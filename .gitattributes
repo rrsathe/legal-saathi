@@ -1,0 +1,37 @@
+# ==============================================================================
+# Git Attributes: Windows Portability & LF Normalization
+# ==============================================================================
+
+# Set default behavior: auto-detect text files and normalize line endings to LF
+* text=auto eol=lf
+
+# Explicitly enforce LF for Python code and configuration files
+*.py text eol=lf
+*.toml text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.json text eol=lf
+*.yaml text eol=lf
+*.yml text eol=lf
+*.env.example text eol=lf
+*.gitignore text eol=lf
+*.gitattributes text eol=lf
+
+# Windows command and shell scripts (require native CRLF for legacy CMD compatibility)
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Binary file declarations (prevent Git from attempting line-ending conversion)
+*.pdf binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pkl binary
+*.sqlite3 binary
+*.chroma binary
+*.bin binary
+*.zip binary
+*.tar.gz binary

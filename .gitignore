@@ -1,0 +1,134 @@
+# ==============================================================================
+# Byte-compiled / optimized / DLL files
+# ==============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.dylib
+*.dll
+
+# ==============================================================================
+# Python Virtual Environments
+# ==============================================================================
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+.pdm-python
+.pdm-build/
+.pixi/
+
+# ==============================================================================
+# Linter, Type Checker & Testing Caches
+# ==============================================================================
+.ruff_cache/
+.mypy_cache/
+.ty_cache/
+.pytest_cache/
+.hypothesis/
+.cache/
+.tox/
+.nox/
+.pytype/
+.pyre/
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+*.py.cover
+*.lcov
+nosetests.xml
+
+# ==============================================================================
+# Environment & Secret Configuration
+# ==============================================================================
+.env
+.env.local
+.env.*.local
+.envrc
+# Whitelist template configuration
+!.env.example
+
+# ==============================================================================
+# Local Vector Database, Indexes & Binary Embeddings (Milestones 2 & 5)
+# ==============================================================================
+data/index/
+data/index/**
+*.chroma
+*.chromadb
+*.faiss
+*.index
+*.pkl
+*.pickle
+chroma.sqlite3
+*.sqlite3-journal
+
+# ==============================================================================
+# Upstream Clones & External Submodules
+# ==============================================================================
+external/
+external/**
+
+# ==============================================================================
+# Distribution & Build Artifacts
+# ==============================================================================
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ==============================================================================
+# Windows OS Specific Files
+# ==============================================================================
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ==============================================================================
+# macOS & Linux OS Files
+# ==============================================================================
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# ==============================================================================
+# IDE & Editor Files
+# ==============================================================================
+.idea/
+*.swp
+*.swo
+*~
+# Allow standard VS Code team settings if created, ignore user state
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# ==============================================================================
+# Multi-Agent Coordination Metadata
+# ==============================================================================
+.agents/teamwork/
