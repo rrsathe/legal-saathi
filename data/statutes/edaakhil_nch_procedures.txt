@@ -1,0 +1,238 @@
+# STATUTE & PROCEDURAL REPOSITORY: NATIONAL CONSUMER HELPLINE (NCH 1915) & E-DAAKHIL FILING PROCEDURES
+# Sources:
+# 1. Department of Consumer Affairs (DoCA), Ministry of Consumer Affairs, Food and Public Distribution, Government of India.
+# 2. National Informatics Centre (NIC) & National Consumer Disputes Redressal Commission (NCDRC) - e-Daakhil User Manual & Standard Operating Procedures.
+# 3. Consumer Protection (Consumer Disputes Redressal Commissions) Rules, 2020 (Statutory Fee Schedule).
+
+================================================================================
+STATUTE: National Consumer Helpline Guidelines
+CHAPTER: Pre-Litigation Grievance Redressal
+SECTION: NCH-1915-Overview
+TITLE: National Consumer Helpline (NCH 1915) and INGRAM Portal
+CLAUSE: General & Convergence Framework
+ACT_YEAR: 2020
+KEYWORDS: national consumer helpline, NCH 1915, INGRAM, consumerhelpline.gov.in, toll free 1915, convergence model, partner companies, CRM integration, docket number, 30 to 45 days timeline
+CROSS_REFS: E-Commerce Rules 2020 Rule 4(4), CPA 2019 Section 35
+CANONICAL_BREADCRUMB: [STATUTE: NCH Guidelines | CHAPTER: Pre-Litigation Redressal | SECTION: NCH-1915-Overview | TITLE: NCH & INGRAM System]
+================================================================================
+### National Consumer Helpline (NCH 1915) & INGRAM Portal
+
+1. Administrative Authority:
+The National Consumer Helpline (NCH) is a project established and managed by the Department of Consumer Affairs (DoCA), Ministry of Consumer Affairs, Food and Public Distribution, Government of India. It functions through the Integrated Grievance Redressal Mechanism (INGRAM) portal (`consumerhelpline.gov.in`).
+
+2. Legislative and Operational Role:
+NCH acts as the primary informal, pre-litigation alternative dispute resolution tier in India. Filing an NCH grievance provides the consumer with an official Government Docket Number, establishing good-faith exhaustion of informal administrative remedies before approaching a Consumer Commission under Section 35 of the Consumer Protection Act, 2019.
+
+3. The Convergence Model:
+- NCH operates an automated "Convergence Network" comprising more than 800 major enterprises, public sector undertakings, airlines, banks, insurance companies, and e-commerce platforms (e.g., Amazon, Flipkart, MakeMyTrip, Tata CliQ, Swiggy, Zomato).
+- Direct API Routing: When a consumer logs a grievance against a registered convergence partner, the INGRAM portal automatically transfers the grievance docket directly into the company’s internal grievance CRM.
+- Resolution Clock: Convergence partner entities are mandated to investigate, redress, and update the status of the grievance within thirty (30) to forty-five (45) calendar days.
+- Docket Generation: A unique numeric Grievance Docket Number (e.g., 6894521) is generated immediately upon registration for real-time tracking.
+
+================================================================================
+STATUTE: National Consumer Helpline Guidelines
+CHAPTER: Pre-Litigation Grievance Redressal
+SECTION: NCH-1915-Modes
+TITLE: Omnichannel Grievance Registration Modes (NCH 1915)
+CLAUSE: Modes 1 to 5
+ACT_YEAR: 2020
+KEYWORDS: NCH modes, toll free 1915, SMS 8800001915, UMANG app, NCH mobile app, WhatsApp bot 8800001915, web portal consumerhelpline
+CROSS_REFS: NCH-1915-Overview
+CANONICAL_BREADCRUMB: [STATUTE: NCH Guidelines | CHAPTER: Pre-Litigation Redressal | SECTION: NCH-1915-Modes | TITLE: NCH Omnichannel Access]
+================================================================================
+### Omnichannel Grievance Registration Modes (NCH 1915)
+
+Consumers can register disputes through five distinct channels:
+
+1. Toll-Free Telephone Helpline:
+- Dial National Short Code: 1915 (or alternative toll-free 1800-11-4000).
+- Operational Hours: 08:00 AM to 08:00 PM on all days, except National Holidays.
+- Multilingual Support: Dedicated consumer counsellors available across 17+ Indian languages (Hindi, English, Bengali, Tamil, Telugu, Marathi, Gujarati, Kannada, Malayalam, Punjabi, etc.).
+
+2. Web Portal (INGRAM):
+- URL: `https://consumerhelpline.gov.in`
+- Procedure: One-time citizen registration using mobile number and OTP. Select Industry, Category, and Company Name. Upload PDF/JPG proof (invoice, payment receipt, chat history) up to 5MB.
+
+3. Official WhatsApp Grievance Bot:
+- WhatsApp Number: +91 8800001915
+- Interactive AI/menu-driven bot allows consumers to log disputes, upload receipts, and check real-time docket status directly in chat.
+
+4. SMS Channel:
+- Send SMS summary to 8800001915. A customer executive calls back the consumer to register the complete facts and issue the grievance docket number.
+
+5. Mobile Applications:
+- "National Consumer Helpline (NCH)" App available on Android Google Play Store and Apple iOS App Store.
+- "UMANG" Government Portal App under Department of Consumer Affairs module.
+
+================================================================================
+STATUTE: e-Daakhil Electronic Filing Procedures
+CHAPTER: Digital Court Litigation
+SECTION: eDaakhil-Overview
+TITLE: e-Daakhil Portal (`edaakhil.nic.in`) Overview & Statutory Foundation
+CLAUSE: General Architecture
+ACT_YEAR: 2020
+KEYWORDS: e-Daakhil, edaakhil.nic.in, NIC, NCDRC, electronic filing, section 35 second proviso, 24x7 online filing, digital case scrutiny, virtual hearing
+CROSS_REFS: CPA 2019 Section 35(1), Section 36(2)
+CANONICAL_BREADCRUMB: [STATUTE: e-Daakhil Procedures | CHAPTER: Digital Court Filing | SECTION: eDaakhil-Overview | TITLE: e-Daakhil Portal Overview]
+================================================================================
+### e-Daakhil Portal (`edaakhil.nic.in`) Overview
+
+1. Statutory Basis:
+The e-Daakhil portal was conceptualized and established pursuant to the second proviso to Section 35(1) of the Consumer Protection Act, 2019, which authorizes the electronic filing of consumer complaints before District Commissions, State Commissions, and the National Commission.
+
+2. Technological Architecture:
+- Designed and maintained by the National Informatics Centre (NIC) under the supervision of the National Consumer Disputes Redressal Commission (NCDRC) and Department of Consumer Affairs (DoCA).
+- Website: `https://edaakhil.nic.in`
+- Enables 24x7 digital dispute filing, online fee payment through Bharatkosh, digital document verification, electronic notice issuance, application for interim relief, and integration with virtual video-conference hearing rooms.
+
+3. Key Features:
+- Citizen Self-Filing: Ordinary consumers can file cases directly without mandatory representation by an advocate.
+- Advocate Portal: Licensed advocates registered with the Bar Council can manage multiple client complaints through dedicated dashboards.
+- Multi-Tier Coverage: Covers District Consumer Disputes Redressal Commissions (DCDRCs), State Consumer Disputes Redressal Commissions (SCDRCs), and the National Consumer Disputes Redressal Commission (NCDRC) across all States and Union Territories.
+
+================================================================================
+STATUTE: e-Daakhil Electronic Filing Procedures
+CHAPTER: Digital Court Litigation
+SECTION: eDaakhil-7Steps
+TITLE: 7-Step Step-by-Step Electronic Filing Procedure on e-Daakhil
+CLAUSE: Steps 1 to 7
+ACT_YEAR: 2020
+KEYWORDS: 7 steps, e-Daakhil filing, registration, jurisdiction selection, memo of parties, dispute categorization, document upload, bharatkosh payment, docket acknowledgement, 21 days scrutiny
+CROSS_REFS: CPA 2019 Section 34, Section 35, Section 36
+CANONICAL_BREADCRUMB: [STATUTE: e-Daakhil Procedures | CHAPTER: Digital Court Filing | SECTION: eDaakhil-7Steps | TITLE: 7-Step e-Daakhil Procedure]
+================================================================================
+### 7-Step Step-by-Step Electronic Filing Procedure on e-Daakhil
+
+Consumers and advocates must execute the following seven sequential steps to institute a consumer case on `edaakhil.nic.in`:
+
+Step 1: User Account Registration & Mobile OTP Authentication
+- Visit `https://edaakhil.nic.in` and click "Register as Consumer" or "Register as Advocate".
+- Input Full Name, Gender, Complete Residential Address, Mobile Number, Email ID, and Identity Proof (Aadhaar / Voter ID / Driving License).
+- Verify account via Two-Factor Authentication (OTP sent to mobile and email).
+- Create secure credentials and login to the Citizen Dashboard.
+
+Step 2: Commission Selection & Jurisdiction Determination
+- Select the State and choose the appropriate Commission Level:
+  (a) District Consumer Disputes Redressal Commission (DCDRC) if consideration paid <= ₹50,00,000;
+  (b) State Consumer Disputes Redressal Commission (SCDRC) if consideration paid > ₹50,00,000 and <= ₹2,00,00,000;
+  (c) National Consumer Disputes Redressal Commission (NCDRC) if consideration paid > ₹2,00,00,000.
+- Under Territorial Jurisdiction, select the Complainant's home district pursuant to Section 34(2)(d) of CPA 2019.
+
+Step 3: Memo of Parties Entry (Complainant & Opposite Parties)
+- Enter Complainant Details: Full name, parentage/spouse name, address with PIN code, mobile number, email ID.
+- Enter Opposite Party (OP) Details: Exact legal entity name (e.g., marketplace platform or manufacturer), registered corporate office address, local branch/warehouse address, official email ID for legal service, and contact numbers.
+- Multiple Opposite Parties: Add third-party seller as OP-1 and marketplace platform as OP-2 to establish joint and several product liability under Section 86.
+
+Step 4: Dispute Categorization & Claim Valuation
+- Select Case Nature: Consumer Complaint under Section 35.
+- Select Dispute Category: Defective Goods / Deficient Services / Unfair Trade Practice / E-Commerce Violation / Delay in Possession / Misleading Advertisement.
+- Valuation: Enter the exact consideration paid in INR (must match the invoice value). State the relief sought (refund amount, replacement, compensation for mental agony, litigation costs).
+
+Step 5: Document Upload & PDF Standardization
+- Upload required documents in individual, searchable PDF files (maximum file size 20MB per document; 300 DPI resolution recommended).
+- Ensure all uploaded documents are clearly indexed and paginated:
+  (a) Index of Documents;
+  (b) Formal Complaint Petition (signed on each page by Complainant);
+  (c) Verification Affidavit (attested/notarized or solemn affirmation);
+  (d) Annexure P-1: Purchase Invoice / Cash Memo;
+  (e) Annexure P-2: Proof of Payment (Bank statement / UPI transaction screenshot);
+  (f) Annexure P-3: Written Grievance Trail (emails with seller/platform, NCH docket status);
+  (g) Annexure P-4: Formal 15-Day Legal Demand Notice & Postal Speed Post Receipt / Email Delivery confirmation;
+  (h) Annexure P-5: Evidence of Defect (photographs, videos, service technician job sheets).
+
+Step 6: Payment of Statutory Court Fees (Bharatkosh Gateway)
+- If consideration paid is up to ₹5,00,000: Select "Fee Exemption (NIL Fee)" under Consumer Protection Rules, 2020.
+- If consideration paid is above ₹5,00,000: The portal calculates the fee automatically and redirects to the Bharatkosh Non-Tax Receipt Portal (`bharatkosh.gov.in`).
+- Pay fee via UPI, Net Banking, or Debit/Credit Card. Download Bharatkosh Challan / Receipt and upload transaction number into e-Daakhil.
+
+Step 7: Final Verification, Digital Submission & Docket Scrutiny
+- Review all entered fields in the Draft Summary Sheet.
+- Check solemn declaration box: "I hereby verify that the facts stated above are true to my personal knowledge and belief."
+- Click "Final Submit".
+- The system generates an immediate electronic Acknowledgement Slip containing a unique Temporary Filing Number (e.g., ED/1245/2026).
+- Registry Scrutiny: As mandated by Section 36(2) of CPA 2019, the registry of the Commission scrutinizes admissibility within twenty-one (21) days. Upon clearance, a formal Regular Case Number (e.g., CC/104/2026) is assigned, and electronic summons are issued to the opposite parties.
+
+================================================================================
+STATUTE: Consumer Protection Rules, 2020 (Fee Schedule)
+CHAPTER: Court Fees
+SECTION: eDaakhil-FeeSchedule
+TITLE: Statutory Court Fee Schedule for Consumer Commissions
+CLAUSE: Schedule under Rule 7
+ACT_YEAR: 2020
+KEYWORDS: court fee, statutory fee schedule, nil fee, up to 5 lakhs free, 5 to 10 lakhs 200, 10 to 20 lakhs 400, 20 to 50 lakhs 1000, state commission 2000, 2500, national commission 7500, bharatkosh
+CROSS_REFS: CPA 2019 Section 35(2), CP (Commissions) Rules 2020
+CANONICAL_BREADCRUMB: [STATUTE: CP Rules, 2020 | CHAPTER: Court Fees | SECTION: eDaakhil-FeeSchedule | TITLE: Statutory Fee Schedule]
+================================================================================
+### Statutory Court Fee Schedule for Consumer Commissions
+
+Notification: Consumer Protection (Consumer Disputes Redressal Commissions) Rules, 2020 (Rule 7 and Schedule)
+
+Fee Structure Based Exclusively on Value of Goods or Services Paid as Consideration:
+
+1. District Commission (DCDRC):
+- Value up to ₹5,00,000 (Five Lakh Rupees): NIL (Completely FREE of court fee).
+- Value above ₹5,00,000 up to ₹10,00,000: ₹200 (Two Hundred Rupees).
+- Value above ₹10,00,000 up to ₹20,00,000: ₹400 (Four Hundred Rupees).
+- Value above ₹20,00,000 up to ₹50,00,000: ₹1,000 (One Thousand Rupees).
+
+2. State Commission (SCDRC):
+- Value above ₹50,00,000 up to ₹1,00,00,000: ₹2,000 (Two Thousand Rupees).
+- Value above ₹1,00,00,000 up to ₹2,00,00,000: ₹2,500 (Two Thousand Five Hundred Rupees).
+
+3. National Commission (NCDRC):
+- Value above ₹2,00,00,000 (Two Crore Rupees): ₹7,500 (Seven Thousand Five Hundred Rupees).
+
+Payment Method:
+Fees shall be paid electronically through the Bharatkosh portal (`bharatkosh.gov.in`) or by crossed demand draft drawn in favour of the Registrar of the respective Commission. No court fee is payable in cases involving consideration up to ₹5 Lakhs, ensuring zero-cost access to justice for ordinary consumers.
+
+================================================================================
+STATUTE: Consumer Commission Filing Regulations
+CHAPTER: Documentation Standards
+SECTION: eDaakhil-DocumentChecklist
+TITLE: Mandatory Document Checklist for e-Daakhil Complaint Petition
+CLAUSE: Checklist Items 1 to 10
+ACT_YEAR: 2020
+KEYWORDS: document checklist, index, memo of parties, complaint petition, verification affidavit, invoice, payment receipt, grievance trail, legal notice, speed post receipt, defect proof, vakalatnama
+CROSS_REFS: CPA 2019 Section 35, eDaakhil-7Steps
+CANONICAL_BREADCRUMB: [STATUTE: Commission Regulations | CHAPTER: Documentation | SECTION: eDaakhil-DocumentChecklist | TITLE: Mandatory Document Checklist]
+================================================================================
+### Mandatory Document Checklist for e-Daakhil Complaint Petition
+
+Every formal consumer complaint petition uploaded to `edaakhil.nic.in` must include the following verified documents:
+
+1. Index of Documents:
+Itemized list of all petitions, applications, affidavits, and annexures with sequential page numbers (e.g., Pages 1 to 35).
+
+2. Memo of Parties:
+Full legal names, parentage/spouse names, full postal addresses with PIN code, mobile phone numbers, and email addresses of the Complainant(s) and all Opposite Parties (OPs). Corporate OPs must include corporate office and local branch/depot addresses.
+
+3. Formal Complaint Petition (Signed on each page):
+Structured legal petition containing:
+(a) Brief synopsis of dates and events;
+(b) Statement of material facts;
+(c) Specific statutory breaches under CPA 2019 (Sections 2(10), 2(11), 2(46), 2(47), 84, 85, 86) and E-Commerce Rules 2020 (Rules 4, 5, 6, 7);
+(d) Pecuniary Jurisdiction Clause (averring that consideration paid matches the forum's limits);
+(e) Territorial Jurisdiction Clause (invoking Section 34(2)(d) based on Complainant residence);
+(f) Limitation Clause (averring that complaint is filed within two years of cause of action under Section 69(1));
+(g) Relief / Prayer Clause (specifying principal refund, interest, compensation for mental agony, punitive damages, and litigation expenses).
+
+4. Complainant Verification Affidavit:
+Affidavit sworn by the Complainant on solemn affirmation or attested by an Oath Commissioner / Notary Public, verifying that the facts stated in Paragraphs 1 to X are true to personal knowledge and belief.
+
+5. Proof of Purchase:
+Tax Invoice, Retail Bill, Cash Memo, or Online Order Confirmation showing Seller Name, Buyer Name, Item Description, Date of Transaction, and Price.
+
+6. Proof of Consideration Paid:
+Bank account debit statement, credit card transaction slip, UPI payment confirmation screenshot with Transaction Reference ID / UTR number, or payment gateway receipt.
+
+7. Written Pre-Litigation Grievance Trail:
+Complete printout of written correspondence with the merchant/platform: customer support emails, Grievance Officer correspondence, rejection notices, and printout of National Consumer Helpline (NCH) docket status.
+
+8. Pre-Litigation Formal Legal Demand Notice & Proof of Service:
+Copy of the 15-day formal legal demand notice sent to the Opposite Parties, accompanied by postal Speed Post receipt, India Post online delivery tracking report showing "Item Delivered", or email read/delivery receipt.
+
+9. Evidence of Defect or Deficiency:
+Clear photographs of defective product, packaging condition, serial number label, video link (if applicable), technician inspection reports, service centre job cards, or refusal notes.
+
+10. Vakalatnama / Letter of Authorization (if applicable):
+Executed Vakalatnama with court fee stamp if represented by an Advocate, or written authorization letter if represented by a registered Voluntary Consumer Association. (Not required for citizen self-representation).

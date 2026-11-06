@@ -1,0 +1,720 @@
+# STATUTE REPOSITORY: THE CONSUMER PROTECTION ACT, 2019 & 2021 PECUNIARY JURISDICTION RULES
+# Source: Act No. 35 of 2019 (Ministry of Law and Justice, Government of India)
+# Amended: Consumer Protection (Jurisdiction of the District Commission, the State Commission and the National Commission) Rules, 2021 (G.S.R. 896(E))
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Preamble
+SECTION: Preamble
+TITLE: Preamble and Legislative Purpose
+CLAUSE: General
+ACT_YEAR: 2019
+KEYWORDS: preamble, legislative intent, consumer rights, protection of interests, timely settlement, authorities
+CROSS_REFS: Section 2(7), Section 10, Section 28
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: Preamble | SECTION: Preamble | TITLE: Legislative Purpose]
+================================================================================
+### Preamble - The Consumer Protection Act, 2019
+
+An Act to provide for protection of the interests of consumers and for the said purpose, to establish authorities for timely and effective administration and settlement of consumers' disputes and for matters connected therewith or incidental thereto.
+
+Be it enacted by Parliament in the Seventieth Year of the Republic of India as follows:—
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter I - Preliminary
+SECTION: Section 1
+TITLE: Short Title, Extent, Commencement and Application
+CLAUSE: Sub-sections (1) to (4)
+ACT_YEAR: 2019
+KEYWORDS: short title, territorial extent, commencement, notification, digital commerce applicability
+CROSS_REFS: Section 2, Section 106
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: I Preliminary | SECTION: 1 | TITLE: Short Title and Scope]
+================================================================================
+### Section 1 - Short Title, Extent, Commencement and Application
+
+(1) This Act may be called the Consumer Protection Act, 2019.
+(2) It extends to the whole of India.
+(3) It shall come into force on such date as the Central Government may, by notification, appoint:
+Provided that different dates may be appointed for different provisions of this Act and any reference in any such provision to the commencement of this Act shall be construed as a reference to the coming into force of that provision.
+(4) Save as otherwise expressly provided by the Central Government, by notification, this Act shall apply to all goods and services.
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter I - Preliminary
+SECTION: Section 2(1)
+TITLE: Definition of Advertisement
+CLAUSE: Sub-section (1)
+ACT_YEAR: 2019
+KEYWORDS: advertisement, notice, circular, label, wrapper, invoice, light, sound, smoke, gas, electronic media
+CROSS_REFS: Section 2(28), Section 21
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: I Preliminary | SECTION: 2(1) | TITLE: Definition of Advertisement]
+================================================================================
+### Section 2(1) - Advertisement
+
+"advertisement" means any audio or visual publicity, representation, endorsement or pronouncement made by means of light, sound, smoke, gas, print, electronic media, internet or website and includes any notice, circular, label, wrapper, invoice or such other documents.
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter I - Preliminary
+SECTION: Section 2(6)
+TITLE: Definition of Complainant
+CLAUSE: Sub-section (6)
+ACT_YEAR: 2019
+KEYWORDS: complainant, consumer, voluntary consumer association, central government, state government, CCPA, legal heir
+CROSS_REFS: Section 35, Section 10
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: I Preliminary | SECTION: 2(6) | TITLE: Definition of Complainant]
+================================================================================
+### Section 2(6) - Complainant
+
+"complainant" means—
+(i) a consumer; or
+(ii) any voluntary consumer association registered under any law for the time being in force; or
+(iii) the Central Government or any State Government; or
+(iv) the Central Authority (CCPA); or
+(v) one or more consumers, where there are numerous consumers having the same interest; or
+(vi) in case of death of a consumer, his legal heir or legal representative; or
+(vii) in case of a consumer being a minor, his parent or legal guardian.
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter I - Preliminary
+SECTION: Section 2(7)
+TITLE: Definition of Consumer
+CLAUSE: Sub-section (7) & Explanations (a) and (b)
+ACT_YEAR: 2019
+KEYWORDS: consumer, buyer, consideration, deferred payment, beneficiary, commercial purpose exclusion, self-employment exception, livelihood, offline, online, e-commerce, teleshopping, direct selling
+CROSS_REFS: Section 2(10), Section 2(11), Section 34, Section 84
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: I Preliminary | SECTION: 2(7) | TITLE: Definition of Consumer]
+================================================================================
+### Section 2(7) - Consumer
+
+"consumer" means any person who—
+(i) buys any goods for a consideration which has been paid or promised or partly paid and partly promised, or under any system of deferred payment and includes any user of such goods other than the person who buys such goods for consideration paid or promised or partly paid or partly promised, or under any system of deferred payment, when such use is made with the approval of such person, but does not include a person who obtains such goods for resale or for any commercial purpose; or
+(ii) hires or avails of any service for a consideration which has been paid or promised or partly paid and partly promised, or under any system of deferred payment and includes any beneficiary of such service other than the person who hires or avails of the services for consideration paid or promised, or partly paid and partly promised, or under any system of deferred payment, when such services are availed of with the approval of the first mentioned person, but does not include a person who avails of such service for any commercial purpose.
+
+Explanation.—For the purposes of this clause,—
+(a) the expression "commercial purpose" does not include use by a person of goods bought and used by him exclusively for the purposes of earning his livelihood by means of self-employment;
+(b) the expressions "buys any goods" and "hires or avails any services" includes offline or online transactions through electronic means or by teleshopping or direct selling or multi-level marketing.
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter I - Preliminary
+SECTION: Section 2(9)
+TITLE: Definition of Consumer Rights
+CLAUSE: Sub-section (9)
+ACT_YEAR: 2019
+KEYWORDS: consumer rights, hazardous goods, right to be informed, right to be assured, right to be heard, right to seek redressal, consumer awareness
+CROSS_REFS: Section 18, Section 39
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: I Preliminary | SECTION: 2(9) | TITLE: Consumer Rights]
+================================================================================
+### Section 2(9) - Consumer Rights
+
+"consumer rights" includes,—
+(i) the right to be protected against the marketing of goods, products or services which are hazardous to life and property;
+(ii) the right to be informed about the quality, quantity, potency, purity, standard and price of goods, products or services, as the case may be, so as to protect the consumer against unfair trade practices;
+(iii) the right to be assured, wherever possible, access to a variety of goods, products or services at competitive prices;
+(iv) the right to be heard and to be assured that consumer's interests will receive due consideration at appropriate fora;
+(v) the right to seek redressal against unfair trade practice or restrictive trade practices or unscrupulous exploitation of consumers; and
+(vi) the right to consumer awareness.
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter I - Preliminary
+SECTION: Section 2(10)
+TITLE: Definition of Defect
+CLAUSE: Sub-section (10)
+ACT_YEAR: 2019
+KEYWORDS: defect, fault, imperfection, shortcoming, quality, quantity, potency, purity, standard, contract express implied, goods, product
+CROSS_REFS: Section 2(7), Section 39(1)(a), Section 84
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: I Preliminary | SECTION: 2(10) | TITLE: Definition of Defect]
+================================================================================
+### Section 2(10) - Defect
+
+"defect" means any fault, imperfection or shortcoming in the quality, quantity, potency, purity or standard which is required to be maintained by or under any law for the time being in force or under any contract, express or implied or as is claimed by the trader in any manner whatsoever in relation to any goods or product.
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter I - Preliminary
+SECTION: Section 2(11)
+TITLE: Definition of Deficiency
+CLAUSE: Sub-section (11)
+ACT_YEAR: 2019
+KEYWORDS: deficiency, fault, imperfection, shortcoming, inadequacy, service, negligence, omission, commission, loss, injury, withholding information
+CROSS_REFS: Section 2(42), Section 39(1)(f), Section 85
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: I Preliminary | SECTION: 2(11) | TITLE: Definition of Deficiency]
+================================================================================
+### Section 2(11) - Deficiency
+
+"deficiency" means any fault, imperfection, shortcoming or inadequacy in the quality, nature and manner of performance which is required to be maintained by or under any law for the time being in force or has been undertaken to be performed by a person in pursuance of a contract or otherwise in relation to any service and includes—
+(i) any act of negligence or omission or commission by such person which causes loss or injury to the consumer; and
+(ii) deliberate withholding of relevant information by such person to the consumer.
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter I - Preliminary
+SECTION: Section 2(16)
+TITLE: Definition of E-Commerce
+CLAUSE: Sub-section (16)
+ACT_YEAR: 2019
+KEYWORDS: e-commerce, electronic commerce, digital network, online buying, electronic network
+CROSS_REFS: Section 2(17), E-Commerce Rules 2020
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: I Preliminary | SECTION: 2(16) | TITLE: Definition of E-Commerce]
+================================================================================
+### Section 2(16) - E-Commerce
+
+"e-commerce" means buying or selling of goods or services including digital products over digital or electronic network.
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter I - Preliminary
+SECTION: Section 2(17)
+TITLE: Definition of Electronic Service Provider
+CLAUSE: Sub-section (17)
+ACT_YEAR: 2019
+KEYWORDS: electronic service provider, technologies, computer resource, online marketplace, online auction, payment gateway
+CROSS_REFS: Section 2(16), E-Commerce Rules 2020 Rule 3
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: I Preliminary | SECTION: 2(17) | TITLE: Electronic Service Provider]
+================================================================================
+### Section 2(17) - Electronic Service Provider
+
+"electronic service provider" means a person who provides technologies or processes to enable a product seller to engage in advertising or selling goods or services to a consumer and includes any online market place or online auction sites.
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter I - Preliminary
+SECTION: Section 2(21)
+TITLE: Definition of Goods
+CLAUSE: Sub-section (21)
+ACT_YEAR: 2019
+KEYWORDS: goods, movable property, sale of goods act, food, food safety
+CROSS_REFS: Section 2(10), Section 84
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: I Preliminary | SECTION: 2(21) | TITLE: Definition of Goods]
+================================================================================
+### Section 2(21) - Goods
+
+"goods" means every kind of movable property and includes "food" as defined in clause (j) of sub-section (1) of section 3 of the Food Safety and Standards Act, 2006.
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter I - Preliminary
+SECTION: Section 2(28)
+TITLE: Definition of Misleading Advertisement
+CLAUSE: Sub-section (28)
+ACT_YEAR: 2019
+KEYWORDS: misleading advertisement, false description, false guarantee, unfair trade practice, deliberate concealment
+CROSS_REFS: Section 21, Section 89
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: I Preliminary | SECTION: 2(28) | TITLE: Misleading Advertisement]
+================================================================================
+### Section 2(28) - Misleading Advertisement
+
+"misleading advertisement" in relation to any product or service, means an advertisement, which—
+(i) falsely describes such product or service; or
+(ii) gives a false guarantee to, or is likely to mislead the consumers as to the nature, substance, quantity or quality of such product or service; or
+(iii) conveys an express or implied representation which, if made by the manufacturer or seller or service provider thereof, would constitute an unfair trade practice; or
+(iv) deliberately conceals important information.
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter I - Preliminary
+SECTION: Section 2(34) to 2(39)
+TITLE: Product Liability Definitions
+CLAUSE: Sub-sections (34), (35), (36), (37), (38), (39)
+ACT_YEAR: 2019
+KEYWORDS: product, product liability, product liability action, product manufacturer, product seller, product service provider, harm
+CROSS_REFS: Section 82, Section 83, Section 84, Section 85, Section 86
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: I Preliminary | SECTION: 2(34)-2(39) | TITLE: Product Liability Definitions]
+================================================================================
+### Section 2(34) to 2(39) - Product Liability Definitions
+
+(34) "product" means any article or goods or substance or raw material or any extended cycle of such article or goods or substance manufactured or produced, but does not include human tissues, blood, blood products and organs.
+(35) "product liability" means the responsibility of a product manufacturer or product seller, of any product or service, to compensate for any harm caused to a consumer by such defective product manufactured or sold or by deficiency in services relating thereto.
+(36) "product liability action" means a complaint filed by a person before a District Commission or State Commission or National Commission, as the case may be, for claiming compensation for the harm caused to him.
+(37) "product manufacturer" means a person who—
+(i) makes any product or parts thereof; or
+(ii) assembles parts thereof made by others; or
+(iii) puts or causes to be put, his own mark on any products made by any other person; or
+(iv) makes a product and sells, distributes, leases, installs, prepares, packages, labels, markets, repairs, maintains such product or is otherwise involved in placing such product for commercial purpose; or
+(v) designs, produces, fabricates, constructs or re-conditions any product before its sale; or
+(vi) being a product seller of a product, is also a manufacturer of such product.
+(38) "product seller", in relation to a product, means a person who, in the course of business, imports, sells, distributes, leases, installs, prepares, packages, labels, markets, repairs, maintains, or otherwise be involved in placing such product for commercial purpose and includes—
+(i) a manufacturer who is also a product seller; or
+(ii) a service provider, but does not include—
+(a) a seller of immovable property;
+(b) a provider of professional services where the essence of the transaction is furnishing of advice, judgment or art;
+(c) a person who acts in only a financial capacity.
+(39) "product service provider", in relation to a product, means a person who provides any service in respect of such product.
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter I - Preliminary
+SECTION: Section 2(42)
+TITLE: Definition of Service
+CLAUSE: Sub-section (42)
+ACT_YEAR: 2019
+KEYWORDS: service, banking, financing, insurance, transport, processing, electrical energy, telecom, boarding, lodging, housing construction, entertainment, amusement, contract of personal service exclusion
+CROSS_REFS: Section 2(11), Section 85
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: I Preliminary | SECTION: 2(42) | TITLE: Definition of Service]
+================================================================================
+### Section 2(42) - Service
+
+"service" means service of any description which is made available to potential users and includes, but not limited to, the provision of facilities in connection with banking, financing, insurance, transport, processing, supply of electrical or other energy, telecom, boarding or lodging or both, housing construction, entertainment, amusement or the purveying of news or other information, but does not include the rendering of any service free of charge or under a contract of personal service.
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter I - Preliminary
+SECTION: Section 2(46)
+TITLE: Definition of Unfair Contract
+CLAUSE: Sub-section (46)
+ACT_YEAR: 2019
+KEYWORDS: unfair contract, excessive security deposit, disproportionate penalty, early repayment refusal, unilateral termination, assignment without consent, unreasonable condition disadvantage
+CROSS_REFS: Section 2(47), Section 34, Section 47
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: I Preliminary | SECTION: 2(46) | TITLE: Definition of Unfair Contract]
+================================================================================
+### Section 2(46) - Unfair Contract
+
+"unfair contract" means a contract between a manufacturer or trader or service provider on one hand, and a consumer on the other, having such terms which cause significant change in the rights of such consumer, including the following, namely:—
+(i) requiring manifestly excessive security deposits to be given by a consumer for the performance of contractual obligations; or
+(ii) imposing any penalty on the consumer, for the breach of contract thereof which is wholly disproportionate to the loss occurred due to such breach to the other party to the contract; or
+(iii) refusing to accept early repayment of debts on payment of applicable penalty; or
+(iv) entitling a party to the contract to terminate such contract unilaterally, without reasonable cause; or
+(v) permitting or has the effect of permitting one party to assign the contract to the detriment of the other party who is a consumer, without his consent; or
+(vi) imposing on the consumer any unreasonable charge, obligation or condition which puts such consumer to disadvantageous position.
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter I - Preliminary
+SECTION: Section 2(47)
+TITLE: Definition of Unfair Trade Practice
+CLAUSE: Sub-section (47)
+ACT_YEAR: 2019
+KEYWORDS: unfair trade practice, misleading representation, false warranty, fake discount, refurbished goods, gift lottery without intention, non-issuance of bill, refusal of refund, refusal to take back goods, 30-day refund mandate, disclosure of personal data
+CROSS_REFS: Section 2(46), Section 39, E-Commerce Rules 2020 Rule 6(3)
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: I Preliminary | SECTION: 2(47) | TITLE: Unfair Trade Practice]
+================================================================================
+### Section 2(47) - Unfair Trade Practice
+
+"unfair trade practice" means a trade practice which, for the purpose of promoting the sale, use or supply of any goods or for the provision of any service, adopts any unfair method or deceptive practice including any of the following practices, namely:—
+(i) making any statement, whether orally or in writing or by visible representation including by means of electronic record, which—
+(a) falsely represents that the goods are of a particular standard, quality, quantity, grade, composition, style or model;
+(b) falsely represents that the services are of a particular standard, quality or grade;
+(c) falsely represents any rebuilt, second-hand, renovated, reconditioned or old goods as new goods;
+(d) represents that the goods or services have sponsorship, approval, performance, characteristics, accessories, uses or benefits which such goods or services do not have;
+(e) represents that the seller or the supplier has a sponsorship or approval or affiliation which such seller or supplier does not have;
+(f) makes a false or misleading representation concerning the need for, or the usefulness of, any goods or services;
+(g) gives to the public any warranty or guarantee of the performance, efficacy or length of life of a product or of any goods that is not based on an adequate or proper test thereof;
+(h) makes to the public a representation in the form that purports to be a warranty or guarantee of a product or of any goods or services, or a promise to replace, maintain or repair an article or any part thereof or to repeat or continue a service until it has achieved a specified result;
+(i) materially misleads the public concerning the price at which a product or like products or goods or services, have been or are, ordinarily sold or provided;
+(j) gives false or misleading facts disparaging the goods, services or trade of another person;
+(ii) permitting the publication of any advertisement, whether in any newspaper or otherwise, including by way of electronic record, for the sale or supply at a bargain price, of goods or services that are not intended to be offered for sale or supply at the bargain price;
+(iii) permitting—
+(a) the offering of gifts, prizes or other items with the intention of not providing them as offered or creating impression that something is being given or offered free of charge when it is fully or partly covered by the amount charged;
+(b) the conduct of any contest, lottery, game of chance or skill, for the purpose of promoting, directly or indirectly, the sale, use or supply of any product or any business interest;
+(iv) permitting the sale or supply of goods intended to be used, or are of a kind likely to be used, by consumers, knowing or having reason to believe that the goods do not comply with the standards prescribed by competent authority;
+(v) permitting the hoarding or destruction of goods, or refusal to sell the goods or to make them available for sale or to provide any service, if such hoarding or destruction or refusal raises or tends to raise or is intended to raise, the cost of those or other similar goods or services;
+(vi) manufacturing of spurious goods or offering such goods for sale or adopting deceptive practices in the provision of services;
+(vii) not issuing bill or cash memo or receipt for the goods sold or services rendered in such manner as may be prescribed;
+(viii) refusing, after selling goods or rendering services, to take back or withdraw defective goods or to withdraw or discontinue deficient services and to refund the consideration thereof, if paid, within the period stipulated in the bill or cash memo or receipt or in the absence of such stipulation, within a period of thirty days;
+(ix) disclosing to any other person any personal information given in confidence by the consumer unless such disclosure is made in accordance with the provisions of any law for the time being in force.
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter II - Central Consumer Protection Authority
+SECTION: Section 10, 18, 19, 20, 21
+TITLE: Central Consumer Protection Authority (CCPA) Powers and Functions
+CLAUSE: Sections 10 to 21
+ACT_YEAR: 2019
+KEYWORDS: CCPA, central consumer protection authority, powers, functions, inquiry, investigation, director general, recall of goods, reimbursement of price, misleading advertisements, endorser penalty, 10 lakhs, 50 lakhs
+CROSS_REFS: Section 2(28), Section 89
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: II CCPA | SECTION: 10-21 | TITLE: CCPA Powers and Functions]
+================================================================================
+### Sections 10, 18, 19, 20, 21 - Central Consumer Protection Authority (CCPA)
+
+Section 10 - Establishment of Central Authority:
+The Central Government shall, by notification, establish an authority to be known as the Central Consumer Protection Authority to protect, promote and enforce the rights of consumers as a class.
+
+Section 18 - Powers and Functions of Central Authority:
+(1) The Central Authority shall—
+(a) protect, promote and enforce the rights of consumers as a class, and prevent violations of consumer rights under this Act;
+(b) prevent unfair trade practices and ensure that no person engages in unfair trade practices;
+(c) ensure that no false or misleading advertisement is made of any goods or services which contravenes the provisions of this Act or the rules or regulations made thereunder;
+(d) ensure that no person takes part in the publication of any false or misleading advertisement.
+(2) Inquire or cause an inquiry or investigation to be made into violations of consumer rights or unfair trade practices, either suo motu or on a complaint received or on the direction from the Central Government;
+(e) file complaints before the District Commission, State Commission or National Commission;
+(f) intervene in any proceedings before the District Commission or State Commission or National Commission;
+(g) issue necessary safety notices to alert consumers against dangerous or hazardous goods or services;
+(h) issue guidelines to prevent unfair trade practices and protect consumers' interest.
+
+Section 19 - Power of Central Authority to Refer Matter for Investigation:
+The Central Authority may direct the Director General of Investigation to inquire into or investigate any violation of consumer rights, unfair trade practices or false or misleading advertisements.
+
+Section 20 - Power of Central Authority to Recall Goods, Refund Prices and Discontinue Unfair Practices:
+Where the Central Authority is satisfied after investigation that there is sufficient evidence to establish violation of consumer rights or unfair trade practice, it may pass such order as may be necessary, including:—
+(a) recalling of goods or withdrawal of services which are dangerous, hazardous or unsafe;
+(b) reimbursement of the prices of goods or services so recalled to purchasers;
+(c) discontinuation of practices which are unfair and prejudicial to consumers' interest.
+
+Section 21 - Power of Central Authority to Issue Directions and Penalties against Misleading Advertisements:
+(1) Central Authority may direct the manufacturer or endorser or advertiser or publisher to discontinue or modify false or misleading advertisements within specified time.
+(2) Impose penalty on a manufacturer or an endorser up to ten lakh rupees (₹10,00,000) for false or misleading advertisement.
+(3) For every subsequent contravention, penalty may extend to fifty lakh rupees (₹50,00,000).
+(4) May prohibit the endorser of a false or misleading advertisement from making endorsement of any product or service for a period which may extend to one year, and for subsequent contravention up to three years.
+(5) Impose penalty on a publisher up to ten lakh rupees (₹10,00,000) unless published in the ordinary course of business.
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter IV - Consumer Disputes Redressal Commission
+SECTION: Section 28 & 34
+TITLE: Establishment and Jurisdiction of District Commission (Including 2021 Pecuniary Rules Revision)
+CLAUSE: Sub-sections (1) and (2)
+ACT_YEAR: 2019
+KEYWORDS: district commission, DCDRC, pecuniary jurisdiction, 50 lakhs, consideration paid, territorial jurisdiction, complainant residence, place of business, cause of action
+CROSS_REFS: Section 35, Section 47, CP (Jurisdiction of Commissions) Rules 2021
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: IV District Commission | SECTION: 34 | TITLE: Jurisdiction of District Commission]
+================================================================================
+### Section 34 - Jurisdiction of District Commission
+
+(1) Pecuniary Jurisdiction:
+Subject to the other provisions of this Act, the District Commission shall have jurisdiction to entertain complaints where the value of the goods or services paid as consideration does not exceed fifty lakh rupees (₹50,00,000).
+[Note: As amended by Rule 3 of the Consumer Protection (Jurisdiction of the District Commission, the State Commission and the National Commission) Rules, 2021 notified on 30 December 2021, reducing the statutory threshold from ₹1 Crore to ₹50 Lakhs based exclusively on consideration paid].
+
+(2) Territorial Jurisdiction:
+A complaint shall be instituted in a District Commission within the local limits of whose jurisdiction—
+(a) the opposite party or each of the opposite parties, where there are more than one, at the time of the institution of the complaint, ordinarily resides or carries on business or has a branch office, or personally works for gain; or
+(b) any of the opposite parties, where there are more than one, at the time of the institution of the complaint, actually and voluntarily resides, or carries on business or has a branch office, or personally works for gain, provided that in such case the permission of the District Commission is given; or
+(c) the cause of action, wholly or in part, arises; or
+(d) the complainant resides or personally works for gain.
+
+[Key Legal Principle: Section 34(2)(d) enables a consumer to institute proceedings in the District Commission having jurisdiction over the consumer's place of residence or personal employment, regardless of where the merchant's corporate headquarters is situated and overriding platform forum-selection clauses].
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter IV - Consumer Disputes Redressal Commission
+SECTION: Section 35
+TITLE: Manner in Which Complaint Shall be Made & Electronic Filing
+CLAUSE: Sub-sections (1) and (2)
+ACT_YEAR: 2019
+KEYWORDS: manner of complaint, electronic filing, e-Daakhil, who may file, fee, court fee, consumer association
+CROSS_REFS: Section 2(6), Section 36, Section 38
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: IV District Commission | SECTION: 35 | TITLE: Manner of Making Complaint & Electronic Filing]
+================================================================================
+### Section 35 - Manner in Which Complaint Shall be Made
+
+(1) A complaint, in relation to any goods sold or delivered or agreed to be sold or delivered or any service provided or agreed to be provided, may be filed with a District Commission by—
+(a) the consumer—
+(i) to whom such goods are sold or delivered or agreed to be sold or delivered or such service is provided or agreed to be provided; or
+(ii) who alleges unfair trade practice in respect of such goods or service;
+(b) any recognised consumer association, whether the consumer to whom the goods sold or delivered or agreed to be sold or delivered or service provided or agreed to be provided, or in respect of whom allegations of unfair trade practice have been made, is a member of such association or not;
+(c) one or more consumers, where there are numerous consumers having the same interest, with the permission of the District Commission, on behalf of, or for the benefit of, all consumers so interested; or
+(d) the Central Government, the Central Authority or the State Government, as the case may be:
+
+Provided that the complaint under this sub-section may also be filed electronically in such manner as may be prescribed.
+
+(2) Every complaint filed under sub-section (1) shall be accompanied with such fee and in such manner, including electronic form, as may be prescribed.
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter IV - Consumer Disputes Redressal Commission
+SECTION: Section 36
+TITLE: Proceedings Before District Commission & 21-Day Deemed Admissibility
+CLAUSE: Sub-sections (1) to (3)
+ACT_YEAR: 2019
+KEYWORDS: proceedings, admissibility, 21 days, deemed admission, rejection notice
+CROSS_REFS: Section 35, Section 38
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: IV District Commission | SECTION: 36 | TITLE: Proceedings and 21-Day Admissibility]
+================================================================================
+### Section 36 - Proceedings Before District Commission
+
+(1) Every proceeding before the District Commission shall be conducted by the President of that Commission and atleast one member thereof, sitting together.
+(2) The admissibility of the complaint shall ordinarily be decided within twenty-one days from the date on which the complaint was filed.
+(3) Where the District Commission does not decide the issue of admissibility of the complaint within twenty-one days, the complaint shall be deemed to have been admitted.
+Provided that no complaint shall be rejected under this section without giving the complainant an opportunity of being heard.
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter IV - Consumer Disputes Redressal Commission
+SECTION: Section 38
+TITLE: Procedure on Admission of Complaint & 30-Day Reply Timeline
+CLAUSE: Sub-sections (1) to (3)
+ACT_YEAR: 2019
+KEYWORDS: procedure, admission, notice to opposite party, 30 days reply, 15 days extension, 45 days maximum, laboratory test, expert analysis
+CROSS_REFS: Section 36, Section 39
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: IV District Commission | SECTION: 38 | TITLE: Procedure on Admission & Reply Timeline]
+================================================================================
+### Section 38 - Procedure on Admission of Complaint
+
+(1) The District Commission shall, on admission of a complaint, refer a copy of the admitted complaint, within twenty-one days from the date of its admission to the opposite party mentioned in the complaint.
+(2) Where the complaint relates to any goods:—
+(a) the Commission shall direct the opposite party to give his version of the case within a period of thirty days or such extended period not exceeding fifteen days as may be granted by it;
+(b) if the opposite party denies or disputes the allegations, or omits or fails to take any action within the given time, the Commission shall proceed to settle the consumer dispute;
+(c) where the complaint alleges a defect in goods which cannot be determined without proper analysis or test, the Commission shall obtain a sample, seal it, and refer it to an appropriate laboratory with a direction to report within forty-five days.
+(3) Where the complaint relates to services:—
+The Commission shall direct the opposite party to give his version within thirty days (extendable by fifteen days) and proceed to decide the dispute on the basis of evidence brought by both parties.
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter IV - Consumer Disputes Redressal Commission
+SECTION: Section 39
+TITLE: Findings of District Commission and Scope of Reliefs
+CLAUSE: Sub-section (1) clauses (a) to (m)
+ACT_YEAR: 2019
+KEYWORDS: findings, reliefs, remove defect, replace goods, return price, refund, compensation, punitive damages, deficiency, cease hazardous goods, litigation costs
+CROSS_REFS: Section 2(10), Section 2(11), Section 2(47)
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: IV District Commission | SECTION: 39 | TITLE: Findings of Commission and Reliefs]
+================================================================================
+### Section 39 - Findings of District Commission
+
+(1) If, after the proceeding conducted under section 38, the District Commission is satisfied that the goods complained against suffer from any of the defects specified in the complaint or that any of the allegations contained in the complaint about the services or any unfair trade practices are proved, it shall issue an order to the opposite party directing him to do one or more of the following things, namely:—
+(a) to remove the defect pointed out by the appropriate laboratory from the goods in question;
+(b) to replace the goods with new goods of similar description which shall be free from any defect;
+(c) to return to the complainant the price, or, as the case may be, the charges paid by the complainant along with such interest on such price or charges as may be decided;
+(d) to pay such amount as may be awarded by it as compensation to the consumer for any loss or injury suffered by the consumer due to the negligence of the opposite party;
+(e) to pay such amount of punitive damages as it deems fit;
+(f) to remove the defects in goods or deficiencies in the services in question;
+(g) to discontinue the unfair trade practice or restrictive trade practice and not to repeat it;
+(h) not to offer the hazardous or unsafe goods for sale;
+(i) to withdraw the hazardous goods from being offered for sale;
+(j) to cease manufacture of hazardous goods and to desist from offering services which are hazardous in nature;
+(k) to pay such sum as may be determined by it where loss or injury has been suffered by a large number of consumers who are not identifiable conveniently, to be credited to the Consumer Welfare Fund;
+(l) to issue corrective advertisement to neutralise the effect of misleading advertisement at the cost of the opposite party;
+(m) to provide for adequate costs to parties.
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter IV - Consumer Disputes Redressal Commission
+SECTION: Section 41, 47, 51, 58, 67
+TITLE: Appeals, State Commission and National Commission Jurisdictions
+CLAUSE: Sections 41, 47, 51, 58, 67
+ACT_YEAR: 2019
+KEYWORDS: appeal, state commission, SCDRC, national commission, NCDRC, 45 days, 30 days, 50 percent deposit, pecuniary jurisdiction 2021 rules, 50 lakhs to 2 crores, above 2 crores, supreme court appeal
+CROSS_REFS: Section 34, CP (Jurisdiction of Commissions) Rules 2021
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: IV Appeals & Higher Commissions | SECTION: 41-67 | TITLE: Appeals & Pecuniary Thresholds]
+================================================================================
+### Sections 41, 47, 51, 58, 67 - Appeals and Higher Commission Jurisdictions
+
+Section 41 - Appeal Against Order of District Commission:
+Any person aggrieved by an order made by the District Commission may prefer an appeal against such order to the State Commission within a period of forty-five days from the date of the order:
+Provided that no appeal by a person, who is required to pay any amount in terms of an order of the District Commission, shall be entertained by the State Commission unless the appellant has deposited fifty per cent (50%) of that amount in the manner prescribed.
+
+Section 47 - Jurisdiction of State Commission:
+(1) Subject to the other provisions of this Act, the State Commission shall have jurisdiction to entertain:—
+(a) complaints where the value of the goods or services paid as consideration exceeds fifty lakh rupees (₹50,00,000) but does not exceed two crore rupees (₹2,00,00,000); [As amended by 2021 Rules];
+(b) appeals against the orders of any District Commission within the State;
+(c) revision petitions calling for records of any consumer dispute pending before or decided by any District Commission within the State.
+
+Section 51 - Appeal Against Order of State Commission:
+Aggrieved person may prefer an appeal to the National Commission within thirty days from the date of the order, subject to depositing fifty per cent (50%) of the amount ordered.
+
+Section 58 - Jurisdiction of National Commission:
+(1) Subject to the other provisions of this Act, the National Commission shall have jurisdiction to entertain:—
+(a) complaints where the value of the goods or services paid as consideration exceeds two crore rupees (₹2,00,00,000); [As amended by 2021 Rules];
+(b) appeals against orders of any State Commission;
+(c) revision petitions calling for records of any dispute decided by or pending before any State Commission.
+
+Section 67 - Appeal Against Order of National Commission:
+Any person aggrieved by an order of the National Commission in exercise of its powers under Section 58(1)(a) may prefer an appeal to the Supreme Court of India within thirty days from the date of the order, subject to depositing fifty per cent (50%) of the amount ordered.
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter IV - Consumer Disputes Redressal Commission
+SECTION: Section 69
+TITLE: Limitation Period and Condonation of Delay
+CLAUSE: Sub-sections (1) and (2)
+ACT_YEAR: 2019
+KEYWORDS: limitation period, two years, cause of action, condonation of delay, sufficient cause, recorded reasons
+CROSS_REFS: Section 34, Section 35
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: IV Limitation | SECTION: 69 | TITLE: Limitation Period and Condonation]
+================================================================================
+### Section 69 - Limitation Period
+
+(1) The District Commission, the State Commission or the National Commission shall not admit a complaint unless it is filed within two years from the date on which the cause of action has arisen.
+(2) Notwithstanding anything contained in sub-section (1), a complaint may be entertained after the period specified in sub-section (1), if the complainant satisfies the District Commission, the State Commission or the National Commission, as the case may be, that he had sufficient cause for not filing the complaint within such period:
+Provided that no such complaint shall be entertained unless the National Commission, the State Commission or the District Commission, as the case may be, records its reasons for condoning such delay.
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter IV - Consumer Disputes Redressal Commission
+SECTION: Section 71 & 72
+TITLE: Enforcement of Orders and Penalty for Non-Compliance
+CLAUSE: Section 71 and Section 72
+ACT_YEAR: 2019
+KEYWORDS: enforcement of orders, execution, civil court decree, order XXI CPC, penalty for non-compliance, imprisonment 1 month to 3 years, fine 25000 to 1 lakh
+CROSS_REFS: Section 39, Code of Civil Procedure 1908
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: IV Enforcement | SECTION: 71-72 | TITLE: Enforcement and Penalties]
+================================================================================
+### Sections 71 & 72 - Enforcement and Penalties
+
+Section 71 - Enforcement of Orders:
+Every order made by a District Commission, State Commission or National Commission shall be enforced by it in the same manner as if it were a decree made by a Court in a suit pending therein, and it shall be lawful for the District Commission, State Commission or National Commission to send, in event of its inability to execute it, such order to the Court within the local limits of whose jurisdiction—
+(a) in the case of an order against a company, the registered office of the company is situated; or
+(b) in the case of an order against any other person, the place where the person ordinarily resides or carries on business or personally works for gain, is situated.
+[Executed in terms of Order XXI of the Code of Civil Procedure, 1908].
+
+Section 72 - Penalty for Non-Compliance of Order:
+(1) Whoever fails to comply with any order made by the District Commission or the State Commission or the National Commission, as the case may be, shall be punishable with imprisonment for a term which shall not be less than one month, but which may extend to three years, or with fine, which shall not be less than twenty-five thousand rupees, but which may extend to one lakh rupees, or with both.
+(2) The Commission shall have the power of a Judicial Magistrate of the first class for the trial of offences under sub-section (1).
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter V - Mediation
+SECTION: Sections 74 to 81
+TITLE: Consumer Mediation and Finality of Settlement
+CLAUSE: Sections 74, 75, 79, 80, 81
+ACT_YEAR: 2019
+KEYWORDS: mediation, consumer mediation cell, empanelment of mediators, reference to mediation, settlement agreement, no appeal against mediation order
+CROSS_REFS: Section 38, Section 41
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: V Mediation | SECTION: 74-81 | TITLE: Mediation and Finality of Settlement]
+================================================================================
+### Sections 74 to 81 - Consumer Mediation
+
+Section 74 - Establishment of Consumer Mediation Cell:
+The State Government shall establish a Consumer Mediation Cell attached to each District Commission and the State Commission. The Central Government shall establish a Consumer Mediation Cell attached to the National Commission.
+
+Section 80 - Reference to Mediation:
+(1) The District Commission or the State Commission or the National Commission, as the case may be, may, at the first hearing of the complaint after admission, or at any later stage, if it appears to it that there exist elements of a settlement which may be acceptable to the parties, direct the parties to give their consent in writing to have their dispute settled through mediation within five days.
+(2) Where the parties agree, the Commission shall refer the matter to the Consumer Mediation Cell.
+
+Section 81 - Procedure for Mediation and Settlement:
+(1) Mediation proceedings shall be conducted by the mediator with confidentiality and integrity.
+(2) If an agreement is reached between the parties with respect to all the issues or some of the issues, the terms shall be reduced into writing and signed by the parties or their authorised representatives and the mediator, and submitted to the Commission.
+(3) The Commission shall, within seven days of receipt of the settlement report, pass suitable order recording such settlement of dispute and dispose of the matter accordingly.
+Section 81(3) Key Rule:
+NO APPEAL SHALL LIE FROM ANY ORDER PASSED BY THE DISTRICT COMMISSION, THE STATE COMMISSION OR THE NATIONAL COMMISSION, AS THE CASE MAY BE, PURSUANT TO A SETTLEMENT REACHED THROUGH MEDIATION.
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter VI - Product Liability
+SECTION: Section 82 & 83
+TITLE: Product Liability Scope and Right of Action
+CLAUSE: Section 82 and Section 83
+ACT_YEAR: 2019
+KEYWORDS: product liability, scope, right of action, harm, defective product, deficient service, manufacturer, service provider, seller
+CROSS_REFS: Section 2(34), Section 2(35), Section 84, Section 85, Section 86
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: VI Product Liability | SECTION: 82-83 | TITLE: Scope of Product Liability Action]
+================================================================================
+### Sections 82 & 83 - Scope of Product Liability Action
+
+Section 82 - Application of Chapter:
+This Chapter shall apply to every product liability action brought by a complainant for harm caused by a defective product manufactured by a product manufacturer or serviced by a product service provider or sold by a product seller.
+
+Section 83 - Product Liability Action:
+A product liability action may be brought by a complainant against a product manufacturer or a product service provider or a product seller, as the case may be, for any harm caused to him on account of a defective product.
+
+Harm includes:
+(i) damage to any property, other than the product itself;
+(ii) personal injury, illness or death;
+(iii) mental agony or emotional distress attendant to personal injury or illness or damage to property;
+(iv) any loss of consortium or loss of society or other wrongful death damages.
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter VI - Product Liability
+SECTION: Section 84
+TITLE: Liability of Product Manufacturer
+CLAUSE: Sub-sections (1) and (2)
+ACT_YEAR: 2019
+KEYWORDS: product manufacturer liability, manufacturing defect, design defect, deviation from specifications, breach of express warranty, failure to provide instructions or warnings, strict liability
+CROSS_REFS: Section 2(37), Section 83, Section 87
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: VI Product Liability | SECTION: 84 | TITLE: Liability of Product Manufacturer]
+================================================================================
+### Section 84 - Liability of Product Manufacturer
+
+(1) A product manufacturer shall be liable in a product liability action, if—
+(a) the product contains a manufacturing defect; or
+(b) the product is defective in design; or
+(c) there is a deviation from manufacturing specifications; or
+(d) the product does not conform to the express warranty; or
+(e) the product fails to contain adequate instructions of correct usage to prevent any harm or any warning regarding improper or incorrect usage.
+
+(2) A product manufacturer shall be liable in a product liability action even if he proves that he was not negligent or fraudulent in making the express warranty of a product.
+[Strict Liability Standard: The absence of negligence or good-faith intent does not absolve the manufacturer from product liability].
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter VI - Product Liability
+SECTION: Section 85
+TITLE: Liability of Product Service Provider
+CLAUSE: Clauses (a) to (d)
+ACT_YEAR: 2019
+KEYWORDS: product service provider liability, faulty service, imperfect, deficient, inadequate, negligence, conscious withholding information, lack of warning, breach of warranty
+CROSS_REFS: Section 2(39), Section 2(11), Section 83
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: VI Product Liability | SECTION: 85 | TITLE: Liability of Product Service Provider]
+================================================================================
+### Section 85 - Liability of Product Service Provider
+
+A product service provider shall be liable in a product liability action, if—
+(a) the service provided by him was faulty, imperfect, deficient or inadequate in quality, nature or manner of performance which is required to be provided by or under any law for the time being in force, or pursuant to any contract or otherwise; or
+(b) there was an act of omission or commission or negligence or conscious withholding of any information which caused harm; or
+(c) the service provider did not issue adequate instructions or warnings to prevent any harm; or
+(d) the service did not conform to express warranty or the terms and conditions of the contract.
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter VI - Product Liability
+SECTION: Section 86
+TITLE: Liability of Product Seller
+CLAUSE: Clauses (a) to (e)
+ACT_YEAR: 2019
+KEYWORDS: product seller liability, substantial control over design, alteration, modification, independent warranty, failure to disclose manufacturer identity, failure to inspect, failure to pass warnings, e-commerce marketplace liability
+CROSS_REFS: Section 2(38), Section 83, E-Commerce Rules 2020 Rule 6
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: VI Product Liability | SECTION: 86 | TITLE: Liability of Product Seller]
+================================================================================
+### Section 86 - Liability of Product Seller
+
+A product seller who is not a product manufacturer shall be liable in a product liability action, if—
+(a) he has exercised substantial control over the designing, testing, manufacturing, packaging or labelling of a product that caused harm; or
+(b) he has altered or modified the product and such alteration or modification was the substantial factor in causing the harm; or
+(c) he has made an express warranty of a product independent of any express warranty made by a manufacturer and such product failed to conform to the express warranty made by the product seller, which caused the harm; or
+(d) the product has been sold by him and the identity of product manufacturer of such product is not known, or if known, the service of notice or process or warrant cannot be effected on him or he is not subject to the law which is in force in India or the order, if any, passed or to be passed cannot be enforced against him; or
+(e) he failed to exercise reasonable care in assembling, inspecting or maintaining such product or he did not pass on the warnings or instructions of the product manufacturer regarding the dangers involved or how to avoid such dangers, relating to the product while selling the product and such failure was the proximate cause of the harm.
+
+================================================================================
+STATUTE: Consumer Protection Act, 2019
+CHAPTER: Chapter VI - Product Liability
+SECTION: Section 87
+TITLE: Exceptions to Product Liability
+CLAUSE: Sub-sections (1) to (4)
+ACT_YEAR: 2019
+KEYWORDS: exceptions to product liability, misuse, alteration, modification, expert supervision, obvious danger, employer workplace, defense
+CROSS_REFS: Section 84, Section 85, Section 86
+CANONICAL_BREADCRUMB: [STATUTE: Consumer Protection Act, 2019 | CHAPTER: VI Product Liability | SECTION: 87 | TITLE: Exceptions to Product Liability]
+================================================================================
+### Section 87 - Exceptions to Product Liability
+
+(1) A product liability action cannot be brought against the product seller if, at the time of harm, the product was misused, altered, or modified.
+(2) In any product liability action against a product manufacturer, he shall not be liable for failure to instruct or warn in respect of:—
+(a) a product which was purchased by an employer for use at the workplace or by employees, where the employer was given warning or instructions;
+(b) a product which was sold as a component or material to be used in another product, and the harm was caused by such other end product;
+(c) a product which was used under the supervision of an expert who was warned or instructed;
+(d) a product which the consumer knew or ought reasonably to have known the dangers involved in using it, considering the characteristics of such product.
+(3) A product manufacturer shall not be liable for failure to warn regarding obvious dangers or risks that are commonly known to an ordinary user or consumer of such product.
+
+================================================================================
+STATUTE: Consumer Protection (Jurisdiction of Commissions) Rules, 2021
+CHAPTER: Statutory Rules
+SECTION: Rules 1, 2, 3, 4, 5
+TITLE: Revised Pecuniary Jurisdiction of District, State, and National Commissions
+CLAUSE: Rules 1 to 5
+ACT_YEAR: 2021
+KEYWORDS: pecuniary jurisdiction, 2021 rules, district commission up to 50 lakhs, state commission 50 lakhs to 2 crores, national commission above 2 crores, value of goods or services paid as consideration
+CROSS_REFS: CPA 2019 Section 34, Section 47, Section 58
+CANONICAL_BREADCRUMB: [STATUTE: CP (Jurisdiction of Commissions) Rules, 2021 | CHAPTER: Rules | SECTION: 1-5 | TITLE: Revised Pecuniary Limits]
+================================================================================
+### Consumer Protection (Jurisdiction of Commissions) Rules, 2021
+
+Notification: G.S.R. 896(E), dated 30th December, 2021 (Ministry of Consumer Affairs, Food and Public Distribution)
+
+Rule 1 - Short Title and Commencement:
+(1) These rules may be called the Consumer Protection (Jurisdiction of the District Commission, the State Commission and the National Commission) Rules, 2021.
+(2) They shall come into force on the date of their publication in the Official Gazette.
+
+Rule 3 - Jurisdiction of District Commission:
+Subject to the other provisions of the Act, the District Commission shall have jurisdiction to entertain complaints where the value of the goods or services paid as consideration does not exceed fifty lakh rupees (₹50,00,000).
+
+Rule 4 - Jurisdiction of State Commission:
+Subject to the other provisions of the Act, the State Commission shall have jurisdiction to entertain complaints where the value of the goods or services paid as consideration exceeds fifty lakh rupees (₹50,00,000) but does not exceed two crore rupees (₹2,00,00,000).
+
+Rule 5 - Jurisdiction of National Commission:
+Subject to the other provisions of the Act, the National Commission shall have jurisdiction to entertain complaints where the value of the goods or services paid as consideration exceeds two crore rupees (₹2,00,00,000).
+
+Governing Legal Principle:
+Pecuniary jurisdiction is calculated solely by reference to the actual consideration paid by the consumer for the goods or services, and NOT by adding the amount of damages, punitive damages, compensation for mental agony, or interest claimed.

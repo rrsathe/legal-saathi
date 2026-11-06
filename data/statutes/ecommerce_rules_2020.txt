@@ -1,0 +1,208 @@
+# STATUTE REPOSITORY: THE CONSUMER PROTECTION (E-COMMERCE) RULES, 2020
+# Source: Notification G.S.R. 462(E), dated 23rd July, 2020 (Department of Consumer Affairs, Ministry of Consumer Affairs, Food and Public Distribution, Government of India)
+# As Amended by Consumer Protection (E-Commerce) (Amendment) Rules, 2021
+
+================================================================================
+STATUTE: Consumer Protection (E-Commerce) Rules, 2020
+CHAPTER: Preliminary
+SECTION: Rule 1
+TITLE: Short Title and Commencement
+CLAUSE: Sub-rules (1) and (2)
+ACT_YEAR: 2020
+KEYWORDS: short title, commencement, 23 july 2020, electronic commerce rules, e-commerce regulation
+CROSS_REFS: CPA 2019 Section 101, Rule 2
+CANONICAL_BREADCRUMB: [STATUTE: CP (E-Commerce) Rules, 2020 | CHAPTER: Preliminary | SECTION: Rule 1 | TITLE: Short Title and Commencement]
+================================================================================
+### Rule 1 - Short Title and Commencement
+
+(1) These rules may be called the Consumer Protection (E-Commerce) Rules, 2020.
+(2) They shall come into force on the date of their publication in the Official Gazette (23rd July, 2020).
+
+================================================================================
+STATUTE: Consumer Protection (E-Commerce) Rules, 2020
+CHAPTER: Preliminary
+SECTION: Rule 2
+TITLE: Scope and Applicability
+CLAUSE: Sub-rules (1) and (2)
+ACT_YEAR: 2020
+KEYWORDS: scope, applicability, digital products, marketplace e-commerce, inventory e-commerce, multi-channel, foreign entities systematic offering in india
+CROSS_REFS: Rule 3, CPA 2019 Section 2(16)
+CANONICAL_BREADCRUMB: [STATUTE: CP (E-Commerce) Rules, 2020 | CHAPTER: Preliminary | SECTION: Rule 2 | TITLE: Scope and Applicability]
+================================================================================
+### Rule 2 - Scope and Applicability
+
+(1) Save as otherwise provided in sub-rule (2), these rules shall apply to:—
+(a) all goods and services bought or sold over digital or electronic network including digital products;
+(b) all models of e-commerce, including marketplace and inventory approaches of e-commerce;
+(c) all e-commerce retail, including multi-channel single brand retailers and single brand retailers in single or multiple formats; and
+(d) all forms of unfair trade practices across all models of e-commerce:
+
+Provided that these rules shall not apply to any activity of a natural person carried out in a personal capacity not being part of any regular professional or commercial activity.
+
+(2) These rules shall also apply to an e-commerce entity which is not established in India, but systematically offers goods or services to consumers in India.
+
+================================================================================
+STATUTE: Consumer Protection (E-Commerce) Rules, 2020
+CHAPTER: Definitions
+SECTION: Rule 3
+TITLE: Definitions of E-Commerce Entities and Terms
+CLAUSE: Sub-rule (1) clauses (a) to (m)
+ACT_YEAR: 2020
+KEYWORDS: definitions, e-commerce entity, marketplace e-commerce entity, inventory e-commerce entity, digital products, grievance officer, user
+CROSS_REFS: CPA 2019 Section 2(16), Rule 4, Rule 5, Rule 7
+CANONICAL_BREADCRUMB: [STATUTE: CP (E-Commerce) Rules, 2020 | CHAPTER: Definitions | SECTION: Rule 3 | TITLE: E-Commerce Definitions]
+================================================================================
+### Rule 3 - Definitions
+
+(1) In these rules, unless the context otherwise requires,—
+(b) "e-commerce entity" means any person who owns, operates or manages digital or electronic facility or platform for electronic commerce, but does not include a seller on a marketplace e-commerce entity;
+(c) "digital products" means goods which are licensed or sold with right to access or download or use in digital form;
+(e) "inventory e-commerce entity" means an e-commerce entity which owns the inventory of goods or services and sells such goods or services directly to the consumers and shall include single brand retailers and multi-channel retailers;
+(f) "grievance officer" means an officer appointed by the e-commerce entity for the consumer grievance redressal under sub-rule (4) of rule 4;
+(g) "marketplace e-commerce entity" means an e-commerce entity which provides an information technology platform on a digital or electronic network to facilitate transactions between buyers and sellers;
+(j) "user" means any person who accesses or avails any computer resource of an e-commerce entity.
+
+================================================================================
+STATUTE: Consumer Protection (E-Commerce) Rules, 2020
+CHAPTER: General Duties
+SECTION: Rule 4
+TITLE: Duties of E-Commerce Entities
+CLAUSE: Sub-rules (1) to (11)
+ACT_YEAR: 2020
+KEYWORDS: duties, grievance officer, 48 hours acknowledgement, 30 days resolution, 1 month, nodal officer 24x7, ticket number, cancellation charges parity, explicit consent, pre-ticked box prohibited, timely refund, price manipulation prohibition
+CROSS_REFS: Rule 3(1)(f), Rule 5, CPA 2019 Section 2(47)
+CANONICAL_BREADCRUMB: [STATUTE: CP (E-Commerce) Rules, 2020 | CHAPTER: General Duties | SECTION: Rule 4 | TITLE: Duties of E-Commerce Entities]
+================================================================================
+### Rule 4 - Duties of E-Commerce Entities
+
+(1) An e-commerce entity shall be a company incorporated under the Companies Act, 1956 or Companies Act, 2013, or a registered partnership or limited liability partnership, or have a principal office and registered agent in India.
+(2) An e-commerce entity shall not adopt any unfair trade practice, whether in the course of business on its platform or otherwise.
+(3) Display in a clear and accessible manner on its platform:
+(a) legal name of the e-commerce entity;
+(b) principal geographic address of its headquarters and all branches;
+(c) name and details of its website;
+(d) direct contact details including email address, fax, landline and mobile numbers of customer care and Grievance Officer.
+
+(4) Mandatory Grievance Redressal Mechanism:
+Every e-commerce entity shall—
+(a) appoint a Grievance Officer for consumer grievance redressal and display his name, designation and contact details prominently on its platform;
+(b) ensure that the Grievance Officer acknowledges the receipt of any consumer complaint within forty-eight (48) hours;
+(c) ensure that the Grievance Officer redresses the complaint within one month (30 days) from the date of receipt of the complaint;
+(d) provide a ticket number for each complaint lodged through which the consumer can track the status of the complaint.
+
+(5) Nodal Officer:
+Every e-commerce entity shall appoint a nodal person of contact or an alternate senior designated functionary who is resident in India, available 24x7 for coordination with law enforcement agencies and officers.
+
+(8) Cancellation Charges Parity:
+No e-commerce entity shall impose cancellation fees on consumers after confirming purchase, unless similar charges are also borne by the e-commerce entity if they cancel the purchase order unilaterally for any reason.
+
+(9) Explicit Consent & Prohibition of Pre-Ticked Checkboxes:
+Every e-commerce entity shall record the explicit consent of consumers for the purchase of any good or service. Consent shall not be recorded automatically, including in the form of pre-ticked checkboxes.
+
+(10) Timely Refunds:
+Every e-commerce entity shall effect all refund requests within a reasonable period of time, or as per the guidelines prescribed by the Reserve Bank of India or other competent authority.
+
+(11) Absolute Prohibition of Price Manipulation:
+No e-commerce entity shall manipulate the price of the goods or services offered on its platform in such a manner as to gain unreasonable profit by imposing unjustified prices, or discriminate between consumers of the same class or make any arbitrary classification of consumers affecting their rights.
+
+================================================================================
+STATUTE: Consumer Protection (E-Commerce) Rules, 2020
+CHAPTER: Liabilities of Marketplace
+SECTION: Rule 5
+TITLE: Liabilities of Marketplace E-Commerce Entities
+CLAUSE: Sub-rules (1) to (5)
+ACT_YEAR: 2020
+KEYWORDS: marketplace liability, seller details, country of origin, expiry dates, return terms, refund terms, exchange, warranty, payment modes, IT Act section 79 compliance
+CROSS_REFS: Rule 3(1)(g), Rule 6, CPA 2019 Section 86
+CANONICAL_BREADCRUMB: [STATUTE: CP (E-Commerce) Rules, 2020 | CHAPTER: Marketplace Liabilities | SECTION: Rule 5 | TITLE: Liabilities of Marketplace Entities]
+================================================================================
+### Rule 5 - Liabilities of Marketplace E-Commerce Entities
+
+(1) A marketplace e-commerce entity which seeks exemption from liability under sub-section (1) of section 79 of the Information Technology Act, 2000 shall comply with sub-sections (2) and (3) of that section, and shall strictly comply with all provisions of the Consumer Protection Act, 2019 and these rules.
+(2) Every marketplace e-commerce entity shall display prominently to its users:
+(a) details regarding the sellers offering goods and services, including the name of their business, whether registered or not, their geographic address, customer care number, and ratings/feedback;
+(b) a ticket number for tracking complaint status.
+(3) Every marketplace e-commerce entity shall provide in a clear and accessible manner on its platform:
+(a) information relating to return, refund, exchange, warranty and guarantee, delivery and shipment, modes of payment, and grievance redressal mechanism;
+(b) all information required to be provided under the Legal Metrology (Packaged Commodities) Rules, 2011.
+(4) Mandatory Country of Origin Disclosure:
+Every marketplace e-commerce entity shall display the country of origin of the goods offered for sale to enable the consumer to make an informed purchase decision.
+(5) Mandatory Expiry Date Disclosure:
+Every marketplace e-commerce entity shall ensure that the expiry date or best before date of goods having defined shelf life is clearly exhibited to consumers prior to purchase.
+
+================================================================================
+STATUTE: Consumer Protection (E-Commerce) Rules, 2020
+CHAPTER: Duties of Marketplace Sellers
+SECTION: Rule 6
+TITLE: Duties of Sellers on Marketplace & Return/Refund Guarantees
+CLAUSE: Sub-rules (1) to (5)
+ACT_YEAR: 2020
+KEYWORDS: seller duties, marketplace sellers, written contract, price breakdown, refusal of return prohibited, refusal of refund prohibited, defective goods, spurious, delayed delivery, fake reviews prohibited
+CROSS_REFS: Rule 5, CPA 2019 Section 2(47), CPA 2019 Section 86
+CANONICAL_BREADCRUMB: [STATUTE: CP (E-Commerce) Rules, 2020 | CHAPTER: Marketplace Sellers | SECTION: Rule 6 | TITLE: Duties of Sellers & Return Guarantees]
+================================================================================
+### Rule 6 - Duties of Sellers on Marketplace
+
+(1) No seller shall adopt any unfair trade practice whether in the course of business on the marketplace platform or otherwise.
+(2) Every seller offering goods or services through a marketplace e-commerce entity shall:
+(a) have a prior written contract with the marketplace entity;
+(b) disclose total price in single figure of any good or service, along with breakup price showing all mandatory charges, taxes, and shipping fees.
+
+(3) STRICT STATUTORY PROHIBITION AGAINST REFUSAL OF RETURN OR REFUND:
+No seller on marketplace shall refuse to take back goods, or withdraw or discontinue services purchased or agreed to be purchased, or refuse to refund consideration paid, if:
+(a) such goods or services are defective, deficient or spurious; or
+(b) the characteristics or features of the goods or services do not conform to the representations made by the seller; or
+(c) delivery of goods or services is delayed beyond the agreed timeline (other than for force majeure events).
+
+(4) Prohibition on Deceptive Practices and Fake Reviews:
+No seller on marketplace shall:
+(a) falsely represent itself as a consumer and post reviews about goods or services;
+(b) misrepresent the quality or the features of any goods or services.
+(5) Sellers must provide an address and contact details to ensure customer service and grievance redressal.
+
+================================================================================
+STATUTE: Consumer Protection (E-Commerce) Rules, 2020
+CHAPTER: Inventory E-Commerce Entities
+SECTION: Rule 7
+TITLE: Duties of Inventory E-Commerce Entities & Return Guarantees
+CLAUSE: Sub-rules (1) to (5)
+ACT_YEAR: 2020
+KEYWORDS: inventory e-commerce duties, D2C brand stores, price disclosures, refusal of return prohibited, refusal of refund prohibited, defective goods, delayed delivery, misleading advertising
+CROSS_REFS: Rule 3(1)(e), Rule 4, CPA 2019 Section 84
+CANONICAL_BREADCRUMB: [STATUTE: CP (E-Commerce) Rules, 2020 | CHAPTER: Inventory Entities | SECTION: Rule 7 | TITLE: Duties of Inventory Entities & Refund Rules]
+================================================================================
+### Rule 7 - Duties of Inventory E-Commerce Entities
+
+(1) Every inventory e-commerce entity shall provide in a clear and accessible manner on its platform:
+(a) total price in single figure along with breakup of all mandatory charges, taxes, delivery fees;
+(b) information relating to return, refund, exchange, warranty and guarantee, delivery and shipment, and grievance redressal mechanism.
+(2) Ensure that notices of return, exchange, or refund are processed smoothly without creating arbitrary hurdles for consumers.
+
+(4) STRICT PROHIBITION AGAINST REFUSAL OF RETURN OR REFUND (INVENTORY ENTITIES):
+No inventory e-commerce entity shall refuse to take back goods, or withdraw or discontinue services purchased or agreed to be purchased, or refuse to refund consideration paid, if:
+(a) such goods or services are defective, deficient or spurious; or
+(b) the characteristics or features of the goods or services do not conform to the representations made by the entity; or
+(c) delivery of goods or services is delayed beyond the agreed timeline.
+
+(5) An inventory e-commerce entity shall not engage in false or misleading advertising or make false claims about the quality, standard, or efficacy of its products.
+
+================================================================================
+STATUTE: Consumer Protection (E-Commerce) Rules, 2020
+CHAPTER: Enforcement and Penalties
+SECTION: Rule 8
+TITLE: Contravention of Rules and Penalties
+CLAUSE: Rule 8
+ACT_YEAR: 2020
+KEYWORDS: contravention, penalties, violation of rules, unfair trade practice, CCPA action, consumer commission complaints
+CROSS_REFS: CPA 2019 Section 20, Section 21, Section 88, Section 89, Section 90, Section 91
+CANONICAL_BREADCRUMB: [STATUTE: CP (E-Commerce) Rules, 2020 | CHAPTER: Enforcement | SECTION: Rule 8 | TITLE: Contravention and Penalties]
+================================================================================
+### Rule 8 - Contravention of Rules
+
+The provisions of the Consumer Protection Act, 2019 shall apply for any violation of the provisions of these rules.
+
+Any contravention of these rules shall be deemed to be an unfair trade practice under Section 2(47) of the Act and shall attract:
+(1) Corrective orders, product recalls, and price reimbursements under Section 20 of the Act by the Central Consumer Protection Authority (CCPA).
+(2) Penalties for false or misleading advertising under Section 21 of the Act.
+(3) Penalties for manufacturing, storing, distributing, or selling adulterated or spurious goods under Sections 90 and 91 of the Act.
+(4) Compensation, replacement, and damages ordered by the District, State, or National Consumer Disputes Redressal Commission under Section 39 of the Act.
