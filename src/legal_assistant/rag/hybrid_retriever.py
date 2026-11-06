@@ -11,6 +11,7 @@ from __future__ import annotations
 import math
 import os
 import re
+import zlib
 from abc import ABC, abstractmethod
 from collections.abc import Callable, Sequence
 from typing import Any
@@ -22,6 +23,186 @@ from rank_bm25 import BM25Okapi
 
 class LegalTokenizer:
     """Specialized tokenizer preserving Indian statutory and currency notation."""
+
+    STOPWORDS: frozenset[str] = frozenset(
+        {
+            "a",
+            "about",
+            "above",
+            "after",
+            "again",
+            "against",
+            "all",
+            "am",
+            "an",
+            "and",
+            "any",
+            "are",
+            "aren't",
+            "as",
+            "at",
+            "be",
+            "because",
+            "been",
+            "before",
+            "being",
+            "below",
+            "between",
+            "both",
+            "but",
+            "by",
+            "can",
+            "can't",
+            "cannot",
+            "could",
+            "couldn't",
+            "did",
+            "didn't",
+            "do",
+            "does",
+            "doesn't",
+            "doing",
+            "don't",
+            "down",
+            "during",
+            "each",
+            "few",
+            "for",
+            "from",
+            "further",
+            "had",
+            "hadn't",
+            "has",
+            "hasn't",
+            "have",
+            "haven't",
+            "having",
+            "he",
+            "he'd",
+            "he'll",
+            "he's",
+            "her",
+            "here",
+            "here's",
+            "hers",
+            "herself",
+            "him",
+            "himself",
+            "his",
+            "how",
+            "how's",
+            "i",
+            "i'd",
+            "i'll",
+            "i'm",
+            "i've",
+            "if",
+            "in",
+            "into",
+            "is",
+            "isn't",
+            "it",
+            "it's",
+            "its",
+            "itself",
+            "let's",
+            "me",
+            "more",
+            "most",
+            "mustn't",
+            "my",
+            "myself",
+            "no",
+            "nor",
+            "not",
+            "of",
+            "off",
+            "on",
+            "once",
+            "only",
+            "or",
+            "other",
+            "ought",
+            "our",
+            "ours",
+            "ourselves",
+            "out",
+            "over",
+            "own",
+            "same",
+            "shan't",
+            "she",
+            "she'd",
+            "she'll",
+            "she's",
+            "should",
+            "shouldn't",
+            "so",
+            "some",
+            "such",
+            "than",
+            "that",
+            "that's",
+            "the",
+            "their",
+            "theirs",
+            "them",
+            "themselves",
+            "then",
+            "there",
+            "there's",
+            "these",
+            "they",
+            "they'd",
+            "they'll",
+            "they're",
+            "they've",
+            "this",
+            "those",
+            "through",
+            "to",
+            "too",
+            "under",
+            "until",
+            "up",
+            "very",
+            "was",
+            "wasn't",
+            "we",
+            "we'd",
+            "we'll",
+            "we're",
+            "we've",
+            "were",
+            "weren't",
+            "what",
+            "what's",
+            "when",
+            "when's",
+            "where",
+            "where's",
+            "which",
+            "while",
+            "who",
+            "who's",
+            "whom",
+            "why",
+            "why's",
+            "with",
+            "won't",
+            "would",
+            "wouldn't",
+            "you",
+            "you'd",
+            "you'll",
+            "you're",
+            "you've",
+            "your",
+            "yours",
+            "yourself",
+            "yourselves",
+        }
+    )
 
     _TOKEN_PATTERN = re.compile(
         # 1. Currency (₹4,500, ₹50,000, ₹50L, ₹2Cr, Rs. 5000, Rs.50,000)
@@ -85,6 +266,15 @@ class LegalTokenizer:
                     tokens.append(match_str.replace(" ", ""))
                 continue
 
+            # Filter standard English stopwords carrying no statutory semantics
+            if (
+                match_str in cls.STOPWORDS
+                and not match_str.startswith("sec_")
+                and not match_str.startswith("rule_")
+                and not any(ch.isdigit() for ch in match_str)
+            ):
+                continue
+
             tokens.append(match_str)
 
         return tokens
@@ -132,6 +322,21 @@ class RetrievalConfidenceResult(BaseModel):
     )
 
 
+def _get_chunk_id(chunk: Any, fallback: str) -> str:
+    """Extract canonical chunk identifier from various chunk schemas uniformly.
+
+    Args:
+        chunk: Chunk, StatutoryChunk, Document, or compatible object.
+        fallback: Fallback identifier if no ID attributes are present.
+
+    Returns:
+        str: Canonical chunk identifier.
+    """
+    meta = getattr(chunk, "metadata", {})
+    meta_id = meta.get("chunk_id") if isinstance(meta, dict) else getattr(meta, "chunk_id", None)
+    return getattr(chunk, "chunk_id", None) or getattr(chunk, "doc_id", None) or meta_id or fallback
+
+
 class BaseDenseRetriever(ABC):
     """Abstract interface for dense semantic retrievers."""
 
@@ -164,7 +369,7 @@ class InMemoryDenseRetriever(BaseDenseRetriever):
     def __init__(
         self,
         embed_fn: Callable[[list[str]], list[list[float]]] | None = None,
-        embedding_dim: int = 2048,
+        embedding_dim: int = 4096,
     ) -> None:
         """Initialize InMemoryDenseRetriever.
 
@@ -195,7 +400,7 @@ class InMemoryDenseRetriever(BaseDenseRetriever):
                 results.append(vec)
                 continue
             for token in tokens:
-                idx = (hash(token) % (self.dim // 2) + (self.dim // 2)) % self.dim
+                idx = zlib.crc32(token.encode("utf-8")) % self.dim
                 vec[idx] += 1.0
             norm = math.sqrt(sum(x * x for x in vec))
             if norm > 0.0:
@@ -213,7 +418,9 @@ class InMemoryDenseRetriever(BaseDenseRetriever):
         if not self.chunks:
             self.embeddings = None
             return
-        texts = [getattr(c, "content", str(c)) for c in self.chunks]
+        texts = [
+            getattr(c, "content", None) or getattr(c, "text", None) or str(c) for c in self.chunks
+        ]
         emb_list = self.embed_fn(texts)
         self.embeddings = np.array(emb_list, dtype=np.float32)
 
@@ -301,8 +508,8 @@ class ChromaDenseRetriever(BaseDenseRetriever):
         metadatas: list[dict[str, str | int | float | bool]] = []
 
         for i, chunk in enumerate(chunks):
-            cid = getattr(chunk, "chunk_id", f"chunk_{i}")
-            content = getattr(chunk, "content", str(chunk))
+            cid = _get_chunk_id(chunk, f"chunk_{i}")
+            content = getattr(chunk, "content", None) or getattr(chunk, "text", None) or str(chunk)
             self.chunk_map[cid] = chunk
 
             raw_meta = getattr(chunk, "metadata", {})
@@ -427,9 +634,9 @@ class StatutoryHybridRetriever:
 
         tokenized_corpus: list[list[str]] = []
         for i, chunk in enumerate(self.indexed_chunks):
-            cid = getattr(chunk, "chunk_id", f"chunk_{i}")
+            cid = _get_chunk_id(chunk, f"chunk_{i}")
             self.chunk_lookup[cid] = chunk
-            content = getattr(chunk, "content", str(chunk))
+            content = getattr(chunk, "content", None) or getattr(chunk, "text", None) or str(chunk)
             tokens = LegalTokenizer.tokenize(content)
             tokenized_corpus.append(tokens)
 
@@ -450,8 +657,8 @@ class StatutoryHybridRetriever:
         Returns:
             dict[str, Any]: Dictionary of statutory attributes.
         """
-        cid = getattr(chunk, "chunk_id", default_id)
-        content = getattr(chunk, "content", str(chunk))
+        cid = _get_chunk_id(chunk, default_id)
+        content = getattr(chunk, "content", None) or getattr(chunk, "text", None) or str(chunk)
 
         meta = getattr(chunk, "metadata", {})
         if isinstance(meta, BaseModel):
@@ -494,8 +701,62 @@ class StatutoryHybridRetriever:
             "chapter": str(chapter),
             "section": str(section),
             "title": str(title),
-            "metadata": meta,
+            "metadata": meta_dict,
         }
+
+    @staticmethod
+    def _extract_target_sections(query: str) -> list[str]:
+        """Extract canonical statutory section citations from a query string.
+
+        Args:
+            query: Query string.
+
+        Returns:
+            list[str]: Normalized lowercased section citations.
+        """
+        targets: list[str] = []
+        # Matches 'Section 2(47)', 'Sec. 34(2)(d)', 'Rule 4(5)', 'Rule 8', 'Sec 35'
+        for m in re.finditer(
+            r"(?:section|sec\.?|rule)\s*(\d+[a-z]?(?:\([a-z0-9]+\))*|\d+)",
+            query,
+            re.IGNORECASE,
+        ):
+            targets.append(m.group(1).lower().replace(" ", ""))
+        # Matches standalone parenthesized section citations like '2(47)', '34(2)(d)', '4(5)'
+        for m in re.finditer(r"\b\d+[a-z]?(?:\([a-z0-9]+\))+", query, re.IGNORECASE):
+            norm = m.group(0).lower().replace(" ", "")
+            if norm not in targets:
+                targets.append(norm)
+        return targets
+
+    @classmethod
+    def _chunk_matches_target_section(cls, chunk: Any, targets: list[str]) -> bool:
+        """Check if chunk's primary section matches an exact query section target.
+
+        Args:
+            chunk: StatutoryChunk or Document object.
+            targets: List of normalized target section citations.
+
+        Returns:
+            bool: True if chunk's metadata section matches any target citation.
+        """
+        if not targets:
+            return False
+        meta = getattr(chunk, "metadata", {})
+        sec = (
+            getattr(chunk, "section", None)
+            or (meta.get("section") if isinstance(meta, dict) else getattr(meta, "section", None))
+            or ""
+        )
+        sec_str = str(sec).strip().lower()
+        chunk_targets = cls._extract_target_sections(sec_str)
+        for t in targets:
+            if t in chunk_targets or t == sec_str:
+                return True
+            clean_sec = re.sub(r"^(?:section|sec\.?|rule)\s*", "", sec_str, flags=re.I).strip()
+            if t == clean_sec or clean_sec.startswith(t):
+                return True
+        return False
 
     def retrieve(self, query: str, top_k: int = 5) -> list[RetrievedChunk]:
         """Perform hybrid BM25 + Dense retrieval with Reciprocal Rank Fusion.
@@ -528,7 +789,8 @@ class StatutoryHybridRetriever:
         """
         threshold = self.confidence_threshold if min_score is None else min_score
 
-        if not self.indexed_chunks or not query or not query.strip():
+        query_tokens = LegalTokenizer.tokenize(query) if query else []
+        if not self.indexed_chunks or not query or not query.strip() or not query_tokens:
             empty_confidence = RetrievalConfidenceResult(
                 is_grounded=False,
                 top_rrf_score=0.0,
@@ -539,25 +801,47 @@ class StatutoryHybridRetriever:
             )
             return [], empty_confidence
 
+        target_sections = self._extract_target_sections(query)
         candidate_pool_size = max(top_k * 4, 20)
 
         # 1. Lexical BM25 Ranking
         bm25_ranks: dict[str, int] = {}
         bm25_scores: dict[str, float] = {}
         if self.bm25_index is not None:
-            query_tokens = LegalTokenizer.tokenize(query)
-            if query_tokens:
-                raw_bm25_scores = self.bm25_index.get_scores(query_tokens)
-                sorted_bm25_indices = np.argsort(raw_bm25_scores)[::-1][:candidate_pool_size]
-                rank = 1
-                for idx in sorted_bm25_indices:
-                    score = float(raw_bm25_scores[idx])
-                    if score > 0.0:  # Only count positive lexical matches
-                        chunk = self.indexed_chunks[idx]
-                        cid = getattr(chunk, "chunk_id", f"chunk_{idx}")
-                        bm25_ranks[cid] = rank
-                        bm25_scores[cid] = score
-                        rank += 1
+            raw_bm25_scores = np.array(self.bm25_index.get_scores(query_tokens), dtype=float)
+            if target_sections:
+                for idx, chunk in enumerate(self.indexed_chunks):
+                    if self._chunk_matches_target_section(chunk, target_sections):
+                        raw_bm25_scores[idx] += 15.0
+
+            sorted_bm25_indices = np.argsort(raw_bm25_scores)[::-1][:candidate_pool_size]
+            rank = 1
+            for idx in sorted_bm25_indices:
+                score = float(raw_bm25_scores[idx])
+                if score > 0.0:  # Only count positive lexical matches
+                    chunk = self.indexed_chunks[idx]
+                    cid = _get_chunk_id(chunk, f"chunk_{idx}")
+
+                    # Abstention Guardrail: For multi-token queries (>=3 tokens), require
+                    # at least 2 distinct token matches unless chunk matches an exact section query,
+                    # preventing isolated common words (e.g. 'change' in automotive queries)
+                    # from creating spurious hits.
+                    if len(query_tokens) >= 3 and not self._chunk_matches_target_section(
+                        chunk, target_sections
+                    ):
+                        chunk_content = (
+                            getattr(chunk, "content", None)
+                            or getattr(chunk, "text", None)
+                            or str(chunk)
+                        )
+                        chunk_tokens_set = set(LegalTokenizer.tokenize(chunk_content))
+                        matched_query_tokens = [t for t in query_tokens if t in chunk_tokens_set]
+                        if len(matched_query_tokens) < 2:
+                            continue
+
+                    bm25_ranks[cid] = rank
+                    bm25_scores[cid] = score
+                    rank += 1
 
         # 2. Dense Vector Ranking (only count meaningful matches)
         dense_ranks: dict[str, int] = {}
@@ -565,8 +849,9 @@ class StatutoryHybridRetriever:
         dense_hits = self.dense_retriever.search(query=query, top_k=candidate_pool_size)
         rank = 1
         for chunk, score in dense_hits:
-            if score > 0.12:  # Discard low-similarity random hash noise
-                cid = getattr(chunk, "chunk_id", f"dense_chunk_{rank}")
+            is_target = self._chunk_matches_target_section(chunk, target_sections)
+            if score > 0.12 or is_target:  # Discard low-similarity random hash noise
+                cid = _get_chunk_id(chunk, f"dense_chunk_{rank}")
                 dense_ranks[cid] = rank
                 dense_scores[cid] = score
                 rank += 1
@@ -582,6 +867,11 @@ class StatutoryHybridRetriever:
                 score += self.w_bm25 / (self.rrf_k + bm25_ranks[cid])
             if cid in dense_ranks:
                 score += self.w_dense / (self.rrf_k + dense_ranks[cid])
+
+            chunk_obj = self.chunk_lookup.get(cid)
+            if chunk_obj and self._chunk_matches_target_section(chunk_obj, target_sections):
+                score += 0.02  # Exact statutory provision match bonus
+
             fused_scores[cid] = score
 
         sorted_cids = sorted(all_candidate_ids, key=lambda c: fused_scores[c], reverse=True)[:top_k]
@@ -626,5 +916,7 @@ class StatutoryHybridRetriever:
             abstention_triggered=not confidence_passed,
             abstention_message=(None if confidence_passed else self.DEFAULT_ABSTENTION_MESSAGE),
         )
+
+        return retrieved_results, confidence
 
         return retrieved_results, confidence

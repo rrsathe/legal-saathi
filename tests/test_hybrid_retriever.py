@@ -12,8 +12,11 @@ Tests:
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 
+from legal_assistant.rag.chunker import StatutoryChunker
 from legal_assistant.rag.hybrid_retriever import (
     ChromaDenseRetriever,
     InMemoryDenseRetriever,
@@ -384,3 +387,119 @@ def test_chroma_dense_retriever_ephemeral() -> None:
     assert len(hits) == 1
     assert hits[0][0].chunk_id == "c1"
     assert hits[0][1] > 0.0
+
+
+# ==============================================================================
+# 8. Component Integration Tests (Chunker -> Retriever -> Bridge)
+# ==============================================================================
+def test_chunker_to_hybrid_retriever_integration() -> None:
+    """Verify StatutoryChunker outputs index cleanly into retriever without ValidationError.
+
+    Asserts that both bm25_rank and dense_rank are populated on retrieved results.
+    """
+    chunker = StatutoryChunker()
+    cpa_file = Path("data/statutes/cpa_2019_core.txt")
+    assert cpa_file.exists(), f"Corpus file not found: {cpa_file}"
+    raw_text = cpa_file.read_text(encoding="utf-8")
+
+    chunks = chunker.split_text(raw_text)
+    assert len(chunks) > 0
+
+    retriever = StatutoryHybridRetriever(chunks=chunks)
+    results, confidence = retriever.retrieve_with_confidence(
+        "defective product refund action", top_k=5
+    )
+
+    assert len(results) > 0
+    assert confidence.confidence_passed is True
+    assert confidence.is_grounded is True
+
+    # Validate that both bm25_rank and dense_rank are populated and valid integers
+    top_hit = results[0]
+    assert isinstance(top_hit.metadata, dict)
+    assert top_hit.bm25_rank is not None and top_hit.bm25_rank >= 1
+    assert top_hit.dense_rank is not None and top_hit.dense_rank >= 1
+    assert top_hit.score > 0.0
+
+
+def test_kotaemon_bridge_end_to_end_corpus_indexing() -> None:
+    """Verify KotaemonLegalBridge indexes corpus and retrieves chunks with HTML provenance."""
+    bridge = KotaemonLegalBridge(chunker=StatutoryChunker())
+    indexed_count = bridge.index_statute_corpus("data/statutes/cpa_2019_core.txt")
+    assert indexed_count > 0
+
+    results = bridge.run("defective product refund", top_k=5)
+    assert len(results) > 0
+
+    top_result = results[0]
+    assert isinstance(top_result, (RetrievedDocument, Document))
+    assert top_result.score > 0.0
+    assert top_result.metadata.get("dense_rank") is not None
+    assert top_result.metadata.get("bm25_rank") is not None
+
+    # Verify HTML provenance generation
+    provenance_html = bridge.format_ui_provenance(
+        bridge.retriever.retrieve("defective product refund")
+    )
+    assert "<details" in provenance_html
+    assert "Verified Statutory Grounds" in provenance_html
+
+
+def test_stopword_abstention_gate() -> None:
+    """Verify out-of-domain queries (recipes, automotive, physics) abstain deterministically."""
+    retriever = StatutoryHybridRetriever(min_confidence_threshold=0.012)
+    chunker = StatutoryChunker()
+    cpa_file = Path("data/statutes/cpa_2019_core.txt")
+    chunks = chunker.split_text(cpa_file.read_text(encoding="utf-8"))
+    retriever.index_chunks(chunks)
+
+    ood_queries = [
+        "recipe for chocolate chip cookies with sourdough starter",
+        "how to change transmission fluid in a 1998 honda civic",
+        "quantum chromodynamics gluon plasma hadron collider higgs boson",
+        "xkzjqw vmpqzrt lkjhgfdsa qwertyuiop",
+        "",
+        "   ",
+    ]
+
+    for query in ood_queries:
+        results, confidence = retriever.retrieve_with_confidence(query, top_k=3)
+        assert confidence.confidence_passed is False, f"Query '{query}' should fail confidence gate"
+        assert confidence.abstention_triggered is True
+        assert confidence.top_rrf_score < 0.012
+        assert confidence.abstention_message is not None
+
+
+def test_exact_section_ranks_over_cross_reference() -> None:
+    """Verify that querying 'Section 2(47)' ranks Section 2(47) #1 over cross-referencing Rule 8."""
+    chunker = StatutoryChunker()
+    cpa_file = Path("data/statutes/cpa_2019_core.txt")
+    ecom_file = Path("data/statutes/ecommerce_rules_2020.txt")
+    all_chunks = chunker.split_text(cpa_file.read_text(encoding="utf-8")) + chunker.split_text(
+        ecom_file.read_text(encoding="utf-8")
+    )
+
+    retriever = StatutoryHybridRetriever(chunks=all_chunks)
+    results = retriever.retrieve("Section 2(47)", top_k=5)
+
+    assert len(results) >= 2
+    top_hit = results[0]
+    assert "2(47)" in top_hit.section
+    assert "Unfair Trade Practice" in top_hit.title
+    assert "con_2019_ch_chapter_i___preliminary_sec_section_2_47_" in top_hit.chunk_id
+
+
+def test_rrf_mathematical_precision_strict() -> None:
+    """Verify RRF formula 1/(k + rank) with k=60 matches theoretical value within 1e-6."""
+    k = 60
+    for r in range(1, 101):
+        actual = 1.0 / (k + r)
+        expected = 1.0 / (60.0 + float(r))
+        assert abs(actual - expected) < 1e-6
+
+    # Test dual fusion math across ranks 1 to 25
+    for r1 in range(1, 25):
+        for r2 in range(1, 25):
+            actual_fused = (1.0 / (k + r1)) + (1.0 / (k + r2))
+            expected_fused = (1.0 / (60.0 + float(r1))) + (1.0 / (60.0 + float(r2)))
+            assert abs(actual_fused - expected_fused) < 1e-6

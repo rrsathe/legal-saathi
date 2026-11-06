@@ -13,7 +13,7 @@ from collections.abc import Generator, Sequence
 from pathlib import Path
 from typing import Any
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 from theflow.base import Function as FlowFunction
 from theflow.base import Param
 
@@ -32,6 +32,26 @@ class KotaemonDocument(BaseModel):
         default=None, description="Target stream channel: chat, info, plot, debug"
     )
     metadata: dict[str, Any] = Field(default_factory=dict, description="Metadata dictionary")
+    doc_id: str | None = Field(default=None, description="Document identifier")
+    source: str | None = Field(default=None, description="Source file or origin")
+
+    @model_validator(mode="before")
+    @classmethod
+    def set_content_or_text(cls, data: Any) -> Any:
+        """Ensure text and content fields are synchronized.
+
+        Args:
+            data: Raw model attributes.
+
+        Returns:
+            Synchronized attributes.
+        """
+        if isinstance(data, dict):
+            if "content" in data and ("text" not in data or not data["text"]):
+                data["text"] = str(data["content"])
+            elif "text" in data and ("content" not in data or data["content"] is None):
+                data["content"] = data["text"]
+        return data
 
     @property
     def plain_text(self) -> str:

@@ -360,3 +360,218 @@ def test_delimited_statute_files_parsing(chunker: StatutoryChunker) -> None:
             assert c.metadata.statute != ""
             assert c.metadata.breadcrumb.startswith("[STATUTE:")
             assert len(c.content) > 0
+
+
+# ==============================================================================
+# Adversarial Stress & Deep Nesting Coverage Tests
+# ==============================================================================
+SEC_2_47_FULL = """THE CONSUMER PROTECTION ACT, 2019
+CHAPTER I
+PRELIMINARY
+
+2. Definitions.—In this Act, unless the context otherwise requires,—
+(47) "unfair trade practice" means a trade practice which, for the purpose of
+promoting the sale, use or supply of any goods or for the provision of any
+service, adopts any unfair method or deceptive practice including any of the
+following practices, namely:—
+(a) making any statement, whether orally or in writing or by visible
+representation including by means of electronic record, which—
+(i) falsely represents that the goods are of a particular standard, quality,
+quantity, grade, composition, style or model;
+(ii) falsely represents that the services are of a particular standard,
+quality or grade;
+(iii) falsely represents that any re-built, second-hand, renovated, reconditioned
+or old goods are new goods;
+(iv) represents that the goods or services have sponsorship, approval,
+performance, characteristics, accessories, uses or benefits which such goods or
+services do not have;
+(v) represents that the seller or the supplier has a sponsorship or approval
+or affiliation which such seller or supplier does not have;
+(vi) makes a false or misleading representation concerning the need for, or the
+usefulness of, any goods or services;
+(vii) gives to the public any warranty or guarantee of the performance,
+efficacy or length of life of a product or of any goods that is not based on an
+adequate or proper test thereof;
+(viii) makes to the public a representation in the form that purports to be a
+warranty or guarantee of a product or of any goods or services;
+(b) permitting the publication of any advertisement for the sale of goods.
+"""
+
+SEC_2_7_FULL = """THE CONSUMER PROTECTION ACT, 2019
+CHAPTER I
+PRELIMINARY
+
+2. Definitions.—In this Act, unless the context otherwise requires,—
+(7) "consumer" means any person who—
+(a) buys any goods for a consideration which has been paid or promised or
+partly paid and partly promised, or under any system of deferred payment and
+includes any user of such goods other than the person who buys such goods for
+consideration paid or promised or partly paid or partly promised, or under any
+system of deferred payment, when such use is made with the approval of such
+person, but does not include a person who obtains such goods for resale or for
+any commercial purpose; or
+(b) hires or avails of any service for a consideration which has been paid or
+promised or partly paid and partly promised, or under any system of deferred
+payment and includes any beneficiary of such service other than the person who
+hires or avails of the services for consideration paid or promised, or partly
+paid and partly promised, or under any system of deferred payment, when such
+services are availed of with the approval of the first mentioned person, but does
+not include a person who avails of such service for any commercial purpose.
+Explanation.—For the purposes of this clause,—
+(a) the expression "commercial purpose" does not include use by a person of
+goods bought and used by him exclusively for the purpose of earning his
+livelihood, by means of self-employment;
+(b) the expressions "buys any goods" and "hires or avails any services"
+includes offline or online transactions through electronic means or by
+teleshopping or direct selling or multi-level marketing;
+"""
+
+
+def test_deep_nesting_sec_2_47_all_subclauses_retain_stems() -> None:
+    """Verify Section 2(47)(a)(i) through (viii) retain introductory stems."""
+    chunker = StatutoryChunker(max_chunk_chars=300)
+    chunks = chunker.split_text(SEC_2_47_FULL)
+
+    assert len(chunks) == 9, f"Expected 9 chunks, got {len(chunks)}"
+
+    main_stem = '"unfair trade practice" means a trade practice which'
+    sub_stem = "making any statement, whether orally or in writing"
+
+    for c in chunks:
+        assert main_stem in c.content, f"Chunk {c.metadata.clause} missing main stem"
+        assert c.metadata.section == "2(47)"
+
+        if c.metadata.clause.startswith("(a)("):
+            assert sub_stem in c.content, f"Chunk {c.metadata.clause} missing subclause stem"
+
+    expected_clauses = [f"(a)({r})" for r in ["i", "ii", "iii", "iv", "v", "vi", "vii", "viii"]] + [
+        "(b)"
+    ]
+    actual_clauses = [c.metadata.clause for c in chunks]
+    assert actual_clauses == expected_clauses
+
+
+def test_sec_2_7_explanation_adherence() -> None:
+    """Verify Explanation adheres to Section 2(7) definition."""
+    chunker = StatutoryChunker(max_chunk_chars=3000)
+    chunks = chunker.split_text(SEC_2_7_FULL)
+
+    assert len(chunks) == 1, f"Expected 1 chunk for standard budget, got {len(chunks)}"
+    content = chunks[0].content
+
+    assert "Explanation.—For the purposes of this clause" in content
+    assert "earning his" in content and "livelihood" in content
+    assert "self-employment" in content
+    assert "commercial purpose" in content
+    assert "offline or online transactions through electronic means" in content
+
+
+def test_sec_2_7_explanation_in_corpus() -> None:
+    """Verify Section 2(7) in data/statutes/cpa_2019_core.txt adheres with Explanation."""
+    cpa_file = Path("data/statutes/cpa_2019_core.txt")
+    assert cpa_file.exists()
+    content = cpa_file.read_text(encoding="utf-8")
+
+    chunker = StatutoryChunker()
+    chunks = chunker.split_text(content)
+
+    sec_7_chunks = [c for c in chunks if "2(7)" in c.metadata.section]
+    assert len(sec_7_chunks) == 1, f"Expected 1 chunk for Section 2(7), got {len(sec_7_chunks)}"
+
+    sec_7 = sec_7_chunks[0]
+    assert "earning his livelihood" in sec_7.content
+    assert "self-employment" in sec_7.content
+    assert "commercial purpose" in sec_7.content
+    assert "teleshopping or direct selling" in sec_7.content
+
+
+def test_delimiter_boundaries_no_duplicates_and_no_truncation() -> None:
+    """Verify all 3 statutory corpus files parse with no duplicate IDs or truncation."""
+    chunker = StatutoryChunker()
+    statute_files = [
+        Path("data/statutes/cpa_2019_core.txt"),
+        Path("data/statutes/ecommerce_rules_2020.txt"),
+        Path("data/statutes/edaakhil_nch_procedures.txt"),
+    ]
+
+    seen_ids: set[str] = set()
+    total_chunks = 0
+
+    for f in statute_files:
+        assert f.exists(), f"File {f} not found"
+        raw_text = f.read_text(encoding="utf-8")
+        chunks = chunker.split_text(raw_text)
+        assert len(chunks) > 0, f"No chunks parsed from {f}"
+
+        for c in chunks:
+            assert c.chunk_id not in seen_ids, f"Duplicate chunk_id found: {c.chunk_id}"
+            seen_ids.add(c.chunk_id)
+
+            assert len(c.content.strip()) > 50, (
+                f"Chunk {c.chunk_id} seems truncated: {len(c.content)} chars"
+            )
+            assert c.metadata.breadcrumb in c.content
+            assert c.metadata.section_title in c.content
+            assert c.metadata.char_count == len(c.content)
+
+            assert not c.content.startswith("===="), f"Delimiter leaked into chunk {c.chunk_id}"
+            assert "====" not in c.content, f"Delimiter boundary found inside chunk {c.chunk_id}"
+
+        total_chunks += len(chunks)
+
+    assert total_chunks == 46
+
+
+def test_currency_rupee_symbol_encoding_across_corpus() -> None:
+    """Verify that Indian Rupee symbol (₹) is preserved without encoding corruption."""
+    chunker = StatutoryChunker()
+    statute_files = [
+        Path("data/statutes/cpa_2019_core.txt"),
+        Path("data/statutes/ecommerce_rules_2020.txt"),
+        Path("data/statutes/edaakhil_nch_procedures.txt"),
+    ]
+
+    rupee_chunks = []
+    for f in statute_files:
+        raw_text = f.read_text(encoding="utf-8")
+        chunks = chunker.split_text(raw_text)
+        for c in chunks:
+            if "₹" in c.content:
+                rupee_chunks.append(c)
+                assert "â‚¹" not in c.content
+                assert "\\u20b9" not in c.content
+                assert "₹" in c.content
+
+    assert len(rupee_chunks) >= 3, f"Expected multiple chunks with ₹, got {len(rupee_chunks)}"
+
+    pecuniary = [
+        c
+        for c in rupee_chunks
+        if "34" in c.metadata.section or "Jurisdiction" in c.metadata.section_title
+    ]
+    assert len(pecuniary) >= 1
+    assert "₹50 Lakhs" in pecuniary[0].content or "₹50,00,000" in pecuniary[0].content
+
+    fee_chunks = [
+        c for c in rupee_chunks if "Fee" in c.metadata.section_title or "edaakhil" in c.chunk_id
+    ]
+    assert len(fee_chunks) >= 1
+
+
+def test_stress_non_contiguous_subclause_omission() -> None:
+    """Adversarial stress test: Check chunker resilience if a clause is omitted."""
+    text = """THE CONSUMER PROTECTION ACT, 2019
+CHAPTER I
+PRELIMINARY
+
+2. Definitions.—In this Act, unless the context otherwise requires,—
+(47) "unfair trade practice" means a trade practice which adopts unfair method:—
+(a) first clause of unfair trade practice exceeding max budget here to test;
+(b) second clause of unfair trade practice exceeding max budget here to test;
+(d) fourth clause where clause (c) was omitted by an amending act;
+"""
+    chunker = StatutoryChunker(max_chunk_chars=100)
+    chunks = chunker.split_text(text)
+    clauses = [c.metadata.clause for c in chunks]
+    assert len(chunks) == 2
+    assert "(a)" in clauses
