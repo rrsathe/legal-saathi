@@ -968,8 +968,15 @@ def create_app(
                         with gr.Column():
                             gr.Markdown("#### Groq Cloud (Ultra-Fast Inference)")
                             groq_model_select = gr.Dropdown(
-                                choices=["llama-3.1-8b-instant", "llama-3.3-70b-versatile"],
+                                choices=[
+                                    "openai/gpt-oss-20b",
+                                    "openai/gpt-oss-120b",
+                                    "qwen/qwen3.8-27b",
+                                    "llama-3.1-8b-instant",
+                                    "llama-3.3-70b-versatile",
+                                ],
                                 value=app_settings.groq_model,
+                                allow_custom_value=True,
                                 label="Groq Model",
                             )
                             groq_key_val = (

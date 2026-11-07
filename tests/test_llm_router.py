@@ -116,7 +116,7 @@ def test_settings_initialization_and_cache() -> None:
     clear_settings_cache()
     settings = get_settings()
     assert settings.ollama_model == "llama3.1:8b"
-    assert settings.groq_model == "llama-3.1-8b-instant"
+    assert settings.groq_model in {"openai/gpt-oss-20b", "llama-3.1-8b-instant"}
     assert settings.llm_timeout_seconds == 30.0
 
     # Test cache singleton

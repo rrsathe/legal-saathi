@@ -65,7 +65,7 @@ class Settings(BaseSettings):
         description="API key for Groq Cloud inference",
     )
     groq_model: str = Field(
-        default="llama-3.1-8b-instant",
+        default="openai/gpt-oss-20b",
         description="Default model identifier for Groq Cloud",
     )
 

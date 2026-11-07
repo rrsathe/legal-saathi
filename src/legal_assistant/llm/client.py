@@ -335,6 +335,8 @@ class OpenAICompatibleClient(BaseLLMClient):
             "temperature": self.config.temperature if temperature is None else temperature,
             **kwargs,
         }
+        if "max_tokens" not in payload and "max_completion_tokens" not in payload:
+            payload["max_tokens"] = 4096
 
         data, latency_ms = self._execute_with_retry(url, payload)
 
@@ -343,7 +345,10 @@ class OpenAICompatibleClient(BaseLLMClient):
             raise LLMProviderError(f"Provider {self.config.provider} returned empty choices array")
 
         message = choices[0].get("message", {})
-        content = message.get("content", "")
+        raw_content = message.get("content")
+        if raw_content is None:
+            raw_content = message.get("reasoning")
+        content = str(raw_content) if raw_content is not None else ""
         finish_reason = choices[0].get("finish_reason")
 
         usage_data = data.get("usage", {})
