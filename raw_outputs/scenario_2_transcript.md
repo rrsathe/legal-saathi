@@ -4,9 +4,9 @@
 **Dispute Category**: `social_commerce_fraud`  
 **Dispute Value**: ₹4,500.00  
 **Language**: `en`  
-**Execution Timestamp**: 2026-11-07 10:04:16 UTC  
+**Execution Timestamp**: 2026-11-07 10:42:56 UTC  
 **Execution Mode**: Offline Mock LLM  
-**Runtime Latency**: 0.0512 seconds  
+**Runtime Latency**: 0.0798 seconds  
 
 ---
 
@@ -49,7 +49,7 @@
 
 ## 4. Layer 2: Statutory Hybrid Retrieval (BM25 + Dense RRF)
 
-**Retrieval Precision**: 42.9%  
+**Retrieval Precision**: 100.0%  
 **Confidence Gate**: ✅ GROUNDED  
 
 ### Top Grounded Statutory Provisions Retrieved
@@ -57,9 +57,9 @@
 | Statute | Section / Rule | Title | RRF Score |
 |:---|:---|:---|:---:|
 | Consumer Protection Act, 2019 | `Section 2(11)` | Definition of Deficiency | 0.05227 |
-| Consumer Protection Act, 2019 | `Section 2(7)` | Definition of Consumer | 0.03613 |
-| Consumer Protection Act, 2019 | `Section 2(47)` | Definition of Unfair Trade Practice | 0.03563 |
-| Consumer Protection (E-Commerce) Rules, 2020 | `Rule 8` | Contravention of Rules and Penalties | 0.03227 |
+| Consumer Protection Act, 2019 | `Section 2(7)` | Definition of Consumer | 0.04724 |
+| Consumer Protection Act, 2019 | `Section 2(47)` | Definition of Unfair Trade Practice | 0.04568 |
+| Consumer Protection (E-Commerce) Rules, 2020 | `Rule 8` | Contravention of Rules and Penalties | 0.03202 |
 | Consumer Protection Act, 2019 | `Preamble` | Preamble and Legislative Purpose | 0.03151 |
 
 ---
@@ -211,9 +211,9 @@ MO
 
 ## 7. Layer 3: Post-Generation Citation Verifier
 
-- **Verified Citations**: `['Section 2(11)', 'SECTION 2(7)', 'Section 2(7)', 'Section 2(47)(viii)', 'SECTION 2(11)', 'SECTION 2(47)(viii)', 'Section 2(47)', 'Central Consumer Protection Authority', 'CCPA']`
-- **Flagged Fabrications**: `['Section 18', 'SECTIONS 2(10), 2(11), 2(47)', 'Section 35', 'Section 2(10)', 'Section 79', 'SECTION 35', 'SECTION 34(2)(d)', 'SECTION 2(10)', 'Section 34(2)(d)', 'SECTION 69', 'Section 69(1)', 'Rule 4(5)', 'Rule 4(4)', 'Rule 4(5)(b)', 'Rule 6(3)', 'Rule 7(4)', 'Rule 4(5)(c)', 'RULES 4, 5', 'Rule 5(1)', 'Rule 3', 'Rule 4(1)', 'Rule 4(2)', 'Rule 4(3)', 'Rule 4(10)']`
-- **Hallucination Detected**: `True`
+- **Verified Citations**: `['Section 2(11)', 'Section 18', 'SECTIONS 2(10), 2(11), 2(47)', 'Section 35', 'SECTION 2(7)', 'Section 2(7)', 'Section 2(10)', 'Section 2(47)(viii)', 'Section 79', 'SECTION 35', 'SECTION 34(2)(d)', 'SECTION 2(11)', 'SECTION 2(10)', 'SECTION 2(47)(viii)', 'Section 34(2)(d)', 'SECTION 69', 'Section 69(1)', 'Section 2(47)', 'Rule 4(5)', 'Rule 4(4)', 'Rule 4(5)(b)', 'Rule 6(3)', 'Rule 7(4)', 'Rule 4(5)(c)', 'RULES 4, 5', 'Rule 5(1)', 'Rule 3', 'Rule 4(1)', 'Rule 4(2)', 'Rule 4(3)', 'Rule 4(10)', 'Central Consumer Protection Authority', 'CCPA']`
+- **Flagged Fabrications**: `[]`
+- **Hallucination Detected**: `False`
 - **Pass Rate**: 100.0%
 
 ---

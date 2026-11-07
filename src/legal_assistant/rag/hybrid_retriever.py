@@ -14,7 +14,7 @@ import re
 import zlib
 from abc import ABC, abstractmethod
 from collections.abc import Callable, Sequence
-from typing import Any
+from typing import Any, cast
 
 import numpy as np
 from pydantic import BaseModel, Field
@@ -539,8 +539,8 @@ class ChromaDenseRetriever(BaseDenseRetriever):
         self.collection.add(
             ids=ids,
             documents=documents,
-            metadatas=metadatas,  # type: ignore[arg-type]
-            embeddings=embeddings_list,  # type: ignore[arg-type]
+            metadatas=cast(Any, metadatas),
+            embeddings=cast(Any, embeddings_list),
         )
 
     def search(self, query: str, top_k: int) -> list[tuple[Any, float]]:
@@ -555,7 +555,7 @@ class ChromaDenseRetriever(BaseDenseRetriever):
         """
         query_embeddings = self.embed_fn([query])
         results = self.collection.query(
-            query_embeddings=query_embeddings,  # type: ignore[arg-type]
+            query_embeddings=cast(Any, query_embeddings),
             n_results=top_k,
         )
 

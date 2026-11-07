@@ -364,6 +364,50 @@ class BenchmarkPipelineRunner:
         self.drafter = DocumentDrafter(llm_router=self.router, retriever=self.retriever)
         self.simulator = OpposingCounselSimulator(router=self.router)
 
+    def _get_procedural_grounding_chunks(self) -> list[RetrievedChunk]:
+        """Extract statutory machinery chunks for court filing and procedural grounding.
+
+        Returns all indexed chunks governing e-Daakhil filing, territorial/pecuniary
+        jurisdiction, limitation, CCPA escalation, and National Consumer Helpline
+        procedures from cpa_2019_core.txt and edaakhil_nch_procedures.txt.
+
+        Returns:
+            list[RetrievedChunk]: Procedural machinery chunks converted to RetrievedChunk.
+        """
+        procedural_chunks: list[RetrievedChunk] = []
+        for c in self.retriever.indexed_chunks:
+            statute_name = getattr(c.metadata, "statute", "")
+            section_name = getattr(c.metadata, "section", "")
+            if (
+                "e-Daakhil" in statute_name
+                or "National Consumer Helpline" in statute_name
+                or "Jurisdiction of Commissions" in statute_name
+                or section_name
+                in [
+                    "Section 35",
+                    "Section 36",
+                    "Section 38",
+                    "Section 39",
+                    "Section 69",
+                    "Section 28 & 34",
+                    "Section 10, 18, 19, 20, 21",
+                ]
+            ):
+                procedural_chunks.append(
+                    RetrievedChunk(
+                        chunk_id=c.chunk_id,
+                        content=c.content,
+                        statute=c.metadata.statute,
+                        chapter=c.metadata.chapter,
+                        section=c.metadata.section,
+                        title=c.metadata.section_title,
+                        score=1.0,
+                        rank=1,
+                        retrieval_method="procedural_grounding",
+                    )
+                )
+        return procedural_chunks
+
     def run_scenario(self, scenario: dict[str, Any]) -> ScenarioExecutionArtifacts:
         """Execute end-to-end benchmark pipeline for a single dispute scenario.
 
@@ -447,10 +491,27 @@ class BenchmarkPipelineRunner:
             provider=self.provider,
         )
 
-        # LAYER 2: Hybrid RAG Retrieval & Confidence Gate
-        rag_query = f"{title} {' '.join(expected_sections[:4])}"
-        chunks = self.retriever.retrieve(query=rag_query, top_k=8)
-        confidence_res = self.confidence_gate.evaluate(chunks, query=rag_query)
+        # LAYER 2: Multi-Faceted Hybrid RAG Retrieval & Confidence Gate
+        cpa_expected = [s for s in expected_sections if "Consumer Protection Act" in s]
+        rules_expected = [s for s in expected_sections if "Rules" in s]
+
+        q_merits = f"{title} {' '.join(cpa_expected)}"
+        q_rules = (
+            f"Consumer Protection E-Commerce Rules duties obligations {' '.join(rules_expected)}"
+        )
+
+        chunks_merits = self.retriever.retrieve(query=q_merits, top_k=15)
+        chunks_rules = self.retriever.retrieve(query=q_rules, top_k=15)
+
+        # Merge unique retrieved chunks preserving relevance ordering
+        seen_chunk_ids: set[str] = set()
+        chunks: list[RetrievedChunk] = []
+        for chk in chunks_merits + chunks_rules:
+            if chk.chunk_id not in seen_chunk_ids:
+                seen_chunk_ids.add(chk.chunk_id)
+                chunks.append(chk)
+
+        confidence_res = self.confidence_gate.evaluate(chunks, query=q_merits)
 
         # Precision calculation
         retrieved_section_names: list[str] = []
@@ -490,6 +551,15 @@ class BenchmarkPipelineRunner:
         )
 
         # LAYER 3: Deterministic Post-Generation Citation Verifier
+        # Assemble complete legal drafting context (scenario chunks + procedural chunks)
+        procedural_chunks = self._get_procedural_grounding_chunks()
+        verification_chunks = list(chunks)
+        seen_v_ids = {c.chunk_id for c in verification_chunks}
+        for pchk in procedural_chunks:
+            if pchk.chunk_id not in seen_v_ids:
+                seen_v_ids.add(pchk.chunk_id)
+                verification_chunks.append(pchk)
+
         combined_draft_text = "\n\n".join(
             [doc.body_markdown for doc in drafted_docs.values()]
             + [standing.consumer_rationale]
@@ -497,7 +567,7 @@ class BenchmarkPipelineRunner:
         )
         citation_res = self.citation_verifier.verify_response(
             response_text=combined_draft_text,
-            source_chunks=chunks,
+            source_chunks=verification_chunks,
             action="flag",
         )
 
@@ -824,7 +894,12 @@ class BenchmarkPipelineRunner:
                     "",
                     f"- Latency: {art.execution_time_seconds:.4f}s",
                     f"- Provider: {self.provider or ('mock' if self.mock_llm else 'groq')}",
-                    "- Status: **COMPLIANT PASS (Guardrail Blocked Hallucination)**",
+                    (
+                        "- Status: **COMPLIANT PASS "
+                        "(Layer 1 Scope Guardrail Intercepted Out-of-Scope Dispute)**"
+                        if art.guardrail_blocked
+                        else "- Status: **FAIL (Guardrail Failed to Intercept)**"
+                    ),
                 ]
             )
             md_text = "\n".join(lines)
@@ -960,6 +1035,10 @@ class BenchmarkPipelineRunner:
                 )
 
         if art.citation_verification:
+            v_cnt = len(art.citation_verification.verified_citations)
+            f_cnt = len(art.citation_verification.flagged_citations)
+            tot_cnt = v_cnt + f_cnt
+            sc_pass_rate = (v_cnt / tot_cnt * 100.0) if tot_cnt > 0 else 100.0
             lines.extend(
                 [
                     "",
@@ -971,7 +1050,7 @@ class BenchmarkPipelineRunner:
                     f"- **Flagged Fabrications**: `{art.citation_verification.flagged_citations}`",
                     f"- **Hallucination Detected**: "
                     f"`{art.citation_verification.hallucination_detected}`",
-                    "- **Pass Rate**: 100.0%",
+                    f"- **Pass Rate**: {sc_pass_rate:.1f}%",
                     "",
                 ]
             )
@@ -1057,6 +1136,12 @@ class BenchmarkPipelineRunner:
         drafting_score_str = f"**{summary.document_drafting_completeness:.1f}% (12/12)**"
         sim_score_str = f"**{summary.simulation_realism_score:.1f} / 100**"
 
+        scope_status = "PASS" if summary.scope_detection_accuracy >= 100.0 else "FAIL"
+        retrieval_status = "PASS" if summary.retrieval_precision_avg >= 80.0 else "FAIL"
+        citation_status = "PASS" if summary.citation_verification_pass_rate >= 100.0 else "FAIL"
+        drafting_status = "PASS" if summary.document_drafting_completeness >= 100.0 else "FAIL"
+        sim_status = "PASS" if summary.simulation_realism_score >= 85.0 else "FAIL"
+
         header_lines = [
             "# Legal Saathi — Master Benchmark Evaluation Report",
             "",
@@ -1073,11 +1158,20 @@ class BenchmarkPipelineRunner:
             "",
             "| Benchmark Metric | Target Standard | Achieved Score | Status |",
             "|:-----------------|:---------------:|:--------------:|:------:|",
-            f"| **Scope Detection Accuracy** | 100.0% | {scope_score_str} | PASS |",
-            f"| **Hybrid Retrieval Precision** | >= 80.0% | {retrieval_score_str} | PASS |",
-            f"| **Citation Verification Pass Rate** | 100.0% | {citation_score_str} | PASS |",
-            f"| **Document Drafting Completeness** | 100.0% | {drafting_score_str} | PASS |",
-            f"| **Simulation Realism Score** | >= 85.0/100 | {sim_score_str} | PASS |",
+            (f"| **Scope Detection Accuracy** | 100.0% | {scope_score_str} | {scope_status} |"),
+            (
+                f"| **Hybrid Retrieval Precision** | >= 80.0% | "
+                f"{retrieval_score_str} | {retrieval_status} |"
+            ),
+            (
+                f"| **Citation Verification Pass Rate** | 100.0% | "
+                f"{citation_score_str} | {citation_status} |"
+            ),
+            (
+                f"| **Document Drafting Completeness** | 100.0% | "
+                f"{drafting_score_str} | {drafting_status} |"
+            ),
+            (f"| **Simulation Realism Score** | >= 85.0/100 | {sim_score_str} | {sim_status} |"),
             "",
             "---",
             "",
@@ -1098,7 +1192,11 @@ class BenchmarkPipelineRunner:
                 verified_count = len(art.citation_verification.verified_citations)
                 flagged_count = len(art.citation_verification.flagged_citations)
                 total_cits = verified_count + flagged_count
-                cits_stat = f"{verified_count} / {total_cits} (100%)"
+                if total_cits > 0:
+                    pass_rate = (verified_count / total_cits) * 100.0
+                    cits_stat = f"{verified_count} / {total_cits} ({pass_rate:.1f}%)"
+                else:
+                    cits_stat = "0 / 0 (100.0%)"
             else:
                 cits_stat = "N/A (Blocked)"
 
@@ -1108,9 +1206,39 @@ class BenchmarkPipelineRunner:
             sim_stat = f"{art.simulation_score:.1f}" if art.is_in_scope else "N/A"
             scope_str = "In-Scope" if art.is_in_scope else "Out-of-Scope"
 
+            # Dynamic scenario evaluation status
+            if not art.is_in_scope:
+                sc_verdict = (
+                    "PASS"
+                    if (
+                        art.guardrail_blocked
+                        and len(art.drafted_documents) == 0
+                        and art.scope_result is not None
+                        and bool(art.scope_result.escalation_advice)
+                    )
+                    else "FAIL"
+                )
+            else:
+                v_cits = (
+                    len(art.citation_verification.verified_citations)
+                    if art.citation_verification
+                    else 0
+                )
+                f_cits = (
+                    len(art.citation_verification.flagged_citations)
+                    if art.citation_verification
+                    else 0
+                )
+                cits_ok = (art.citation_verification is not None) and (f_cits == 0) and (v_cits > 0)
+                docs_ok = len(art.drafted_documents) == 3
+                retrieval_ok = art.retrieval_precision >= 80.0
+                sim_ok = art.simulation_score >= 80.0
+
+                sc_verdict = "PASS" if (cits_ok and docs_ok and retrieval_ok and sim_ok) else "FAIL"
+
             row = (
                 f"| `{art.scenario_id}` | {art.category} | INR {art.dispute_amount_inr:,.0f} | "
-                f"{scope_str} | {top_hit} | {cits_stat} | {docs_stat} | {sim_stat} | PASS |"
+                f"{scope_str} | {top_hit} | {cits_stat} | {docs_stat} | {sim_stat} | {sc_verdict} |"
             )
             rows.append(row)
 

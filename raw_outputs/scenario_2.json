@@ -22,7 +22,7 @@
     ]
   },
   "case_file": {
-    "case_id": "case_52a636c2",
+    "case_id": "case_eb3e0f50",
     "title": "Consumer Dispute regarding Goods / Services",
     "complainant": {
       "name": "Priya Nair",
@@ -54,14 +54,14 @@
     "facts_summary": "My name is Priya Nair (priya.nair@example.com, +91-9847123456), living in Marine Drive, Kochi, Kerala. On 2nd May 2024, I came across an Instagram fashion page '@VintageVibe_Thrift' operated by a merchant claiming to be in Surat, Gujarat. The page had 45,000 followers and posted an original Ralph Lauren vintage down jacket for Rs. 4,500/-. I sent a direct message to buy the jacket. The seller instructed me to transfer Rs. 4,500/- immediately via UPI to handle vintagevibe@okaxis (Merchant name: Rahul M., Axis Bank) and share the screenshot to WhatsApp number +91-9123456789 to receive the BlueDart tracking number within 24 hours. On 2nd May 2024 at 14:15 IST, I transferred Rs. 4,500/- via Google Pay (UPI Transaction ID: 412356789012). Immediately after I sent the payment screenshot on WhatsApp, the seller deleted all product posts from chat, blocked my number on WhatsApp, and blocked my handle on Instagram without dispatching the goods. At 16:30 IST on the same day (within 2 hours), I called my bank customer support requesting an urgent UPI chargeback and requesting the beneficiary account be frozen for digital cyber fraud. The bank executive flatly refused, stating UPI transfers are instant and irrevocable, and told me that the bank has zero liability without a formal court order or official legal directive.",
     "timeline": [
       {
-        "event_id": "evt_0860af",
+        "event_id": "evt_3428d5",
         "date": "2026-11-07",
         "description": "Transaction entered and consideration paid for goods/services.",
         "supporting_document": null,
         "significance": "Purchase date establishing consumer standing under Section 2(7)"
       },
       {
-        "event_id": "evt_dfb650",
+        "event_id": "evt_a2322a",
         "date": "2026-11-07",
         "description": "Opposite party customer support refused refund or return request.",
         "supporting_document": null,
@@ -97,7 +97,7 @@
       "ecommerce_rules_2020",
       "marketplace_dispute"
     ],
-    "created_at": "2026-11-07T10:04:16.906035Z"
+    "created_at": "2026-11-07T10:42:56.913189Z"
   },
   "retrieval": {
     "queries": [
@@ -119,7 +119,7 @@
         "chapter": "Chapter I - Preliminary",
         "section": "Section 2(7)",
         "title": "Definition of Consumer",
-        "score": 0.03613,
+        "score": 0.04724,
         "retrieval_method": "hybrid_rrf"
       },
       {
@@ -128,7 +128,7 @@
         "chapter": "Chapter I - Preliminary",
         "section": "Section 2(47)",
         "title": "Definition of Unfair Trade Practice",
-        "score": 0.03563,
+        "score": 0.04568,
         "retrieval_method": "hybrid_rrf"
       },
       {
@@ -137,7 +137,7 @@
         "chapter": "Enforcement and Penalties",
         "section": "Rule 8",
         "title": "Contravention of Rules and Penalties",
-        "score": 0.03227,
+        "score": 0.03202,
         "retrieval_method": "hybrid_rrf"
       },
       {
@@ -155,16 +155,16 @@
         "chapter": "Chapter I - Preliminary",
         "section": "Section 1",
         "title": "Short Title, Extent, Commencement and Application",
-        "score": 0.03033,
+        "score": 0.03078,
         "retrieval_method": "hybrid_rrf"
       },
       {
-        "chunk_id": "con_2019_ch_chapter_i___preliminary_sec_section_2_16_",
+        "chunk_id": "con_2019_ch_chapter_i___preliminary_sec_section_2_21_",
         "statute": "Consumer Protection Act, 2019",
         "chapter": "Chapter I - Preliminary",
-        "section": "Section 2(16)",
-        "title": "Definition of E-Commerce",
-        "score": 0.02985,
+        "section": "Section 2(21)",
+        "title": "Definition of Goods",
+        "score": 0.03031,
         "retrieval_method": "hybrid_rrf"
       },
       {
@@ -173,7 +173,169 @@
         "chapter": "Chapter I - Preliminary",
         "section": "Section 2(6)",
         "title": "Definition of Complainant",
-        "score": 0.02947,
+        "score": 0.02942,
+        "retrieval_method": "hybrid_rrf"
+      },
+      {
+        "chunk_id": "con_2019_ch_chapter_i___preliminary_sec_section_2_16_",
+        "statute": "Consumer Protection Act, 2019",
+        "chapter": "Chapter I - Preliminary",
+        "section": "Section 2(16)",
+        "title": "Definition of E-Commerce",
+        "score": 0.02941,
+        "retrieval_method": "hybrid_rrf"
+      },
+      {
+        "chunk_id": "con_2019_ch_chapter_i___preliminary_sec_section_2_10_",
+        "statute": "Consumer Protection Act, 2019",
+        "chapter": "Chapter I - Preliminary",
+        "section": "Section 2(10)",
+        "title": "Definition of Defect",
+        "score": 0.02858,
+        "retrieval_method": "hybrid_rrf"
+      },
+      {
+        "chunk_id": "con_2019_ch_chapter_i___preliminary_sec_section_2_17_",
+        "statute": "Consumer Protection Act, 2019",
+        "chapter": "Chapter I - Preliminary",
+        "section": "Section 2(17)",
+        "title": "Definition of Electronic Service Provider",
+        "score": 0.02837,
+        "retrieval_method": "hybrid_rrf"
+      },
+      {
+        "chunk_id": "con_2019_ch_chapter_i___preliminary_sec_section_2_9_",
+        "statute": "Consumer Protection Act, 2019",
+        "chapter": "Chapter I - Preliminary",
+        "section": "Section 2(9)",
+        "title": "Definition of Consumer Rights",
+        "score": 0.02798,
+        "retrieval_method": "hybrid_rrf"
+      },
+      {
+        "chunk_id": "con_2019_ch_chapter_i___preliminary_sec_section_2_1_",
+        "statute": "Consumer Protection Act, 2019",
+        "chapter": "Chapter I - Preliminary",
+        "section": "Section 2(1)",
+        "title": "Definition of Advertisement",
+        "score": 0.02778,
+        "retrieval_method": "hybrid_rrf"
+      },
+      {
+        "chunk_id": "con_2019_ch_chapter_i___preliminary_sec_section_2_46_",
+        "statute": "Consumer Protection Act, 2019",
+        "chapter": "Chapter I - Preliminary",
+        "section": "Section 2(46)",
+        "title": "Definition of Unfair Contract",
+        "score": 0.02669,
+        "retrieval_method": "hybrid_rrf"
+      },
+      {
+        "chunk_id": "con_2019_ch_chapter_i___preliminary_sec_section_2_42_",
+        "statute": "Consumer Protection Act, 2019",
+        "chapter": "Chapter I - Preliminary",
+        "section": "Section 2(42)",
+        "title": "Definition of Service",
+        "score": 0.02667,
+        "retrieval_method": "hybrid_rrf"
+      },
+      {
+        "chunk_id": "con_2020_ch_preliminary_sec_rule_1",
+        "statute": "Consumer Protection (E-Commerce) Rules, 2020",
+        "chapter": "Preliminary",
+        "section": "Rule 1",
+        "title": "Short Title and Commencement",
+        "score": 0.03279,
+        "retrieval_method": "hybrid_rrf"
+      },
+      {
+        "chunk_id": "con_2020_ch_preliminary_sec_rule_2",
+        "statute": "Consumer Protection (E-Commerce) Rules, 2020",
+        "chapter": "Preliminary",
+        "section": "Rule 2",
+        "title": "Scope and Applicability",
+        "score": 0.03175,
+        "retrieval_method": "hybrid_rrf"
+      },
+      {
+        "chunk_id": "con_2020_ch_liabilities_of_marketplace_sec_rule_5",
+        "statute": "Consumer Protection (E-Commerce) Rules, 2020",
+        "chapter": "Liabilities of Marketplace",
+        "section": "Rule 5",
+        "title": "Liabilities of Marketplace E-Commerce Entities",
+        "score": 0.03101,
+        "retrieval_method": "hybrid_rrf"
+      },
+      {
+        "chunk_id": "con_2020_ch_definitions_sec_rule_3",
+        "statute": "Consumer Protection (E-Commerce) Rules, 2020",
+        "chapter": "Definitions",
+        "section": "Rule 3",
+        "title": "Definitions of E-Commerce Entities and Terms",
+        "score": 0.03101,
+        "retrieval_method": "hybrid_rrf"
+      },
+      {
+        "chunk_id": "con_2020_ch_inventory_e_commerce_entities_sec_rule_7",
+        "statute": "Consumer Protection (E-Commerce) Rules, 2020",
+        "chapter": "Inventory E-Commerce Entities",
+        "section": "Rule 7",
+        "title": "Duties of Inventory E-Commerce Entities & Return Guarantees",
+        "score": 0.03008,
+        "retrieval_method": "hybrid_rrf"
+      },
+      {
+        "chunk_id": "con_2020_ch_general_duties_sec_rule_4",
+        "statute": "Consumer Protection (E-Commerce) Rules, 2020",
+        "chapter": "General Duties",
+        "section": "Rule 4",
+        "title": "Duties of E-Commerce Entities",
+        "score": 0.02986,
+        "retrieval_method": "hybrid_rrf"
+      },
+      {
+        "chunk_id": "con_2021_ch_statutory_rules_sec_rules_1__2__3__4__5",
+        "statute": "Consumer Protection (Jurisdiction of Commissions) Rules, 2021",
+        "chapter": "Statutory Rules",
+        "section": "Rules 1, 2, 3, 4, 5",
+        "title": "Revised Pecuniary Jurisdiction of District, State, and National Commissions",
+        "score": 0.02899,
+        "retrieval_method": "hybrid_rrf"
+      },
+      {
+        "chunk_id": "con_2020_ch_court_fees_sec_edaakhil_feeschedule",
+        "statute": "Consumer Protection Rules, 2020 (Fee Schedule)",
+        "chapter": "Court Fees",
+        "section": "eDaakhil-FeeSchedule",
+        "title": "Statutory Court Fee Schedule for Consumer Commissions",
+        "score": 0.02858,
+        "retrieval_method": "hybrid_rrf"
+      },
+      {
+        "chunk_id": "con_2020_ch_duties_of_marketplace_sellers_sec_rule_6",
+        "statute": "Consumer Protection (E-Commerce) Rules, 2020",
+        "chapter": "Duties of Marketplace Sellers",
+        "section": "Rule 6",
+        "title": "Duties of Sellers on Marketplace & Return/Refund Guarantees",
+        "score": 0.02808,
+        "retrieval_method": "hybrid_rrf"
+      },
+      {
+        "chunk_id": "nat_2020_ch_pre_litigation_grievance_redressal_sec_nch_1915_overview",
+        "statute": "National Consumer Helpline Guidelines",
+        "chapter": "Pre-Litigation Grievance Redressal",
+        "section": "NCH-1915-Overview",
+        "title": "National Consumer Helpline (NCH 1915) and INGRAM Portal",
+        "score": 0.02721,
+        "retrieval_method": "hybrid_rrf"
+      },
+      {
+        "chunk_id": "con_2019_ch_chapter_iv___consumer_disputes_redressal_commission_sec_section_28___34",
+        "statute": "Consumer Protection Act, 2019",
+        "chapter": "Chapter IV - Consumer Disputes Redressal Commission",
+        "section": "Section 28 & 34",
+        "title": "Establishment and Jurisdiction of District Commission (Including 2021 Pecuniary Rules Revision)",
+        "score": 0.02671,
         "retrieval_method": "hybrid_rrf"
       }
     ],
@@ -181,7 +343,7 @@
       "is_grounded": true,
       "top_rrf_score": 0.0522664584959667,
       "confidence_passed": true,
-      "retrieved_chunk_count": 8,
+      "retrieved_chunk_count": 26,
       "abstention_triggered": false,
       "abstention_message": null
     },
@@ -201,10 +363,28 @@
       "Consumer Protection (E-Commerce) Rules, 2020 Rule 8",
       "Consumer Protection Act, 2019 Preamble",
       "Consumer Protection Act, 2019 Section 1",
+      "Consumer Protection Act, 2019 Section 2(21)",
+      "Consumer Protection Act, 2019 Section 2(6)",
       "Consumer Protection Act, 2019 Section 2(16)",
-      "Consumer Protection Act, 2019 Section 2(6)"
+      "Consumer Protection Act, 2019 Section 2(10)",
+      "Consumer Protection Act, 2019 Section 2(17)",
+      "Consumer Protection Act, 2019 Section 2(9)",
+      "Consumer Protection Act, 2019 Section 2(1)",
+      "Consumer Protection Act, 2019 Section 2(46)",
+      "Consumer Protection Act, 2019 Section 2(42)",
+      "Consumer Protection (E-Commerce) Rules, 2020 Rule 1",
+      "Consumer Protection (E-Commerce) Rules, 2020 Rule 2",
+      "Consumer Protection (E-Commerce) Rules, 2020 Rule 5",
+      "Consumer Protection (E-Commerce) Rules, 2020 Rule 3",
+      "Consumer Protection (E-Commerce) Rules, 2020 Rule 7",
+      "Consumer Protection (E-Commerce) Rules, 2020 Rule 4",
+      "Consumer Protection (Jurisdiction of Commissions) Rules, 2021 Rules 1, 2, 3, 4, 5",
+      "Consumer Protection Rules, 2020 (Fee Schedule) eDaakhil-FeeSchedule",
+      "Consumer Protection (E-Commerce) Rules, 2020 Rule 6",
+      "National Consumer Helpline Guidelines NCH-1915-Overview",
+      "Consumer Protection Act, 2019 Section 28 & 34"
     ],
-    "retrieval_precision_percent": 42.9
+    "retrieval_precision_percent": 100.0
   },
   "legal_standing": {
     "is_consumer": true,
@@ -296,7 +476,7 @@
   },
   "drafted_documents": {
     "grievance_email": {
-      "document_id": "doc_404f487e",
+      "document_id": "doc_fb69ca97",
       "document_type": "grievance_email",
       "title": "Grievance Escalation Email under Rule 4(5) - Consumer Dispute regarding Goods / Services",
       "recipient": "Grievance Officer, Opposite Party (Merchant / Platform) (grievance-officer@ecommerce-platform.in)",
@@ -345,7 +525,7 @@
       }
     },
     "legal_notice": {
-      "document_id": "doc_3d9185d3",
+      "document_id": "doc_9c258e1e",
       "document_type": "legal_notice",
       "title": "15-Day Formal Legal Notice under CPA 2019 - Consumer Dispute regarding Goods / Services",
       "recipient": "Opposite Party (Merchant / Platform) & Opposite Party (Merchant / Platform)",
@@ -407,7 +587,7 @@
       "claim_amount_inr": 29500.0
     },
     "edaakhil_complaint": {
-      "document_id": "doc_0bbbb8ad",
+      "document_id": "doc_30993784",
       "document_type": "edaakhil_complaint",
       "title": "e-Daakhil Complaint Petition before District Consumer Disputes Redressal Commission - Consumer Dispute regarding Goods / Services",
       "recipient": "District Consumer Disputes Redressal Commission at New Delhi, Delhi",
@@ -478,30 +658,26 @@
     }
   },
   "citation_verification": {
-    "cleaned_text": "**TO**: Grievance Redressal Officer, Opposite Party (Merchant / Platform)\n**EMAIL**: grievance-officer@ecommerce-platform.in\n**DATE**: 2026-11-07\n**SUBJECT**: FORMAL ESCALATION: Grievance under <flag>Rule 4(5): Unverified citation</flag> of Consumer Protection (E-Commerce) Rules, 2020 - Order regarding Consumer Dispute regarding Goods / Services\n\nDear Grievance Officer,\n\nI am writing to formally lodge a statutory consumer grievance pursuant to **<flag>Rule 4(4): Unverified citation</flag> and <flag>Rule 4(5): Unverified citation</flag> of the Consumer Protection (E-Commerce) Rules, 2020** regarding a transaction conducted on your platform.\n\n### 1. TRANSACTION DETAILS\n- **Complainant / Buyer**: Priya Nair (9847123456, priya.nair@example.com)\n- **Transaction / Order Date**: 2026-11-07\n- **Item / Service Purchased**: Consumer Dispute regarding Goods / Services\n- **Valuable Consideration Paid**: ₹4,500.00\n- **Opposite Party Seller**: Opposite Party (Merchant / Platform)\n- **Opposite Party Marketplace**: Opposite Party (Merchant / Platform)\n\n### 2. FACTUAL SUMMARY OF GRIEVANCE\nMy name is Priya Nair (priya.nair@example.com, +91-9847123456), living in Marine Drive, Kochi, Kerala. On 2nd May 2024, I came across an Instagram fashion page '@VintageVibe_Thrift' operated by a merchant claiming to be in Surat, Gujarat. The page had 45,000 followers and posted an original Ralph Lauren vintage down jacket for Rs. 4,500/-. I sent a direct message to buy the jacket. The seller instructed me to transfer Rs. 4,500/- immediately via UPI to handle vintagevibe@okaxis (Merchant name: Rahul M., Axis Bank) and share the screenshot to WhatsApp number +91-9123456789 to receive the BlueDart tracking number within 24 hours. On 2nd May 2024 at 14:15 IST, I transferred Rs. 4,500/- via Google Pay (UPI Transaction ID: 412356789012). Immediately after I sent the payment screenshot on WhatsApp, the seller deleted all product posts from chat, blocked my number on WhatsApp, and blocked my handle on Instagram without dispatching the goods. At 16:30 IST on the same day (within 2 hours), I called my bank customer support requesting an urgent UPI chargeback and requesting the beneficiary account be frozen for digital cyber fraud. The bank executive flatly refused, stating UPI transfers are instant and irrevocable, and told me that the bank has zero liability without a formal court order or official legal directive.\n\nDespite bringing this matter to the attention of customer support, my legitimate request for refund / replacement was unlawfully denied.\n\n### 3. STATUTORY BREACHES\n1. **<flag>Rule 4(5)(b): Unverified citation</flag> & (c), Consumer Protection (E-Commerce) Rules, 2020**: Mandatory statutory obligation of the Grievance Officer to acknowledge receipt within forty-eight (48) hours with a ticket number, and redress within thirty (30) days.\n2. **<flag>Rule 6(3): Unverified citation</flag> & <flag>Rule 7(4): Unverified citation</flag>, Consumer Protection (E-Commerce) Rules, 2020**: Absolute prohibition against refusal to refund consideration paid or take back goods that are defective, deficient, or spurious.\n3. **Section 2(11), Consumer Protection Act, 2019**: Gross deficiency in service by failing to deliver goods as represented and denying legitimate post-sale remedy.\n\n### 4. FORMAL DEMANDS\nPursuant to the mandatory statutory framework, you are hereby called upon to:\n1. **Acknowledge this grievance within forty-eight (48) hours** from receipt and issue an official Complaint Ticket Number.\n2. **Initiate and credit a full refund of ₹4,500.00** to my original payment source within **seven (7) working days**.\n3. **Provide full written resolution** within thirty (30) days as mandated under <flag>Rule 4(5)(c): Unverified citation</flag>.\n\nPlease be advised that failure to resolve this complaint within the statutory window will constrain me to escalate this matter to the **National Consumer Helpline (NCH 1915)**, register a formal complaint with the **Central Consumer Protection Authority (CCPA)** under <flag>Section 18: Unverified citation</flag> of CPA 2019, and institute legal proceedings before the competent Consumer Commission via **e-Daakhil (`edaakhil.nic.in`)**, claiming full refund with 18% interest, compensation for mental agony, and litigation expenses.\n\nYours faithfully,\n\n**Priya Nair**\nAddress on record\nEmail: priya.nair@example.com | Phone: 9847123456\n\n\n# FORMAL LEGAL DEMAND NOTICE\n**(ISSUED UNDER <flag>SECTIONS 2(10), 2(11), 2(47): Unverified citation</flag>, AND 35 OF THE CONSUMER PROTECTION ACT, 2019 READ WITH <flag>RULES 4, 5: Unverified citation</flag>, AND 6 OF THE CONSUMER PROTECTION (E-COMMERCE) RULES, 2020)**\n\n**SENT VIA REGISTERED POST WITH ACKNOWLEDGMENT DUE (RPAD) & SPEED POST & REGISTERED EMAIL**\n\n**Date**: 2026-11-07\n**Place**: New Delhi, India\n\n**TO**:\n1. **Opposite Party (Merchant / Platform)** (Opposite Party No. 1 / Seller)\n   Address: Address on invoice / Platform seller directory\n2. **Opposite Party (Merchant / Platform)** (Opposite Party No. 2 / Marketplace Entity)\n   Address: Corporate Headquarters / Principal Place of Business in India\n\n**FROM**:\n**Priya Nair** (Complainant / Consumer)\nAddress: Residential Address on record, New Delhi\nEmail: priya.nair@example.com | Phone: 9847123456\n\n**SUBJECT**: FORMAL LEGAL DEMAND NOTICE: Under <flag>Section 35: Unverified citation</flag> CPA 2019 demanding refund of ₹4,500.00 with 18% interest and compensation regarding Order for Consumer Dispute regarding Goods / Services\n\n---\n\nSIRS / MADAM,\n\nUnder instructions and on behalf of myself, **Priya Nair**, a bona fide consumer, I do hereby serve upon you this Formal Legal Notice:\n\n### 1. BONA FIDE CONSUMER STATUS (SECTION 2(7) CPA 2019)\nThat the Complainant is a bona fide \"consumer\" within the meaning of **Section 2(7) of the Consumer Protection Act, 2019**, having purchased goods/services for personal use for valuable consideration paid, and is not engaged in any commercial resale.\n\n### 2. TRANSACTION AND FACTUAL MATRIX\n1. That on **2026-11-07**, the Complainant ordered **Consumer Dispute regarding Goods / Services** from Opposite Party No. 1 through Opposite Party No. 2's platform, paying **₹4,500.00** electronically.\n2. That upon delivery, the Complainant discovered:\nMy name is Priya Nair (priya.nair@example.com, +91-9847123456), living in Marine Drive, Kochi, Kerala. On 2nd May 2024, I came across an Instagram fashion page '@VintageVibe_Thrift' operated by a merchant claiming to be in Surat, Gujarat. The page had 45,000 followers and posted an original Ralph Lauren vintage down jacket for Rs. 4,500/-. I sent a direct message to buy the jacket. The seller instructed me to transfer Rs. 4,500/- immediately via UPI to handle vintagevibe@okaxis (Merchant name: Rahul M., Axis Bank) and share the screenshot to WhatsApp number +91-9123456789 to receive the BlueDart tracking number within 24 hours. On 2nd May 2024 at 14:15 IST, I transferred Rs. 4,500/- via Google Pay (UPI Transaction ID: 412356789012). Immediately after I sent the payment screenshot on WhatsApp, the seller deleted all product posts from chat, blocked my number on WhatsApp, and blocked my handle on Instagram without dispatching the goods. At 16:30 IST on the same day (within 2 hours), I called my bank customer support requesting an urgent UPI chargeback and requesting the beneficiary account be frozen for digital cyber fraud. The bank executive flatly refused, stating UPI transfers are instant and irrevocable, and told me that the bank has zero liability without a formal court order or official legal directive.\n3. That the Complainant reported the issue immediately, but Opposite Parties unlawfully denied return/refund citing arbitrary internal policies.\n\n### 3. STATUTORY BREACHES AND UNLAWFUL CONDUCT\n1. **Defect in Goods (<flag>Section 2(10): Unverified citation</flag>, CPA 2019)**: The goods supplied suffer from material faults, substandard quality, and non-conformity with representations made.\n2. **Gross Deficiency in Service (Section 2(11), CPA 2019)**: Opposite Parties failed to fulfill statutory post-sale duties and arbitrarily rejected return requests.\n3. **Unfair Trade Practice (Section 2(47)(viii), CPA 2019)**: Unlawful refusal to take back defective goods and refund consideration paid.\n4. **Violation of E-Commerce Rules, 2020**:\n   - **<flag>Rule 6(3): Unverified citation</flag>**: Explicit statutory bar prohibiting sellers from refusing refunds.\n   - **<flag>Rule 4(5): Unverified citation</flag>**: Mandatory grievance resolution timeline violated.\n   - **Non-Exemption under IT Act <flag>Section 79: Unverified citation</flag>**: Under <flag>Rule 5(1): Unverified citation</flag>, marketplace entities cannot seek intermediary safe harbor exemption while actively facilitating unfair trade practices.\n\n### 4. PEREMPTORY 15-DAY DEMAND\nYou are hereby jointly and severally called upon to comply with the following demands within **FIFTEEN (15) DAYS** from the date of receipt of this Legal Notice:\n1. **Full Refund**: Immediately refund **₹4,500.00** along with interest at the rate of **18% per annum** from the date of payment until realization.\n2. **Compensation**: Pay an amount of **₹25,000.00** towards mental agony, severe harassment, trauma, and loss of valuable time caused to the Complainant.\n3. **Legal Expenses**: Pay a sum of **₹5,000.00** towards legal notice expenses.\n\n### 5. NOTICE OF LEGAL ACTION (E-DAAKHIL FILING)\nPlease take notice that if you fail to comply with the aforesaid demands within the stipulated period of **15 days**, the Complainant shall institute an online consumer complaint before the competent **District Consumer Disputes Redressal Commission** under **<flag>Section 35: Unverified citation</flag> of CPA 2019 via e-Daakhil (`edaakhil.nic.in`)**.\n\nIn that event, you shall be held jointly and severally liable for all consequential damages, punitive damages, and full costs of litigation at your sole risk and peril.\n\n**Copy retained for official records and production before the Hon'ble Consumer Commission.**\n\nYours faithfully,\n\n**Priya Nair**\n(Complainant / Party-in-Person)\n\n**LIST OF ANNEXURES**:\n- Annexure A: Copy of Tax Invoice & Proof of Purchase\n- Annexure B: Bank / UPI Electronic Payment Confirmation\n- Annexure C: Photographs / Video Proof of Defective Goods\n- Annexure D: Customer Support Chat / Rejection Email Trail\n\n\n# BEFORE THE HON'BLE DISTRICT CONSUMER DISPUTES REDRESSAL COMMISSION AT NEW DELHI, DELHI\n\n### CONSUMER COMPLAINT NO. _________ OF 2026\n**(INSTITUTED UNDER <flag>SECTION 35: Unverified citation</flag> READ WITH <flag>SECTION 34(2)(d): Unverified citation</flag> OF THE CONSUMER PROTECTION ACT, 2019)**\n\n---\n\n### PART I: MEMO OF PARTIES\n\n**IN THE MATTER OF:**\n\n**Priya Nair**\nAge: Adult, S/o or D/o: [Parent/Spouse Name on record]\nResiding at: Address on file, New Delhi, Delhi\nMobile: 9847123456 | Email: priya.nair@example.com\n... **COMPLAINANT**\n\n**VERSUS**\n\n1. **Opposite Party (Merchant / Platform)** (Seller)\n   Registered Office: Address on file / Platform seller directory\n   ... **OPPOSITE PARTY NO. 1**\n\n2. **Opposite Party (Merchant / Platform)** (E-Commerce Marketplace Entity)\n   Principal Office: Corporate Headquarters in India\n   ... **OPPOSITE PARTY NO. 2**\n\n---\n\n### PART II: INDEX OF DOCUMENTS\n\n| Sl. No. | Description of Annexure | Annexure Marker |\n|:---:|:---|:---:|\n| 1. | Formal Consumer Complaint with Solemn Verification Affidavit | - |\n| 2. | Copy of Tax Invoice & Proof of Purchase dated 2026-11-07 | **Annexure C-1** |\n| 3. | Copy of Electronic Bank / UPI Payment Receipt of ₹4,500.00 | **Annexure C-2** |\n| 4. | Photographic Proof / Video Recording of Defective / Spurious Goods | **Annexure C-3** |\n| 5. | Email Communication & Customer Support Denial Records | **Annexure C-4** |\n| 6. | Copy of Formal 15-Day Legal Demand Notice dated 2026-11-07 with Postal Receipt | **Annexure C-5** |\n\n---\n\n### PART III: STATEMENT OF MATERIAL FACTS\n\nMOST RESPECTFULLY SHOWETH:\n\n1. **Status of Parties**:\n   The Complainant is an individual residing at New Delhi, Delhi, and is a bona fide \"consumer\" under **Section 2(7) of the Consumer Protection Act, 2019**. The goods/services were purchased solely for personal use for valuable consideration paid, and not for commercial resale. Opposite Party No. 1 is the registered seller, and Opposite Party No. 2 is the marketplace platform under the E-Commerce Rules, 2020.\n\n2. **Purchase Transaction & Consideration**:\n   On **2026-11-07**, the Complainant purchased **Consumer Dispute regarding Goods / Services** through Opposite Party No. 2's marketplace, paying valuable consideration of **₹4,500.00** (**Annexure C-1 and C-2**).\n\n3. **Defect & Grievance**:\n   My name is Priya Nair (priya.nair@example.com, +91-9847123456), living in Marine Drive, Kochi, Kerala. On 2nd May 2024, I came across an Instagram fashion page '@VintageVibe_Thrift' operated by a merchant claiming to be in Surat, Gujarat. The page had 45,000 followers and posted an original Ralph Lauren vintage down jacket for Rs. 4,500/-. I sent a direct message to buy the jacket. The seller instructed me to transfer Rs. 4,500/- immediately via UPI to handle vintagevibe@okaxis (Merchant name: Rahul M., Axis Bank) and share the screenshot to WhatsApp number +91-9123456789 to receive the BlueDart tracking number within 24 hours. On 2nd May 2024 at 14:15 IST, I transferred Rs. 4,500/- via Google Pay (UPI Transaction ID: 412356789012). Immediately after I sent the payment screenshot on WhatsApp, the seller deleted all product posts from chat, blocked my number on WhatsApp, and blocked my handle on Instagram without dispatching the goods. At 16:30 IST on the same day (within 2 hours), I called my bank customer support requesting an urgent UPI chargeback and requesting the beneficiary account be frozen for digital cyber fraud. The bank executive flatly refused, stating UPI transfers are instant and irrevocable, and told me that the bank has zero liability without a formal court order or official legal directive.\n\n4. **Arbitrary Denial & Statutory Breach**:\n   The Complainant immediately reported the grievance to Opposite Parties. Opposite Parties arbitrarily refused return/refund, directly violating <flag>Rule 4(5): Unverified citation</flag> and <flag>Rule 6(3): Unverified citation</flag> of the Consumer Protection (E-Commerce) Rules, 2020.\n\n5. **Exhaustion of Pre-Litigation Notice**:\n   The Complainant dispatched a formal 15-day Legal Demand Notice upon Opposite Parties on 2026-11-07 (**Annexure C-5**). Opposite Parties failed to remedy the grievance within the stipulated window.\n\n---\n\n### PART IV: STATUTORY GROUNDS OF CLAIM\n\nThe present complaint is instituted on the following distinct legal grounds:\n\n- **GROUND A (GROSS DEFICIENCY IN SERVICE - SECTION 2(11) CPA 2019)**:\n  Opposite Parties acted with gross deficiency, imperfection, and inadequacy in the quality and manner of performance required by law and contract.\n\n- **GROUND B (DEFECT IN GOODS - <flag>SECTION 2(10): Unverified citation</flag> CPA 2019)**:\n  The goods delivered were defective, substandard, and failed to conform to the representations.\n\n- **GROUND C (UNFAIR TRADE PRACTICE - SECTION 2(47)(viii) CPA 2019)**:\n  Opposite Parties adopted an unfair trade practice by unlawfully refusing to take back defective goods and refund consideration paid within thirty days.\n\n- **GROUND D (VIOLATION OF CONSUMER PROTECTION (E-COMMERCE) RULES, 2020)**:\n  Opposite Party No. 1 violated <flag>Rule 6(3): Unverified citation</flag> barring refusal of refunds. Opposite Party No. 2 breached <flag>Rule 4(4): Unverified citation</flag> and <flag>Rule 4(5): Unverified citation</flag> by failing to ensure proper grievance officer redressal.\n\n- **GROUND E (JOINT AND SEVERAL LIABILITY)**:\n  Pursuant to <flag>Rule 5(1): Unverified citation</flag> of the E-Commerce Rules, Opposite Party No. 2 cannot claim safe harbor under <flag>Section 79: Unverified citation</flag> of the Information Technology Act, 2000, and is jointly and severally liable.\n\n---\n\n### PART V: PECUNIARY & TERRITORIAL JURISDICTION\n\n1. **Pecuniary Jurisdiction**:\n   The value of consideration paid is **₹4,500.00**, which does not exceed ₹50,00,000/- (Rupees Fifty Lakhs). Hence, this Hon'ble District Commission has competent pecuniary jurisdiction under **<flag>Rule 3: Unverified citation</flag> of the 2021 Pecuniary Rules**.\n\n2. **Territorial Jurisdiction**:\n   The Complainant resides and personally works for gain at **New Delhi, Delhi**. Territorial jurisdiction is expressly conferred under **<flag>Section 34(2)(d): Unverified citation</flag> of the Consumer Protection Act, 2019**.\n\n3. **Statutory Filing Fee**:\n   The statutory filing fee is **₹0** under the statutory schedule, payable online via Bharatkosh on e-Daakhil (Nil fee for consideration up to ₹5,00,000/-).\n\n---\n\n### PART VI: LIMITATION STATEMENT (<flag>SECTION 69: Unverified citation</flag>)\n\nThe cause of action first arose on **2026-11-07** when Opposite Parties rejected the return/refund. The present complaint is instituted within the mandatory 2-year limitation period (730 days) prescribed under **<flag>Section 69(1): Unverified citation</flag> of the Consumer Protection Act, 2019**.\n\n---\n\n### PART VII: PRAYER / RELIEF SOUGHT\n\nWHEREFORE, in light of the above facts, grounds, and statutory provisions, the Complainant most respectfully prays that this Hon'ble Commission may be pleased to:\n\na) **Direct Opposite Parties jointly and severally to refund** the full consideration amount of **₹4,500.00** along with interest @ **12% per annum** from the date of payment until realization;\nb) **Award compensation of ₹25,000.00** against Opposite Parties for mental harassment, trauma, agony, and hardship caused to the Complainant;\nc) **Award litigation costs of ₹5,000.00** incurred in pursuing these proceedings; and\nd) **Pass such other and further relief(s)** as this Hon'ble Commission may deem fit and proper in the interest of justice.\n\n**COMPLAINANT**\nThrough: Self (Party-in-Person)\nPlace: New Delhi\nDate: 2026-11-07\n\n---\n\n### VERIFICATION / SOLEMN AFFIDAVIT CLAUSE\n\nI, Priya Nair, do hereby solemnly declare and verify on oath that the contents of Paragraphs 1 to 5 of the Statement of Facts and the Grounds of Claim are true and correct to the best of my personal knowledge and belief, based on official records, and no part thereof is false and nothing material has been concealed therefrom. Verified at New Delhi on this 7 day of November, 2026.\n\n**DEPONENT / COMPLAINANT**\n\n\nThe complainant paid consideration of ₹4,500.00 for personal use, qualifying as a consumer under Section 2(7) of CPA 2019.\n\nConsumer Protection Act, 2019 Section 2(7) Consumer Protection Act, 2019 Section 2(11) Consumer Protection Act, 2019 Section 2(47) Consumer Protection (E-Commerce) Rules, 2020 <flag>Rule 4(1): Unverified citation</flag> Consumer Protection (E-Commerce) Rules, 2020 <flag>Rule 4(2): Unverified citation</flag> Consumer Protection (E-Commerce) Rules, 2020 <flag>Rule 4(3): Unverified citation</flag> Consumer Protection (E-Commerce) Rules, 2020 <flag>Rule 4(10): Unverified citation</flag>",
+    "cleaned_text": "**TO**: Grievance Redressal Officer, Opposite Party (Merchant / Platform)\n**EMAIL**: grievance-officer@ecommerce-platform.in\n**DATE**: 2026-11-07\n**SUBJECT**: FORMAL ESCALATION: Grievance under Rule 4(5) of Consumer Protection (E-Commerce) Rules, 2020 - Order regarding Consumer Dispute regarding Goods / Services\n\nDear Grievance Officer,\n\nI am writing to formally lodge a statutory consumer grievance pursuant to **Rule 4(4) and Rule 4(5) of the Consumer Protection (E-Commerce) Rules, 2020** regarding a transaction conducted on your platform.\n\n### 1. TRANSACTION DETAILS\n- **Complainant / Buyer**: Priya Nair (9847123456, priya.nair@example.com)\n- **Transaction / Order Date**: 2026-11-07\n- **Item / Service Purchased**: Consumer Dispute regarding Goods / Services\n- **Valuable Consideration Paid**: ₹4,500.00\n- **Opposite Party Seller**: Opposite Party (Merchant / Platform)\n- **Opposite Party Marketplace**: Opposite Party (Merchant / Platform)\n\n### 2. FACTUAL SUMMARY OF GRIEVANCE\nMy name is Priya Nair (priya.nair@example.com, +91-9847123456), living in Marine Drive, Kochi, Kerala. On 2nd May 2024, I came across an Instagram fashion page '@VintageVibe_Thrift' operated by a merchant claiming to be in Surat, Gujarat. The page had 45,000 followers and posted an original Ralph Lauren vintage down jacket for Rs. 4,500/-. I sent a direct message to buy the jacket. The seller instructed me to transfer Rs. 4,500/- immediately via UPI to handle vintagevibe@okaxis (Merchant name: Rahul M., Axis Bank) and share the screenshot to WhatsApp number +91-9123456789 to receive the BlueDart tracking number within 24 hours. On 2nd May 2024 at 14:15 IST, I transferred Rs. 4,500/- via Google Pay (UPI Transaction ID: 412356789012). Immediately after I sent the payment screenshot on WhatsApp, the seller deleted all product posts from chat, blocked my number on WhatsApp, and blocked my handle on Instagram without dispatching the goods. At 16:30 IST on the same day (within 2 hours), I called my bank customer support requesting an urgent UPI chargeback and requesting the beneficiary account be frozen for digital cyber fraud. The bank executive flatly refused, stating UPI transfers are instant and irrevocable, and told me that the bank has zero liability without a formal court order or official legal directive.\n\nDespite bringing this matter to the attention of customer support, my legitimate request for refund / replacement was unlawfully denied.\n\n### 3. STATUTORY BREACHES\n1. **Rule 4(5)(b) & (c), Consumer Protection (E-Commerce) Rules, 2020**: Mandatory statutory obligation of the Grievance Officer to acknowledge receipt within forty-eight (48) hours with a ticket number, and redress within thirty (30) days.\n2. **Rule 6(3) & Rule 7(4), Consumer Protection (E-Commerce) Rules, 2020**: Absolute prohibition against refusal to refund consideration paid or take back goods that are defective, deficient, or spurious.\n3. **Section 2(11), Consumer Protection Act, 2019**: Gross deficiency in service by failing to deliver goods as represented and denying legitimate post-sale remedy.\n\n### 4. FORMAL DEMANDS\nPursuant to the mandatory statutory framework, you are hereby called upon to:\n1. **Acknowledge this grievance within forty-eight (48) hours** from receipt and issue an official Complaint Ticket Number.\n2. **Initiate and credit a full refund of ₹4,500.00** to my original payment source within **seven (7) working days**.\n3. **Provide full written resolution** within thirty (30) days as mandated under Rule 4(5)(c).\n\nPlease be advised that failure to resolve this complaint within the statutory window will constrain me to escalate this matter to the **National Consumer Helpline (NCH 1915)**, register a formal complaint with the **Central Consumer Protection Authority (CCPA)** under Section 18 of CPA 2019, and institute legal proceedings before the competent Consumer Commission via **e-Daakhil (`edaakhil.nic.in`)**, claiming full refund with 18% interest, compensation for mental agony, and litigation expenses.\n\nYours faithfully,\n\n**Priya Nair**\nAddress on record\nEmail: priya.nair@example.com | Phone: 9847123456\n\n\n# FORMAL LEGAL DEMAND NOTICE\n**(ISSUED UNDER SECTIONS 2(10), 2(11), 2(47), AND 35 OF THE CONSUMER PROTECTION ACT, 2019 READ WITH RULES 4, 5, AND 6 OF THE CONSUMER PROTECTION (E-COMMERCE) RULES, 2020)**\n\n**SENT VIA REGISTERED POST WITH ACKNOWLEDGMENT DUE (RPAD) & SPEED POST & REGISTERED EMAIL**\n\n**Date**: 2026-11-07\n**Place**: New Delhi, India\n\n**TO**:\n1. **Opposite Party (Merchant / Platform)** (Opposite Party No. 1 / Seller)\n   Address: Address on invoice / Platform seller directory\n2. **Opposite Party (Merchant / Platform)** (Opposite Party No. 2 / Marketplace Entity)\n   Address: Corporate Headquarters / Principal Place of Business in India\n\n**FROM**:\n**Priya Nair** (Complainant / Consumer)\nAddress: Residential Address on record, New Delhi\nEmail: priya.nair@example.com | Phone: 9847123456\n\n**SUBJECT**: FORMAL LEGAL DEMAND NOTICE: Under Section 35 CPA 2019 demanding refund of ₹4,500.00 with 18% interest and compensation regarding Order for Consumer Dispute regarding Goods / Services\n\n---\n\nSIRS / MADAM,\n\nUnder instructions and on behalf of myself, **Priya Nair**, a bona fide consumer, I do hereby serve upon you this Formal Legal Notice:\n\n### 1. BONA FIDE CONSUMER STATUS (SECTION 2(7) CPA 2019)\nThat the Complainant is a bona fide \"consumer\" within the meaning of **Section 2(7) of the Consumer Protection Act, 2019**, having purchased goods/services for personal use for valuable consideration paid, and is not engaged in any commercial resale.\n\n### 2. TRANSACTION AND FACTUAL MATRIX\n1. That on **2026-11-07**, the Complainant ordered **Consumer Dispute regarding Goods / Services** from Opposite Party No. 1 through Opposite Party No. 2's platform, paying **₹4,500.00** electronically.\n2. That upon delivery, the Complainant discovered:\nMy name is Priya Nair (priya.nair@example.com, +91-9847123456), living in Marine Drive, Kochi, Kerala. On 2nd May 2024, I came across an Instagram fashion page '@VintageVibe_Thrift' operated by a merchant claiming to be in Surat, Gujarat. The page had 45,000 followers and posted an original Ralph Lauren vintage down jacket for Rs. 4,500/-. I sent a direct message to buy the jacket. The seller instructed me to transfer Rs. 4,500/- immediately via UPI to handle vintagevibe@okaxis (Merchant name: Rahul M., Axis Bank) and share the screenshot to WhatsApp number +91-9123456789 to receive the BlueDart tracking number within 24 hours. On 2nd May 2024 at 14:15 IST, I transferred Rs. 4,500/- via Google Pay (UPI Transaction ID: 412356789012). Immediately after I sent the payment screenshot on WhatsApp, the seller deleted all product posts from chat, blocked my number on WhatsApp, and blocked my handle on Instagram without dispatching the goods. At 16:30 IST on the same day (within 2 hours), I called my bank customer support requesting an urgent UPI chargeback and requesting the beneficiary account be frozen for digital cyber fraud. The bank executive flatly refused, stating UPI transfers are instant and irrevocable, and told me that the bank has zero liability without a formal court order or official legal directive.\n3. That the Complainant reported the issue immediately, but Opposite Parties unlawfully denied return/refund citing arbitrary internal policies.\n\n### 3. STATUTORY BREACHES AND UNLAWFUL CONDUCT\n1. **Defect in Goods (Section 2(10), CPA 2019)**: The goods supplied suffer from material faults, substandard quality, and non-conformity with representations made.\n2. **Gross Deficiency in Service (Section 2(11), CPA 2019)**: Opposite Parties failed to fulfill statutory post-sale duties and arbitrarily rejected return requests.\n3. **Unfair Trade Practice (Section 2(47)(viii), CPA 2019)**: Unlawful refusal to take back defective goods and refund consideration paid.\n4. **Violation of E-Commerce Rules, 2020**:\n   - **Rule 6(3)**: Explicit statutory bar prohibiting sellers from refusing refunds.\n   - **Rule 4(5)**: Mandatory grievance resolution timeline violated.\n   - **Non-Exemption under IT Act Section 79**: Under Rule 5(1), marketplace entities cannot seek intermediary safe harbor exemption while actively facilitating unfair trade practices.\n\n### 4. PEREMPTORY 15-DAY DEMAND\nYou are hereby jointly and severally called upon to comply with the following demands within **FIFTEEN (15) DAYS** from the date of receipt of this Legal Notice:\n1. **Full Refund**: Immediately refund **₹4,500.00** along with interest at the rate of **18% per annum** from the date of payment until realization.\n2. **Compensation**: Pay an amount of **₹25,000.00** towards mental agony, severe harassment, trauma, and loss of valuable time caused to the Complainant.\n3. **Legal Expenses**: Pay a sum of **₹5,000.00** towards legal notice expenses.\n\n### 5. NOTICE OF LEGAL ACTION (E-DAAKHIL FILING)\nPlease take notice that if you fail to comply with the aforesaid demands within the stipulated period of **15 days**, the Complainant shall institute an online consumer complaint before the competent **District Consumer Disputes Redressal Commission** under **Section 35 of CPA 2019 via e-Daakhil (`edaakhil.nic.in`)**.\n\nIn that event, you shall be held jointly and severally liable for all consequential damages, punitive damages, and full costs of litigation at your sole risk and peril.\n\n**Copy retained for official records and production before the Hon'ble Consumer Commission.**\n\nYours faithfully,\n\n**Priya Nair**\n(Complainant / Party-in-Person)\n\n**LIST OF ANNEXURES**:\n- Annexure A: Copy of Tax Invoice & Proof of Purchase\n- Annexure B: Bank / UPI Electronic Payment Confirmation\n- Annexure C: Photographs / Video Proof of Defective Goods\n- Annexure D: Customer Support Chat / Rejection Email Trail\n\n\n# BEFORE THE HON'BLE DISTRICT CONSUMER DISPUTES REDRESSAL COMMISSION AT NEW DELHI, DELHI\n\n### CONSUMER COMPLAINT NO. _________ OF 2026\n**(INSTITUTED UNDER SECTION 35 READ WITH SECTION 34(2)(d) OF THE CONSUMER PROTECTION ACT, 2019)**\n\n---\n\n### PART I: MEMO OF PARTIES\n\n**IN THE MATTER OF:**\n\n**Priya Nair**\nAge: Adult, S/o or D/o: [Parent/Spouse Name on record]\nResiding at: Address on file, New Delhi, Delhi\nMobile: 9847123456 | Email: priya.nair@example.com\n... **COMPLAINANT**\n\n**VERSUS**\n\n1. **Opposite Party (Merchant / Platform)** (Seller)\n   Registered Office: Address on file / Platform seller directory\n   ... **OPPOSITE PARTY NO. 1**\n\n2. **Opposite Party (Merchant / Platform)** (E-Commerce Marketplace Entity)\n   Principal Office: Corporate Headquarters in India\n   ... **OPPOSITE PARTY NO. 2**\n\n---\n\n### PART II: INDEX OF DOCUMENTS\n\n| Sl. No. | Description of Annexure | Annexure Marker |\n|:---:|:---|:---:|\n| 1. | Formal Consumer Complaint with Solemn Verification Affidavit | - |\n| 2. | Copy of Tax Invoice & Proof of Purchase dated 2026-11-07 | **Annexure C-1** |\n| 3. | Copy of Electronic Bank / UPI Payment Receipt of ₹4,500.00 | **Annexure C-2** |\n| 4. | Photographic Proof / Video Recording of Defective / Spurious Goods | **Annexure C-3** |\n| 5. | Email Communication & Customer Support Denial Records | **Annexure C-4** |\n| 6. | Copy of Formal 15-Day Legal Demand Notice dated 2026-11-07 with Postal Receipt | **Annexure C-5** |\n\n---\n\n### PART III: STATEMENT OF MATERIAL FACTS\n\nMOST RESPECTFULLY SHOWETH:\n\n1. **Status of Parties**:\n   The Complainant is an individual residing at New Delhi, Delhi, and is a bona fide \"consumer\" under **Section 2(7) of the Consumer Protection Act, 2019**. The goods/services were purchased solely for personal use for valuable consideration paid, and not for commercial resale. Opposite Party No. 1 is the registered seller, and Opposite Party No. 2 is the marketplace platform under the E-Commerce Rules, 2020.\n\n2. **Purchase Transaction & Consideration**:\n   On **2026-11-07**, the Complainant purchased **Consumer Dispute regarding Goods / Services** through Opposite Party No. 2's marketplace, paying valuable consideration of **₹4,500.00** (**Annexure C-1 and C-2**).\n\n3. **Defect & Grievance**:\n   My name is Priya Nair (priya.nair@example.com, +91-9847123456), living in Marine Drive, Kochi, Kerala. On 2nd May 2024, I came across an Instagram fashion page '@VintageVibe_Thrift' operated by a merchant claiming to be in Surat, Gujarat. The page had 45,000 followers and posted an original Ralph Lauren vintage down jacket for Rs. 4,500/-. I sent a direct message to buy the jacket. The seller instructed me to transfer Rs. 4,500/- immediately via UPI to handle vintagevibe@okaxis (Merchant name: Rahul M., Axis Bank) and share the screenshot to WhatsApp number +91-9123456789 to receive the BlueDart tracking number within 24 hours. On 2nd May 2024 at 14:15 IST, I transferred Rs. 4,500/- via Google Pay (UPI Transaction ID: 412356789012). Immediately after I sent the payment screenshot on WhatsApp, the seller deleted all product posts from chat, blocked my number on WhatsApp, and blocked my handle on Instagram without dispatching the goods. At 16:30 IST on the same day (within 2 hours), I called my bank customer support requesting an urgent UPI chargeback and requesting the beneficiary account be frozen for digital cyber fraud. The bank executive flatly refused, stating UPI transfers are instant and irrevocable, and told me that the bank has zero liability without a formal court order or official legal directive.\n\n4. **Arbitrary Denial & Statutory Breach**:\n   The Complainant immediately reported the grievance to Opposite Parties. Opposite Parties arbitrarily refused return/refund, directly violating Rule 4(5) and Rule 6(3) of the Consumer Protection (E-Commerce) Rules, 2020.\n\n5. **Exhaustion of Pre-Litigation Notice**:\n   The Complainant dispatched a formal 15-day Legal Demand Notice upon Opposite Parties on 2026-11-07 (**Annexure C-5**). Opposite Parties failed to remedy the grievance within the stipulated window.\n\n---\n\n### PART IV: STATUTORY GROUNDS OF CLAIM\n\nThe present complaint is instituted on the following distinct legal grounds:\n\n- **GROUND A (GROSS DEFICIENCY IN SERVICE - SECTION 2(11) CPA 2019)**:\n  Opposite Parties acted with gross deficiency, imperfection, and inadequacy in the quality and manner of performance required by law and contract.\n\n- **GROUND B (DEFECT IN GOODS - SECTION 2(10) CPA 2019)**:\n  The goods delivered were defective, substandard, and failed to conform to the representations.\n\n- **GROUND C (UNFAIR TRADE PRACTICE - SECTION 2(47)(viii) CPA 2019)**:\n  Opposite Parties adopted an unfair trade practice by unlawfully refusing to take back defective goods and refund consideration paid within thirty days.\n\n- **GROUND D (VIOLATION OF CONSUMER PROTECTION (E-COMMERCE) RULES, 2020)**:\n  Opposite Party No. 1 violated Rule 6(3) barring refusal of refunds. Opposite Party No. 2 breached Rule 4(4) and Rule 4(5) by failing to ensure proper grievance officer redressal.\n\n- **GROUND E (JOINT AND SEVERAL LIABILITY)**:\n  Pursuant to Rule 5(1) of the E-Commerce Rules, Opposite Party No. 2 cannot claim safe harbor under Section 79 of the Information Technology Act, 2000, and is jointly and severally liable.\n\n---\n\n### PART V: PECUNIARY & TERRITORIAL JURISDICTION\n\n1. **Pecuniary Jurisdiction**:\n   The value of consideration paid is **₹4,500.00**, which does not exceed ₹50,00,000/- (Rupees Fifty Lakhs). Hence, this Hon'ble District Commission has competent pecuniary jurisdiction under **Rule 3 of the 2021 Pecuniary Rules**.\n\n2. **Territorial Jurisdiction**:\n   The Complainant resides and personally works for gain at **New Delhi, Delhi**. Territorial jurisdiction is expressly conferred under **Section 34(2)(d) of the Consumer Protection Act, 2019**.\n\n3. **Statutory Filing Fee**:\n   The statutory filing fee is **₹0** under the statutory schedule, payable online via Bharatkosh on e-Daakhil (Nil fee for consideration up to ₹5,00,000/-).\n\n---\n\n### PART VI: LIMITATION STATEMENT (SECTION 69)\n\nThe cause of action first arose on **2026-11-07** when Opposite Parties rejected the return/refund. The present complaint is instituted within the mandatory 2-year limitation period (730 days) prescribed under **Section 69(1) of the Consumer Protection Act, 2019**.\n\n---\n\n### PART VII: PRAYER / RELIEF SOUGHT\n\nWHEREFORE, in light of the above facts, grounds, and statutory provisions, the Complainant most respectfully prays that this Hon'ble Commission may be pleased to:\n\na) **Direct Opposite Parties jointly and severally to refund** the full consideration amount of **₹4,500.00** along with interest @ **12% per annum** from the date of payment until realization;\nb) **Award compensation of ₹25,000.00** against Opposite Parties for mental harassment, trauma, agony, and hardship caused to the Complainant;\nc) **Award litigation costs of ₹5,000.00** incurred in pursuing these proceedings; and\nd) **Pass such other and further relief(s)** as this Hon'ble Commission may deem fit and proper in the interest of justice.\n\n**COMPLAINANT**\nThrough: Self (Party-in-Person)\nPlace: New Delhi\nDate: 2026-11-07\n\n---\n\n### VERIFICATION / SOLEMN AFFIDAVIT CLAUSE\n\nI, Priya Nair, do hereby solemnly declare and verify on oath that the contents of Paragraphs 1 to 5 of the Statement of Facts and the Grounds of Claim are true and correct to the best of my personal knowledge and belief, based on official records, and no part thereof is false and nothing material has been concealed therefrom. Verified at New Delhi on this 7 day of November, 2026.\n\n**DEPONENT / COMPLAINANT**\n\n\nThe complainant paid consideration of ₹4,500.00 for personal use, qualifying as a consumer under Section 2(7) of CPA 2019.\n\nConsumer Protection Act, 2019 Section 2(7) Consumer Protection Act, 2019 Section 2(11) Consumer Protection Act, 2019 Section 2(47) Consumer Protection (E-Commerce) Rules, 2020 Rule 4(1) Consumer Protection (E-Commerce) Rules, 2020 Rule 4(2) Consumer Protection (E-Commerce) Rules, 2020 Rule 4(3) Consumer Protection (E-Commerce) Rules, 2020 Rule 4(10)",
     "verified_citations": [
       "Section 2(11)",
-      "SECTION 2(7)",
-      "Section 2(7)",
-      "Section 2(47)(viii)",
-      "SECTION 2(11)",
-      "SECTION 2(47)(viii)",
-      "Section 2(47)",
-      "Central Consumer Protection Authority",
-      "CCPA"
-    ],
-    "flagged_citations": [
       "Section 18",
       "SECTIONS 2(10), 2(11), 2(47)",
       "Section 35",
+      "SECTION 2(7)",
+      "Section 2(7)",
       "Section 2(10)",
+      "Section 2(47)(viii)",
       "Section 79",
       "SECTION 35",
       "SECTION 34(2)(d)",
+      "SECTION 2(11)",
       "SECTION 2(10)",
+      "SECTION 2(47)(viii)",
       "Section 34(2)(d)",
       "SECTION 69",
       "Section 69(1)",
+      "Section 2(47)",
       "Rule 4(5)",
       "Rule 4(4)",
       "Rule 4(5)(b)",
@@ -514,24 +690,27 @@
       "Rule 4(1)",
       "Rule 4(2)",
       "Rule 4(3)",
-      "Rule 4(10)"
+      "Rule 4(10)",
+      "Central Consumer Protection Authority",
+      "CCPA"
     ],
-    "hallucination_detected": true,
-    "warning_message": "Warning: 24 unverified citation(s) detected and flagged."
+    "flagged_citations": [],
+    "hallucination_detected": false,
+    "warning_message": null
   },
   "opposing_simulation": {
     "turns": [
       {
-        "turn_id": "turn_dad9f6",
+        "turn_id": "turn_740b69",
         "turn_number": 1,
         "speaker": "opposing_counsel",
         "content": "Clause 14 of our Terms of Use explicitly states: 'All sales are final; items cannot be returned or refunded under any circumstances once delivered.' You accepted these terms when clicking 'Place Order'. Under the Indian Contract Act, this forms a binding contract, so no refund is payable.",
         "defense_tactic": "terms_and_conditions_no_refund",
         "feedback": null,
-        "timestamp": "2026-11-07T10:04:16.952810Z"
+        "timestamp": "2026-11-07T10:42:56.988956Z"
       },
       {
-        "turn_id": "turn_b98df7",
+        "turn_id": "turn_67f166",
         "turn_number": 2,
         "speaker": "consumer",
         "content": "Under Section 2(7) of the Consumer Protection Act, 2019, I am a consumer who paid Rs. 4,500 via UPI. Blocking a buyer and pocketing consideration without dispatching goods constitutes an unfair trade practice under Section 2(47) and deficiency in service under Section 2(11). Furthermore, under Rule 4 and Rule 6(3) of the Consumer Protection (E-Commerce) Rules, 2020, e-commerce sellers are legally obligated to maintain grievance redressal and cannot refuse a refund for non-delivery. Unilateral terms and conditions claiming all sales are final or no refund are void as an unfair contract under Section 2(46). I demand an immediate full refund.",
@@ -547,12 +726,12 @@
           ],
           "weaknesses": [],
           "statutory_sections_cited": [
-            "Section 2(46)",
-            "Section 2(7)",
-            "Rule 4",
-            "Section 2(47)",
             "Section 2(11)",
-            "Rule 6(3)"
+            "Rule 6(3)",
+            "Section 2(7)",
+            "Section 2(47)",
+            "Section 2(46)",
+            "Rule 4"
           ],
           "missing_statutory_sections": [
             "Rule 6(5)",
@@ -570,7 +749,7 @@
           ],
           "coaching_tip": "Outstanding rebuttal. Your argument is anchored in statutory law and dismantles the defense. You are ready to present this position to the Commission."
         },
-        "timestamp": "2026-11-07T10:04:16.952810Z"
+        "timestamp": "2026-11-07T10:42:56.988956Z"
       }
     ],
     "evaluation_score": 100.0,
@@ -585,12 +764,12 @@
       ],
       "weaknesses": [],
       "statutory_sections_cited": [
-        "Section 2(46)",
-        "Section 2(7)",
-        "Rule 4",
-        "Section 2(47)",
         "Section 2(11)",
-        "Rule 6(3)"
+        "Rule 6(3)",
+        "Section 2(7)",
+        "Section 2(47)",
+        "Section 2(46)",
+        "Rule 4"
       ],
       "missing_statutory_sections": [
         "Rule 6(5)",
@@ -615,10 +794,10 @@
     "exception_caught": null
   },
   "telemetry": {
-    "execution_duration_seconds": 0.0512,
+    "execution_duration_seconds": 0.0798,
     "provider": "mock",
     "model": "mock-llama3.1:8b",
     "mock_llm": true,
-    "timestamp_utc": "2026-11-07T10:04:16.952810+00:00"
+    "timestamp_utc": "2026-11-07T10:42:56.988956+00:00"
   }
 }

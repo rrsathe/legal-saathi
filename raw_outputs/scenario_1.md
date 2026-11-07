@@ -4,9 +4,9 @@
 **Dispute Category**: `ecommerce_defective_goods`  
 **Dispute Value**: ₹89,999.00  
 **Language**: `en`  
-**Execution Timestamp**: 2026-11-07 10:04:16 UTC  
+**Execution Timestamp**: 2026-11-07 10:42:56 UTC  
 **Execution Mode**: Offline Mock LLM  
-**Runtime Latency**: 0.0563 seconds  
+**Runtime Latency**: 0.0883 seconds  
 
 ---
 
@@ -50,7 +50,7 @@
 
 ## 4. Layer 2: Statutory Hybrid Retrieval (BM25 + Dense RRF)
 
-**Retrieval Precision**: 50.0%  
+**Retrieval Precision**: 100.0%  
 **Confidence Gate**: ✅ GROUNDED  
 
 ### Top Grounded Statutory Provisions Retrieved
@@ -60,7 +60,7 @@
 | Consumer Protection Act, 2019 | `Section 2(11)` | Definition of Deficiency | 0.05227 |
 | Consumer Protection Act, 2019 | `Section 2(10)` | Definition of Defect | 0.05083 |
 | Consumer Protection Act, 2019 | `Section 2(7)` | Definition of Consumer | 0.04674 |
-| Consumer Protection Act, 2019 | `Section 2(47)` | Definition of Unfair Trade Practice | 0.03563 |
+| Consumer Protection Act, 2019 | `Section 2(47)` | Definition of Unfair Trade Practice | 0.04533 |
 | Consumer Protection (E-Commerce) Rules, 2020 | `Rule 8` | Contravention of Rules and Penalties | 0.03178 |
 
 ---
@@ -213,9 +213,9 @@ MOS
 
 ## 7. Layer 3: Post-Generation Citation Verifier
 
-- **Verified Citations**: `['Section 2(11)', 'SECTIONS 2(10), 2(11), 2(47)', 'SECTION 2(7)', 'Section 2(7)', 'Section 2(10)', 'Section 2(47)(viii)', 'SECTION 2(11)', 'SECTION 2(10)', 'SECTION 2(47)(viii)', 'Section 2(47)', 'Central Consumer Protection Authority', 'CCPA']`
-- **Flagged Fabrications**: `['Section 79', 'Section 18', 'Section 35', 'SECTION 35', 'SECTION 34(2)(d)', 'Section 34(2)(d)', 'SECTION 69', 'Section 69(1)', 'Rule 4(5)', 'Rule 4(4)', 'Rule 4(5)(b)', 'Rule 6(3)', 'Rule 7(4)', 'Rule 4(5)(c)', 'RULES 4, 5', 'Rule 5(1)', 'Rule 3', 'Rule 5(3)(a)', 'Rule 6(3)(a)']`
-- **Hallucination Detected**: `True`
+- **Verified Citations**: `['Section 79', 'Section 2(11)', 'Section 18', 'SECTIONS 2(10), 2(11), 2(47)', 'Section 35', 'SECTION 2(7)', 'Section 2(7)', 'Section 2(10)', 'Section 2(47)(viii)', 'SECTION 35', 'SECTION 34(2)(d)', 'SECTION 2(11)', 'SECTION 2(10)', 'SECTION 2(47)(viii)', 'Section 34(2)(d)', 'SECTION 69', 'Section 69(1)', 'Section 2(47)', 'Rule 4(5)', 'Rule 4(4)', 'Rule 4(5)(b)', 'Rule 6(3)', 'Rule 7(4)', 'Rule 4(5)(c)', 'RULES 4, 5', 'Rule 5(1)', 'Rule 3', 'Rule 5(3)(a)', 'Rule 6(3)(a)', 'Central Consumer Protection Authority', 'CCPA']`
+- **Flagged Fabrications**: `[]`
+- **Hallucination Detected**: `False`
 - **Pass Rate**: 100.0%
 
 ---

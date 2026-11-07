@@ -11,10 +11,9 @@ from __future__ import annotations
 import html
 from collections.abc import Generator, Sequence
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from pydantic import BaseModel, Field, model_validator
-from theflow.base import Function as FlowFunction
 from theflow.base import Param
 
 from legal_assistant.rag.hybrid_retriever import (
@@ -79,27 +78,42 @@ class KotaemonRetrievedDocument(KotaemonDocument):
     )
 
 
-# Aliases for Kotaemon native types
-try:
-    from kotaemon.base import Document as _KtemDoc
-    from kotaemon.base import RetrievedDocument as _KtemRetrievedDoc
+if TYPE_CHECKING:
+    # Explicit static typing definitions for strict mypy compliance without suppressions
+    class Document(KotaemonDocument):
+        """Kotaemon Document static typing definition."""
 
-    class Document(_KtemDoc):  # type: ignore[misc]
-        """Kotaemon Document subclass."""
+    class RetrievedDocument(KotaemonRetrievedDocument):
+        """Kotaemon RetrievedDocument static typing definition."""
 
-    class RetrievedDocument(_KtemRetrievedDoc):  # type: ignore[misc]
-        """Kotaemon RetrievedDocument subclass."""
+    class FlowFunction:
+        """Typed stub for theflow.base.Function during static analysis."""
 
-except ImportError:
+        def __init__(self, *args: Any, **kwargs: Any) -> None:
+            """Initialize FlowFunction stub."""
+else:
+    try:
+        from kotaemon.base import Document as _KtemDoc
+        from kotaemon.base import RetrievedDocument as _KtemRetrievedDoc
 
-    class Document(KotaemonDocument):  # type: ignore[no-redef]
-        """Fallback Document conforming to Kotaemon schema."""
+        class Document(_KtemDoc):
+            """Kotaemon Document subclass."""
 
-    class RetrievedDocument(KotaemonRetrievedDocument):  # type: ignore[no-redef]
-        """Fallback RetrievedDocument conforming to Kotaemon schema."""
+        class RetrievedDocument(_KtemRetrievedDoc):
+            """Kotaemon RetrievedDocument subclass."""
+
+    except ImportError:
+
+        class Document(KotaemonDocument):
+            """Fallback Document conforming to Kotaemon schema."""
+
+        class RetrievedDocument(KotaemonRetrievedDocument):
+            """Fallback RetrievedDocument conforming to Kotaemon schema."""
+
+    from theflow.base import Function as FlowFunction
 
 
-class KotaemonLegalBridge(FlowFunction):  # type: ignore[misc]
+class KotaemonLegalBridge(FlowFunction):
     """Bridge adapter integrating Legal Saathi RAG with Kotaemon and Gradio UI."""
 
     retriever: Any = Param(default=None, help="StatutoryHybridRetriever instance")

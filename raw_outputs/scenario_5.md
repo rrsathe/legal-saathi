@@ -4,9 +4,9 @@
 **Dispute Category**: `commercial_b2b_cheque_bounce`  
 **Dispute Value**: ₹25,000,000.00  
 **Language**: `en`  
-**Execution Timestamp**: 2026-11-07 10:04:17 UTC  
+**Execution Timestamp**: 2026-11-07 10:42:57 UTC  
 **Execution Mode**: Offline Mock LLM  
-**Runtime Latency**: 0.0061 seconds  
+**Runtime Latency**: 0.0047 seconds  
 
 ---
 
@@ -36,6 +36,6 @@
 
 ## 3. Execution Telemetry
 
-- Latency: 0.0061s
+- Latency: 0.0047s
 - Provider: mock
-- Status: **COMPLIANT PASS (Guardrail Blocked Hallucination)**
+- Status: **COMPLIANT PASS (Layer 1 Scope Guardrail Intercepted Out-of-Scope Dispute)**
