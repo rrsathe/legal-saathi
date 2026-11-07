@@ -1,6 +1,6 @@
 # Legal-Saathi: AI Consumer Lawyer for India
 
-[![Python 3.11](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![Python 3.12](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![uv](https://img.shields.io/badge/Package_Manager-uv-blueviolet)](https://github.com/astral-sh/uv)
 [![Ruff](https://img.shields.io/badge/Linter-Ruff_0.16.2-orange)](https://github.com/astral-sh/ruff)
 [![Mypy Strict](https://img.shields.io/badge/Types-Mypy_Strict-blue)](https://mypy.readthedocs.io/)
@@ -192,7 +192,7 @@ Legal-Saathi is developed and optimized for **native Windows 10/11** using Power
 ### Prerequisites
 - Windows 10 or 11 (64-bit)
 - PowerShell 5.1+ or PowerShell 7 (pwsh)
-- Python 3.11 (installed via `uv`)
+- Python 3.12 (installed via `uv`)
 - `uv` package manager ([astral-sh/uv](https://github.com/astral-sh/uv))
 
 ```powershell
@@ -211,7 +211,7 @@ Run the automated Windows setup script from the project root:
 
 This script:
 1. Verifies Windows environment and PowerShell execution policy.
-2. Creates a clean Python 3.11 virtual environment using `uv venv`.
+2. Creates a clean Python 3.12 virtual environment using `uv venv`.
 3. Installs all production dependencies, Gradio UI, and quality gate tools via `uv sync`.
 4. Initializes `.env` from `.env.example` if not present.
 5. Ingests the statutory corpus into local vector/BM25 stores.

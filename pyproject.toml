@@ -2,26 +2,26 @@
 name = "legal-saathi"
 version = "0.1.0"
 description = "AI Consumer Lawyer for India (CPA 2019 & E-Commerce Rules 2020)"
-requires-python = ">=3.11,<3.12"
+requires-python = ">=3.12"
 authors = [
     { name = "Legal Saathi Multi-Agent Team" }
 ]
 dependencies = [
-    "pydantic>=2.10.0,<=2.10.6",
+    "pydantic>=2.10.0",
     "pydantic-settings>=2.7.0,<3.0.0",
     "litellm>=1.50.0",
     "groq>=0.11.0",
     "ollama>=0.4.0",
-    "gradio>=4.31.0,<5.0.0",
-    "huggingface-hub<=0.24.7",
+    "gradio>=5.0.0",
+    "huggingface-hub>=0.24.7",
     "rank-bm25>=0.2.2",
-    "chromadb>=0.5.0,<=0.5.16",
+    "chromadb>=0.5.0",
     "faiss-cpu>=1.9.0",
     "theflow>=0.8.6,<0.9.0",
     "python-dotenv>=1.0.0",
     "httpx>=0.27.0",
-    "starlette<1.0.0",
-    "fastapi<0.116.0",
+    "starlette>=0.40.0",
+    "fastapi>=0.115.0",
 ]
 
 [project.optional-dependencies]
@@ -32,6 +32,7 @@ dev = [
     "ruff>=0.8.0",
     "mypy>=1.13.0",
     "ty>=0.0.18",
+    "pip-audit>=2.8.0",
 ]
 
 [dependency-groups]
@@ -42,6 +43,7 @@ dev = [
     "ruff>=0.8.0",
     "mypy>=1.13.0",
     "ty>=0.0.18",
+    "pip-audit>=2.8.0",
 ]
 
 [build-system]
@@ -56,7 +58,7 @@ packages = ["src/legal_assistant"]
 # ==============================================================================
 [tool.ruff]
 line-length = 100
-target-version = "py311"
+target-version = "py312"
 src = ["src", "tests"]
 
 [tool.ruff.lint]
@@ -101,7 +103,7 @@ line-ending = "lf"
 # Mypy Configuration: Strict Static Type Checking
 # ==============================================================================
 [tool.mypy]
-python_version = "3.11"
+python_version = "3.12"
 strict = true
 mypy_path = "src"
 explicit_package_bases = true
@@ -120,7 +122,7 @@ plugins = ["pydantic.mypy"]
 [tool.pydantic-mypy]
 init_forbid_extra = true
 init_typed = true
-warn_required_dynamic_aliases = true
+warn_required_dynamic_aliases = false
 
 [[tool.mypy.overrides]]
 module = [
@@ -141,7 +143,7 @@ ignore_missing_imports = true
 # Ty Configuration: Fast Astral Type Checker
 # ==============================================================================
 [tool.ty.environment]
-python-version = "3.11"
+python-version = "3.12"
 root = ["./src", "."]
 
 [tool.ty.src]

@@ -18,9 +18,9 @@ def test_package_import_and_version() -> None:
 
 
 def test_python_runtime_version() -> None:
-    """Verify runtime Python is 3.11.x as required for Windows wheels."""
+    """Verify runtime Python is 3.12.x as required for Windows wheels."""
     assert sys.version_info.major == 3
-    assert sys.version_info.minor == 11
+    assert sys.version_info.minor == 12
 
 
 def test_unicode_utf8_legal_characters() -> None:
