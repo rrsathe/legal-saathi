@@ -7,6 +7,7 @@ guardrails (Scope Checker, Citation Verifier), statutory calculations, and bench
 
 from __future__ import annotations
 
+import re
 import uuid
 from datetime import UTC, date, datetime
 from enum import StrEnum
@@ -339,9 +340,8 @@ class CaseFile(BaseModel):
         if isinstance(value, (int, float)):
             return float(value)
         if isinstance(value, str):
-            sanitized = (
-                value.replace("₹", "").replace("Rs.", "").replace("Rs", "").replace(",", "").strip()
-            )
+            sanitized = value.replace("₹", "").replace("/-", "").replace(",", "")
+            sanitized = re.sub(r"(?i)(?:inr|rs\.?)", "", sanitized).strip()
             try:
                 return float(sanitized)
             except ValueError:

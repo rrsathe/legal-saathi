@@ -39,29 +39,32 @@ def clean_markdown_fences(text: str) -> str:
 def extract_outermost_json(text: str) -> str:
     """Locate the outermost JSON object or array substring within text.
 
+    Strictly pairs opening braces `{` with closing braces `}` and opening
+    brackets `[` with closing brackets `]`, preventing mismatched delimiter
+    trapping.
+
     Args:
         text: Text containing potential JSON data.
 
     Returns:
-        Substring from the first opening brace/bracket to the last closing brace/bracket.
+        Substring from the first opening delimiter to its matching last closing delimiter.
     """
     first_brace = text.find("{")
+    last_brace = text.rfind("}")
+    brace_valid = first_brace != -1 and last_brace > first_brace
+
     first_bracket = text.find("[")
+    last_bracket = text.rfind("]")
+    bracket_valid = first_bracket != -1 and last_bracket > first_bracket
 
-    start = -1
-    if first_brace != -1 and first_bracket != -1:
-        start = min(first_brace, first_bracket)
-    elif first_brace != -1:
-        start = first_brace
-    elif first_bracket != -1:
-        start = first_bracket
-
-    if start != -1:
-        last_brace = text.rfind("}")
-        last_bracket = text.rfind("]")
-        end = max(last_brace, last_bracket)
-        if end != -1 and end >= start:
-            return text[start : end + 1]
+    if brace_valid and bracket_valid:
+        if first_brace < first_bracket:
+            return text[first_brace : last_brace + 1]
+        return text[first_bracket : last_bracket + 1]
+    elif brace_valid:
+        return text[first_brace : last_brace + 1]
+    elif bracket_valid:
+        return text[first_bracket : last_bracket + 1]
 
     return text
 
@@ -109,10 +112,11 @@ def parse_and_unwrap_dict(raw_json: str, schema: type[T]) -> dict[str, Any]:
 
     Raises:
         json.JSONDecodeError: If string is fundamentally unparseable as JSON.
+        ValueError: If parsed JSON is not a JSON object (dict).
     """
     data = json.loads(raw_json)
     if not isinstance(data, dict):
-        return data  # type: ignore[no-any-return]
+        raise ValueError(f"Expected JSON object (dict), got {type(data).__name__}")
 
     schema_fields = set(schema.model_fields.keys())
 
@@ -159,6 +163,7 @@ def parse_and_validate(text: str, schema: type[T]) -> T:
     Raises:
         ValidationError: If validated data violates Pydantic constraints.
         json.JSONDecodeError: If JSON decoding fails after all repair passes.
+        ValueError: If repaired JSON payload is not an object.
     """
     # Attempt 1: Direct validation if string is already clean JSON
     try:
@@ -171,6 +176,6 @@ def parse_and_validate(text: str, schema: type[T]) -> T:
     try:
         data_dict = parse_and_unwrap_dict(repaired_text, schema)
         return schema.model_validate(data_dict)
-    except (ValidationError, json.JSONDecodeError) as exc:
+    except (ValidationError, ValueError) as exc:
         logger.warning("Local JSON repair failed to validate against %s: %s", schema.__name__, exc)
         raise

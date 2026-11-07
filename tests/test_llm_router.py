@@ -15,7 +15,7 @@ from unittest.mock import MagicMock, patch
 
 import httpx
 import pytest
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, SecretStr
 
 from legal_assistant.config import Settings, clear_settings_cache, get_settings
 from legal_assistant.llm.base import (
@@ -37,6 +37,7 @@ from legal_assistant.llm.json_repair import (
     clean_markdown_fences,
     extract_outermost_json,
     fix_trailing_commas,
+    parse_and_unwrap_dict,
     repair_and_parse_json,
     repair_json_string,
 )
@@ -142,7 +143,7 @@ def test_settings_fallback_providers_parsing() -> None:
 def test_settings_get_active_model_and_api_key() -> None:
     """Verify get_active_model and get_api_key resolution."""
     settings = Settings(
-        groq_api_key="gsk_test_12345",  # type: ignore[arg-type]
+        groq_api_key=SecretStr("gsk_test_12345"),
         default_model_name="custom-override-model",
     )
     assert settings.get_api_key("groq") == "gsk_test_12345"
@@ -726,3 +727,65 @@ def test_section_69_limitation_status() -> None:
     )
     assert is_within_5 is False
     assert remaining_5 < 0
+
+
+def test_parse_and_unwrap_dict_non_dict_raises_value_error() -> None:
+    """Verify parse_and_unwrap_dict raises ValueError when payload is not a JSON dict."""
+    with pytest.raises(ValueError, match="Expected JSON object"):
+        parse_and_unwrap_dict("[1, 2, 3]", SampleCitation)
+
+    with pytest.raises(ValueError, match="Expected JSON object"):
+        parse_and_unwrap_dict('"raw string"', SampleCitation)
+
+    with pytest.raises(ValueError, match="Expected JSON object"):
+        parse_and_unwrap_dict("123", SampleCitation)
+
+
+def test_extract_outermost_json_strict_delimiter_pairing() -> None:
+    """Verify extract_outermost_json strictly pairs matching delimiters without cross-trapping."""
+    assert extract_outermost_json('Here is { "a": 1 } and a closing bracket ]') == '{ "a": 1 }'
+    assert extract_outermost_json('Here is { "a": 1 } [Note: filed in 2024]') == '{ "a": 1 }'
+    assert extract_outermost_json("Result: [1, 2, 3] {end note}") == "[1, 2, 3]"
+    assert extract_outermost_json('[ {"a": 1}, {"b": 2} ]') == '[ {"a": 1}, {"b": 2} ]'
+    assert extract_outermost_json('{ "items": [1, 2, 3] }') == '{ "items": [1, 2, 3] }'
+
+
+def test_case_file_inr_amount_sanitization() -> None:
+    """Verify CaseFile sanitizes diverse Indian currency formats cleanly."""
+    valid_data: dict[str, Any] = {
+        "title": "INR Sanitization Test",
+        "complainant": {"name": "Test User", "city": "Delhi"},
+        "opposite_parties": [{"name": "Merchant", "role": "Seller"}],
+        "transaction_date": "2024-01-15",
+        "facts_summary": "Dispute details",
+    }
+
+    # Test INR prefix, commas, and trailing /-
+    payload1: dict[str, Any] = {
+        **valid_data,
+        "disputed_amount_inr": "INR 45,000",
+        "compensation_claimed_inr": "45,000/-",
+    }
+    case1 = CaseFile.model_validate(payload1)
+    assert case1.disputed_amount_inr == 45000.0
+    assert case1.compensation_claimed_inr == 45000.0
+
+    # Test lowercase inr, Rs. prefix, and /- suffix
+    payload2: dict[str, Any] = {
+        **valid_data,
+        "disputed_amount_inr": "inr 1,25,000/-",
+        "compensation_claimed_inr": "Rs. 25,000",
+    }
+    case2 = CaseFile.model_validate(payload2)
+    assert case2.disputed_amount_inr == 125000.0
+    assert case2.compensation_claimed_inr == 25000.0
+
+    # Test rupee symbol and invalid non-numeric string fallback
+    payload3: dict[str, Any] = {
+        **valid_data,
+        "disputed_amount_inr": "₹ 84,990.50",
+        "compensation_claimed_inr": "N/A - Free Gift",
+    }
+    case3 = CaseFile.model_validate(payload3)
+    assert case3.disputed_amount_inr == 84990.50
+    assert case3.compensation_claimed_inr == 0.0
