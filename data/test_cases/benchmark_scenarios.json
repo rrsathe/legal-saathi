@@ -1,0 +1,289 @@
+[
+  {
+    "id": "scenario_1",
+    "title": "E-Commerce Defective Gaming Laptop & Unlawful Warranty Shifting",
+    "category": "ecommerce_defective_goods",
+    "language": "en",
+    "dispute_amount_inr": 89999.0,
+    "user_narrative": "My name is Rohan Sen (rohan.sen@example.com, +91-9876543210), residing at 402 Palm Heights, Indiranagar, Bengaluru, Karnataka. On 10th April 2024, I purchased an ASUS ROG Strix G16 gaming laptop from MegaKart India E-Commerce Pvt Ltd (Order ID: MK-202404-99210) for Rs. 89,999/- paid via ICICI Bank credit card. The seller on the marketplace was SuperDeals Retail India Pvt Ltd. The parcel arrived on 14th April 2024. Upon powering on the device, the screen started flickering uncontrollably with persistent horizontal green scanlines, and the dedicated GPU repeatedly crashed under standard workload. Within 24 hours of delivery, on 15th April 2024, I initiated a return request on MegaKart's platform. On 16th April 2024, MegaKart abruptly closed my return ticket without an inspection, stating that their platform policy excludes electronics from direct replacement and directing me to contact the brand service center under Section 79 of the IT Act. On 18th April 2024, I took the laptop to the authorized PredatorTech/ASUS service center in Bengaluru (Job Sheet No: BLR-SRV-2024-8812). The service center confirmed that the motherboard and display panel had manufacturing defects, but refused replacement or warranty repair, claiming the unit was sold as an unauthorized clearance item on MegaKart and therefore void of replacement support. Both the marketplace platform and the manufacturer are pointing fingers at each other, refusing a refund of my Rs. 89,999/-.",
+    "expected_parties": {
+      "complainant": {
+        "name": "Rohan Sen",
+        "city": "Bengaluru",
+        "state": "Karnataka",
+        "contact": "rohan.sen@example.com / +91-9876543210"
+      },
+      "opposite_parties": [
+        {
+          "name": "MegaKart India E-Commerce Pvt Ltd",
+          "role": "E-Commerce Marketplace Platform",
+          "entity_type": "marketplace"
+        },
+        {
+          "name": "SuperDeals Retail India Pvt Ltd",
+          "role": "Marketplace Registered Seller",
+          "entity_type": "authorized_seller"
+        },
+        {
+          "name": "PredatorTech Electronics India Pvt Ltd",
+          "role": "Manufacturer / Brand Owner",
+          "entity_type": "corporate"
+        }
+      ]
+    },
+    "expected_statutory_sections": [
+      "Consumer Protection Act, 2019 Section 2(7)",
+      "Consumer Protection Act, 2019 Section 2(10)",
+      "Consumer Protection Act, 2019 Section 2(11)",
+      "Consumer Protection Act, 2019 Section 2(47)",
+      "Consumer Protection (E-Commerce) Rules, 2020 Rule 4(4)",
+      "Consumer Protection (E-Commerce) Rules, 2020 Rule 5(1)",
+      "Consumer Protection (E-Commerce) Rules, 2020 Rule 5(3)(a)",
+      "Consumer Protection (E-Commerce) Rules, 2020 Rule 6(3)(a)"
+    ],
+    "expected_remedies": [
+      "Full refund of consideration paid (Rs. 89,999/-) along with 12% interest per annum from 10th April 2024 till realization",
+      "Or in the alternative, replacement with a brand-new, defect-free unit of identical or superior specifications",
+      "Compensation of Rs. 25,000/- for mental agony, harassment, and loss of business/academic work",
+      "Litigation costs of Rs. 5,000/-"
+    ],
+    "expected_in_scope": true,
+    "expected_escalation": {
+      "forum": "District Consumer Disputes Redressal Commission (DCDRC), Bengaluru Urban",
+      "out_of_scope_category": null,
+      "advocate_required": false,
+      "statutory_court_fee_inr": 0,
+      "resolution_ladder": [
+        "Step 1: Grievance Officer Escalation to MegaKart & SuperDeals citing E-Commerce Rules Rule 4(4) & Rule 6(3)",
+        "Step 2: National Consumer Helpline (NCH 1915 / INGRAM) docket filing against convergence partners",
+        "Step 3: Formal 15-day Legal Demand Notice under CPA 2019",
+        "Step 4: Electronic complaint filing via e-Daakhil (edaakhil.nic.in) before DCDRC Bengaluru"
+      ]
+    }
+  },
+  {
+    "id": "scenario_2",
+    "title": "Instagram Social Commerce Thrift Scam & Bank Chargeback Stonewalling",
+    "category": "social_commerce_fraud",
+    "language": "en",
+    "dispute_amount_inr": 4500.0,
+    "user_narrative": "My name is Priya Nair (priya.nair@example.com, +91-9847123456), living in Marine Drive, Kochi, Kerala. On 2nd May 2024, I came across an Instagram fashion page '@VintageVibe_Thrift' operated by a merchant claiming to be in Surat, Gujarat. The page had 45,000 followers and posted an original Ralph Lauren vintage down jacket for Rs. 4,500/-. I sent a direct message to buy the jacket. The seller instructed me to transfer Rs. 4,500/- immediately via UPI to handle vintagevibe@okaxis (Merchant name: Rahul M., Axis Bank) and share the screenshot to WhatsApp number +91-9123456789 to receive the BlueDart tracking number within 24 hours. On 2nd May 2024 at 14:15 IST, I transferred Rs. 4,500/- via Google Pay (UPI Transaction ID: 412356789012). Immediately after I sent the payment screenshot on WhatsApp, the seller deleted all product posts from chat, blocked my number on WhatsApp, and blocked my handle on Instagram without dispatching the goods. At 16:30 IST on the same day (within 2 hours), I called my bank customer support requesting an urgent UPI chargeback and requesting the beneficiary account be frozen for digital cyber fraud. The bank executive flatly refused, stating UPI transfers are instant and irrevocable, and told me that the bank has zero liability without a formal court order or official legal directive.",
+    "expected_parties": {
+      "complainant": {
+        "name": "Priya Nair",
+        "city": "Kochi",
+        "state": "Kerala",
+        "contact": "priya.nair@example.com / +91-9847123456"
+      },
+      "opposite_parties": [
+        {
+          "name": "VintageVibe Thrift / Rahul M.",
+          "role": "Unregistered D2C Social Media Seller",
+          "entity_type": "inventory_ecommerce"
+        },
+        {
+          "name": "Axis Bank Ltd / UPI Acquiring Bank",
+          "role": "Beneficiary UPI Acquiring Bank & Financial Intermediary",
+          "entity_type": "fintech"
+        }
+      ]
+    },
+    "expected_statutory_sections": [
+      "Consumer Protection Act, 2019 Section 2(7)",
+      "Consumer Protection Act, 2019 Section 2(11)",
+      "Consumer Protection Act, 2019 Section 2(47)",
+      "Consumer Protection (E-Commerce) Rules, 2020 Rule 4(1)",
+      "Consumer Protection (E-Commerce) Rules, 2020 Rule 4(2)",
+      "Consumer Protection (E-Commerce) Rules, 2020 Rule 4(3)",
+      "Consumer Protection (E-Commerce) Rules, 2020 Rule 4(10)"
+    ],
+    "expected_remedies": [
+      "Complete refund of consideration paid (Rs. 4,500/-) with 18% penal interest",
+      "Order directing beneficiary bank to freeze the recipient UPI account and recover the illicit transfer",
+      "Compensation of Rs. 10,000/- for emotional distress, cheating, and harassment",
+      "Filing of National Cybercrime Portal docket (cybercrime.gov.in) and NCH 1915 convergence ticket"
+    ],
+    "expected_in_scope": true,
+    "expected_escalation": {
+      "forum": "District Consumer Disputes Redressal Commission (DCDRC), Ernakulam, Kochi",
+      "out_of_scope_category": null,
+      "advocate_required": false,
+      "statutory_court_fee_inr": 0,
+      "resolution_ladder": [
+        "Step 1: Immediate Financial Cyber Fraud Helpline (1930 / cybercrime.gov.in) reporting within golden hour to freeze recipient wallet",
+        "Step 2: National Consumer Helpline (NCH 1915) complaint against both seller and beneficiary bank",
+        "Step 3: Formal 15-day Legal Notice to seller's UPI contact and bank's Nodal Grievance Officer",
+        "Step 4: e-Daakhil filing before District Consumer Commission, Ernakulam"
+      ]
+    }
+  },
+  {
+    "id": "scenario_3",
+    "title": "EdTech Unfair Subscription Mandate & Arbitrary No-Refund Clause",
+    "category": "edtech_subscription_trap",
+    "language": "en",
+    "dispute_amount_inr": 60000.0,
+    "user_narrative": "My name is Ananya Verma (ananya.v@example.com, +91-9811223344), resident of Gomti Nagar, Lucknow, Uttar Pradesh. On 1st June 2024, I registered for an advertised 'Risk-Free 7-Day Free Trial' for a UPSC Civil Services preparation program on the mobile app of EduMaster Global Technologies Pvt Ltd ('EduMaster'). The registration required setting up a digital e-mandate on my HDFC debit card with a Rs. 2 authentication charge, which explicitly stated that no money would be debited if the trial was cancelled before 7th June 2024. After reviewing the course materials for 3 days, I found the recorded lectures outdated (recorded in 2020) and mentor sessions non-existent. On 5th June 2024 (Day 4 of the 7-day trial), I clicked 'Cancel Subscription' in the app and immediately sent a formal cancellation email to support@edumaster.com and grievance@edumaster.com requesting revocation of the e-mandate. I received an automated acknowledgment ticket #EM-88219. However, on 8th June 2024, EduMaster triggered the auto-debit mandate and deducted Rs. 60,000/- for a 1-year non-refundable subscription from my bank account without sending the mandatory 24-hour pre-debit SMS. When I demanded an immediate refund, EduMaster's legal retention team replied on 10th June 2024 citing Clause 14.2 of their online terms: 'Once a student logs into the learning portal and accesses study material, the subscription fee is deemed earned and strictly non-refundable under any circumstances.' They categorically refuse to refund my Rs. 60,000/-.",
+    "expected_parties": {
+      "complainant": {
+        "name": "Ananya Verma",
+        "city": "Lucknow",
+        "state": "Uttar Pradesh",
+        "contact": "ananya.v@example.com / +91-9811223344"
+      },
+      "opposite_parties": [
+        {
+          "name": "EduMaster Global Technologies Pvt Ltd",
+          "role": "EdTech Service Provider",
+          "entity_type": "corporate"
+        },
+        {
+          "name": "PayEase Recurring Mandate Solutions Ltd / Partner Bank",
+          "role": "E-Mandate Processor & Gateway",
+          "entity_type": "fintech"
+        }
+      ]
+    },
+    "expected_statutory_sections": [
+      "Consumer Protection Act, 2019 Section 2(7)",
+      "Consumer Protection Act, 2019 Section 2(11)",
+      "Consumer Protection Act, 2019 Section 2(46)",
+      "Consumer Protection Act, 2019 Section 2(47)",
+      "Consumer Protection (E-Commerce) Rules, 2020 Rule 4(8)",
+      "Consumer Protection (E-Commerce) Rules, 2020 Rule 4(9)",
+      "Consumer Protection (E-Commerce) Rules, 2020 Rule 6(5)",
+      "Consumer Protection (E-Commerce) Rules, 2020 Rule 7(4)"
+    ],
+    "expected_remedies": [
+      "Immediate refund of Rs. 60,000/- illegally debited under the revoked mandate with 12% interest",
+      "Striking down and invalidation of Clause 14.2 as an 'Unfair Contract' under Section 2(46) of CPA 2019",
+      "Compensation of Rs. 30,000/- for severe mental harassment, financial distress, and deceptive trade practices",
+      "Costs of litigation Rs. 10,000/-"
+    ],
+    "expected_in_scope": true,
+    "expected_escalation": {
+      "forum": "District Consumer Disputes Redressal Commission (DCDRC), Lucknow",
+      "out_of_scope_category": null,
+      "advocate_required": false,
+      "statutory_court_fee_inr": 0,
+      "resolution_ladder": [
+        "Step 1: Grievance Officer Escalation to EduMaster citing CPA Sec 2(46) and RBI E-Mandate circular",
+        "Step 2: Dual NCH 1915 complaint & RBI Banking Ombudsman complaint against auto-debit violation",
+        "Step 3: Formal 15-day Legal Notice for Unfair Contract and Deficiency in Service",
+        "Step 4: e-Daakhil filing before District Consumer Commission, Lucknow"
+      ]
+    }
+  },
+  {
+    "id": "scenario_4",
+    "title": "Quick-Commerce Infant Grocery Shortage & Automated Chatbot Stonewalling",
+    "category": "quick_commerce_short_delivery",
+    "language": "en",
+    "dispute_amount_inr": 1800.0,
+    "user_narrative": "My name is Vikram Malhotra (vikram.m@example.com, +91-9988776655), residing at Flat 804, Tower B, Nirvana Country, Sector 50, Gurugram, Haryana. On the night of 15th July 2024 at 20:30 IST, I placed an emergency 10-minute grocery order on the QuickDrop mobile application (operated by QuickDrop Hyperlocal India Pvt Ltd) for a total consideration of Rs. 1,800/- (Order ID: QD-882194) paid via UPI. The order was critical because it contained infant essentials: one tin of Nestle NAN PRO baby formula milk powder (Rs. 850/-), one jumbo pack of Pampers diapers (Rs. 650/-), along with 2 litres of organic cow milk (Rs. 100/-) and fresh fruits (Rs. 200/-). At 20:46 IST, the delivery partner handed over a single sealed brown paper bag. When I opened the bag immediately in the presence of the rider, the baby formula and the diapers were completely missing; the bag only contained the milk and fruits worth Rs. 300/-. When I asked the rider, he shrugged, said the dark store gave him only one bag, and sped away. Within 5 minutes (at 20:51 IST), I raised an issue on QuickDrop's in-app chat support with photos of the delivered bag, the physical receipt, and a kitchen scale showing package weight of 2.1 kg (whereas the full order weighed over 4.8 kg). Instead of human assistance, an automated AI chatbot repeatedly posted: 'Our delivery partner confirmed complete delivery using your 4-digit OTP. As per company policy, items cannot be reported missing once the OTP is shared. Your refund request is rejected.' The chatbot automatically closed the chat session and blocked further replies. The platform took Rs. 1,800/- and refused to refund the Rs. 1,500/- for the undelivered infant supplies, leaving my 6-month-old infant without baby formula late at night.",
+    "expected_parties": {
+      "complainant": {
+        "name": "Vikram Malhotra",
+        "city": "Gurugram",
+        "state": "Haryana",
+        "contact": "vikram.m@example.com / +91-9988776655"
+      },
+      "opposite_parties": [
+        {
+          "name": "QuickDrop Hyperlocal India Pvt Ltd",
+          "role": "Inventory E-Commerce Quick-Commerce Platform",
+          "entity_type": "inventory_ecommerce"
+        }
+      ]
+    },
+    "expected_statutory_sections": [
+      "Consumer Protection Act, 2019 Section 2(7)",
+      "Consumer Protection Act, 2019 Section 2(11)",
+      "Consumer Protection Act, 2019 Section 2(47)",
+      "Consumer Protection (E-Commerce) Rules, 2020 Rule 4(4)",
+      "Consumer Protection (E-Commerce) Rules, 2020 Rule 4(10)",
+      "Consumer Protection (E-Commerce) Rules, 2020 Rule 7(4)"
+    ],
+    "expected_remedies": [
+      "Immediate refund of Rs. 1,500/- for undelivered items (or full Rs. 1,800/- order value) with interest",
+      "Substantial compensation of Rs. 20,000/- for gross deficiency in service and extreme mental harassment during an infant medical emergency",
+      "Punitive costs of Rs. 10,000/- against the deployment of coercive automated chatbot loops designed to frustrate consumer redressal"
+    ],
+    "expected_in_scope": true,
+    "expected_escalation": {
+      "forum": "District Consumer Disputes Redressal Commission (DCDRC), Gurugram",
+      "out_of_scope_category": null,
+      "advocate_required": false,
+      "statutory_court_fee_inr": 0,
+      "resolution_ladder": [
+        "Step 1: Grievance Officer Escalation to QuickDrop citing E-Commerce Rules Rule 4(4) and Rule 7(4), demanding dark-store CCTV and scale logs",
+        "Step 2: National Consumer Helpline (NCH 1915 / INGRAM) docket filing against QuickDrop convergence partner",
+        "Step 3: Formal 15-day Legal Notice for deficiency in service",
+        "Step 4: e-Daakhil filing before District Consumer Commission, Gurugram"
+      ]
+    }
+  },
+  {
+    "id": "scenario_5",
+    "title": "Boundary Multi-Forum Dispute (Commercial B2B, NI Act 138 Cheque Bounce & Criminal Threat)",
+    "category": "commercial_b2b_cheque_bounce",
+    "language": "en",
+    "dispute_amount_inr": 25000000.0,
+    "user_narrative": "My name is Rajesh Singhania (rajesh@apexsteel.co.in, +91-9820011223), Managing Director of Apex Steel & Alloys Pvt Ltd, registered office at Nariman Point, Mumbai, Maharashtra. On 10th November 2023, our company entered into a commercial wholesale supply contract with Bharat Heavy Infrastructure Ltd (represented by Managing Director Vikramaditya Verma) to supply 500 metric tons of industrial structural steel billets for a commercial highway infrastructure project. The total contract value was Rs. 2,50,00,000/- (Rs. 2.50 Crores). We supplied the entire industrial steel consignment under tax invoices #AS-2023-901 through #AS-2023-908, accompanied by commercial e-way bills. In discharge of this commercial liability, Bharat Heavy Infrastructure issued a post-dated corporate cheque (Cheque No: 883901, dated 10th January 2024, drawn on State Bank of India, Fort Branch, Mumbai) for Rs. 2,50,00,000/-. When we deposited the cheque on 15th January 2024, the cheque bounced with a formal Bank Return Memo stating 'Funds Insufficient / Account Blocked'. When I confronted Vikramaditya Verma on 1st February 2024, he dispatched 8 armed recovery thugs to our factory in Navi Mumbai. The goons assaulted our warehouse manager, smashed office computers, and issued direct death threats to kill me and my children if we ever demanded payment or initiated legal proceedings. I want to file a consumer complaint on e-Daakhil to recover the bounced cheque amount of Rs. 2.50 Crores and get compensation for the physical violence.",
+    "expected_parties": {
+      "complainant": {
+        "name": "Rajesh Singhania / Apex Steel & Alloys Pvt Ltd",
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "contact": "rajesh@apexsteel.co.in / +91-9820011223"
+      },
+      "opposite_parties": [
+        {
+          "name": "Bharat Heavy Infrastructure Ltd",
+          "role": "Commercial Corporate Buyer / Accused Drawer",
+          "entity_type": "corporate"
+        },
+        {
+          "name": "Vikramaditya Verma",
+          "role": "Managing Director / Accused",
+          "entity_type": "individual"
+        },
+        {
+          "name": "Tiger Security & Recovery Agents",
+          "role": "Armed Extortionists / Recovery Agency",
+          "entity_type": "corporate"
+        }
+      ]
+    },
+    "expected_statutory_sections": [
+      "Negotiable Instruments Act, 1881 Section 138",
+      "Negotiable Instruments Act, 1881 Section 141",
+      "Commercial Courts Act, 2015 Section 2(1)(c)",
+      "Commercial Courts Act, 2015 Section 12A",
+      "Bharatiya Nyaya Sanhita, 2023 Section 351",
+      "Bharatiya Nyaya Sanhita, 2023 Section 115",
+      "Insolvency and Bankruptcy Code, 2016 Section 9",
+      "Consumer Protection Act, 2019 Section 2(7)"
+    ],
+    "expected_remedies": [
+      "Statutory 15-day Demand Notice under Section 138 of Negotiable Instruments Act, 1881 within 30 days of receiving cheque return memo",
+      "Filing of Criminal Complaint under Section 138 NI Act before the Court of the Metropolitan Magistrate / Judicial Magistrate First Class",
+      "Filing of Commercial Recovery Suit or Section 12A Pre-Institution Mediation before the Commercial Court / High Court of Judicature at Bombay",
+      "Immediate registration of a First Information Report (FIR) at the Police Station for assault, criminal intimidation, and extortion under BNS / IPC",
+      "Section 9 Demand Notice and Corporate Insolvency Petition under Insolvency & Bankruptcy Code (IBC) before the National Company Law Tribunal (NCLT), Mumbai Bench"
+    ],
+    "expected_in_scope": false,
+    "expected_escalation": {
+      "forum": "High Court of Bombay (Commercial Division) / Metropolitan Magistrate Court / NCLT Mumbai",
+      "out_of_scope_category": "cheque_bounce",
+      "advocate_required": true,
+      "statutory_court_fee_inr": 3000,
+      "resolution_ladder": [
+        "Step 1: Consult an Advocate enrolled with the Bar Council of India specializing in commercial litigation and criminal trial",
+        "Step 2: Issue 15-day Statutory Demand Notice under Section 138 NI Act within 30 days of bank return memo",
+        "Step 3: Register formal FIR at Police Station for criminal intimidation (death threats) and physical assault under BNS/IPC",
+        "Step 4: Initiate Section 12A Pre-Institution Mediation or file Commercial Suit before the High Court / Commercial Court"
+      ]
+    }
+  }
+]

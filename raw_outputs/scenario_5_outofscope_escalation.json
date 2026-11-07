@@ -1,0 +1,54 @@
+{
+  "scenario_id": "scenario_5",
+  "benchmark_metadata": {
+    "title": "Boundary Multi-Forum Dispute (Commercial B2B, NI Act 138 Cheque Bounce & Criminal Threat)",
+    "category": "commercial_b2b_cheque_bounce",
+    "language": "en",
+    "dispute_amount_inr": 25000000.0
+  },
+  "scope_guardrail": {
+    "is_in_scope": false,
+    "out_of_scope_category": "cheque_bounce",
+    "escalation_advice": "Dishonour of cheques and debt recovery under Section 138 of the Negotiable Instruments Act, 1881 are quasi-criminal proceedings falling outside the jurisdiction of Consumer Commissions. You must issue a formal Statutory Demand Notice within 30 days of receiving the cheque return memo, demanding payment within 15 days. If payment is not received, a criminal complaint must be filed before the competent Judicial Magistrate / Metropolitan Magistrate within one month. You are advised to immediately engage an Advocate enrolled with the Bar Council of India to draft the statutory notice and represent you.",
+    "detected_triggers": [
+      "bounced cheque",
+      "funds insufficient"
+    ]
+  },
+  "case_file": null,
+  "retrieval": {
+    "queries": [
+      "Boundary Multi-Forum Dispute (Commercial B2B, NI Act 138 Cheque Bounce & Criminal Threat) Negotiable Instruments Act, 1881 Section 138 Negotiable Instruments Act, 1881 Section 141 Commercial Courts Act, 2015 Section 2(1)(c) Commercial Courts Act, 2015 Section 12A"
+    ],
+    "retrieved_chunks": [],
+    "retrieval_confidence": null,
+    "expected_statutory_sections": [
+      "Negotiable Instruments Act, 1881 Section 138",
+      "Negotiable Instruments Act, 1881 Section 141",
+      "Commercial Courts Act, 2015 Section 2(1)(c)",
+      "Commercial Courts Act, 2015 Section 12A",
+      "Bharatiya Nyaya Sanhita, 2023 Section 351",
+      "Bharatiya Nyaya Sanhita, 2023 Section 115",
+      "Insolvency and Bankruptcy Code, 2016 Section 9",
+      "Consumer Protection Act, 2019 Section 2(7)"
+    ],
+    "retrieved_sections": [],
+    "retrieval_precision_percent": 0.0
+  },
+  "legal_standing": null,
+  "drafted_documents": null,
+  "citation_verification": null,
+  "opposing_simulation": null,
+  "guardrail_enforcement": {
+    "downstream_drafting_blocked": true,
+    "advocate_escalation_provided": true,
+    "exception_caught": "OutOfScopeDisputeError"
+  },
+  "telemetry": {
+    "execution_duration_seconds": 0.0061,
+    "provider": "mock",
+    "model": "mock-llama3.1:8b",
+    "mock_llm": true,
+    "timestamp_utc": "2026-11-07T10:04:17.078415+00:00"
+  }
+}

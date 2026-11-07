@@ -1,0 +1,617 @@
+{
+  "scenario_id": "scenario_4",
+  "benchmark_metadata": {
+    "title": "Quick-Commerce Infant Grocery Shortage & Automated Chatbot Stonewalling",
+    "category": "quick_commerce_short_delivery",
+    "language": "en",
+    "dispute_amount_inr": 1800.0
+  },
+  "scope_guardrail": {
+    "is_in_scope": true,
+    "out_of_scope_category": null,
+    "escalation_advice": null,
+    "detected_triggers": [
+      "order",
+      "delivery",
+      "delivered",
+      "refund",
+      "consideration",
+      "paid",
+      "upi",
+      "receipt"
+    ]
+  },
+  "case_file": {
+    "case_id": "case_db41ac3e",
+    "title": "Consumer Dispute regarding Goods / Services",
+    "complainant": {
+      "name": "Vikram Malhotra",
+      "role": "Complainant",
+      "address": null,
+      "email": "vikram.m@example.com",
+      "phone": "9988776655",
+      "city": null,
+      "state": null,
+      "party_type": "individual"
+    },
+    "opposite_parties": [
+      {
+        "name": "Opposite Party (Merchant / Platform)",
+        "role": "E-Commerce Marketplace",
+        "address": null,
+        "email": null,
+        "phone": null,
+        "city": null,
+        "state": null,
+        "party_type": "individual",
+        "entity_type": "marketplace"
+      }
+    ],
+    "transaction_date": "2026-11-07",
+    "cause_of_action_date": "2026-11-07",
+    "disputed_amount_inr": 1800.0,
+    "compensation_claimed_inr": 25000.0,
+    "facts_summary": "My name is Vikram Malhotra (vikram.m@example.com, +91-9988776655), residing at Flat 804, Tower B, Nirvana Country, Sector 50, Gurugram, Haryana. On the night of 15th July 2024 at 20:30 IST, I placed an emergency 10-minute grocery order on the QuickDrop mobile application (operated by QuickDrop Hyperlocal India Pvt Ltd) for a total consideration of Rs. 1,800/- (Order ID: QD-882194) paid via UPI. The order was critical because it contained infant essentials: one tin of Nestle NAN PRO baby formula milk powder (Rs. 850/-), one jumbo pack of Pampers diapers (Rs. 650/-), along with 2 litres of organic cow milk (Rs. 100/-) and fresh fruits (Rs. 200/-). At 20:46 IST, the delivery partner handed over a single sealed brown paper bag. When I opened the bag immediately in the presence of the rider, the baby formula and the diapers were completely missing; the bag only contained the milk and fruits worth Rs. 300/-. When I asked the rider, he shrugged, said the dark store gave him only one bag, and sped away. Within 5 minutes (at 20:51 IST), I raised an issue on QuickDrop's in-app chat support with photos of the delivered bag, the physical receipt, and a kitchen scale showing package weight of 2.1 kg (whereas the full order weighed over 4.8 kg). Instead of human assistance, an automated AI chatbot repeatedly posted: 'Our delivery partner confirmed complete delivery using your 4-digit OTP. As per company policy, items cannot be reported missing once the OTP is shared. Your refund request is rejected.' The chatbot automatically closed the chat session and blocked further replies. The platform took Rs. 1,800/- and refused to refund the Rs. 1,500/- for the undelivered infant supplies, leaving my 6-month-old infant without baby formula late at night.",
+    "timeline": [
+      {
+        "event_id": "evt_213da9",
+        "date": "2026-11-07",
+        "description": "Transaction entered and consideration paid for goods/services.",
+        "supporting_document": null,
+        "significance": "Purchase date establishing consumer standing under Section 2(7)"
+      },
+      {
+        "event_id": "evt_f1a7ae",
+        "date": "2026-11-07",
+        "description": "Opposite party customer support refused refund or return request.",
+        "supporting_document": null,
+        "significance": "Cause of action arose under Section 69"
+      }
+    ],
+    "evidence_checklist": [],
+    "missing_evidence": [
+      {
+        "item_name": "Tax Invoice with GSTIN & Serial Number",
+        "importance": "critical",
+        "why_needed": "Mandatory proof of purchase, consideration paid, and seller identity under Section 2(7) CPA 2019 and Rule 5(2) of the E-Commerce Rules, 2020.",
+        "where_to_obtain": "Download tax invoice from the platform 'My Orders' section or request an itemized duplicate tax invoice directly from the seller."
+      },
+      {
+        "item_name": "Electronic Payment Receipt / Bank Statement",
+        "importance": "high",
+        "why_needed": "Establishes conclusive payment of valuable consideration and exact date of transaction to prove consumer standing under Section 2(7) CPA 2019.",
+        "where_to_obtain": "Bank netbanking portal, UPI app transaction history, or credit card statement."
+      },
+      {
+        "item_name": "Customer Support Denial Trail / Grievance Ticket Number",
+        "importance": "high",
+        "why_needed": "Proves cause of action date under Section 69 CPA 2019 and establishes platform failure to acknowledge within 48h / resolve within 30d under Rule 4(5) of the E-Commerce Rules, 2020.",
+        "where_to_obtain": "Platform customer support chat logs, helpdesk email responses, or SMS alerts."
+      },
+      {
+        "item_name": "Authorized Service Center Job Sheet / Inspection Report",
+        "importance": "critical",
+        "why_needed": "Statutory proof of manufacturing defect under Section 2(10) CPA 2019 to rebut merchant claims of user-induced physical or liquid damage.",
+        "where_to_obtain": "Visit brand's authorized service center and obtain an official stamped job sheet."
+      }
+    ],
+    "clarification_questions": [],
+    "tags": [
+      "consumer_dispute",
+      "consumer_protection_act_2019",
+      "deficiency_in_service",
+      "ecommerce_rules_2020",
+      "marketplace_dispute",
+      "refund_refusal"
+    ],
+    "created_at": "2026-11-07T10:04:17.013546Z"
+  },
+  "retrieval": {
+    "queries": [
+      "Quick-Commerce Infant Grocery Shortage & Automated Chatbot Stonewalling Consumer Protection Act, 2019 Section 2(7) Consumer Protection Act, 2019 Section 2(11) Consumer Protection Act, 2019 Section 2(47) Consumer Protection (E-Commerce) Rules, 2020 Rule 4(4)"
+    ],
+    "retrieved_chunks": [
+      {
+        "chunk_id": "con_2019_ch_chapter_i___preliminary_sec_section_2_11_",
+        "statute": "Consumer Protection Act, 2019",
+        "chapter": "Chapter I - Preliminary",
+        "section": "Section 2(11)",
+        "title": "Definition of Deficiency",
+        "score": 0.05227,
+        "retrieval_method": "hybrid_rrf"
+      },
+      {
+        "chunk_id": "con_2019_ch_chapter_i___preliminary_sec_section_2_7_",
+        "statute": "Consumer Protection Act, 2019",
+        "chapter": "Chapter I - Preliminary",
+        "section": "Section 2(7)",
+        "title": "Definition of Consumer",
+        "score": 0.03613,
+        "retrieval_method": "hybrid_rrf"
+      },
+      {
+        "chunk_id": "con_2019_ch_chapter_i___preliminary_sec_section_2_47_",
+        "statute": "Consumer Protection Act, 2019",
+        "chapter": "Chapter I - Preliminary",
+        "section": "Section 2(47)",
+        "title": "Definition of Unfair Trade Practice",
+        "score": 0.03563,
+        "retrieval_method": "hybrid_rrf"
+      },
+      {
+        "chunk_id": "con_2020_ch_enforcement_and_penalties_sec_rule_8",
+        "statute": "Consumer Protection (E-Commerce) Rules, 2020",
+        "chapter": "Enforcement and Penalties",
+        "section": "Rule 8",
+        "title": "Contravention of Rules and Penalties",
+        "score": 0.03227,
+        "retrieval_method": "hybrid_rrf"
+      },
+      {
+        "chunk_id": "con_2019_ch_preamble_sec_preamble",
+        "statute": "Consumer Protection Act, 2019",
+        "chapter": "Preamble",
+        "section": "Preamble",
+        "title": "Preamble and Legislative Purpose",
+        "score": 0.03151,
+        "retrieval_method": "hybrid_rrf"
+      },
+      {
+        "chunk_id": "con_2019_ch_chapter_i___preliminary_sec_section_1",
+        "statute": "Consumer Protection Act, 2019",
+        "chapter": "Chapter I - Preliminary",
+        "section": "Section 1",
+        "title": "Short Title, Extent, Commencement and Application",
+        "score": 0.03033,
+        "retrieval_method": "hybrid_rrf"
+      },
+      {
+        "chunk_id": "con_2019_ch_chapter_i___preliminary_sec_section_2_16_",
+        "statute": "Consumer Protection Act, 2019",
+        "chapter": "Chapter I - Preliminary",
+        "section": "Section 2(16)",
+        "title": "Definition of E-Commerce",
+        "score": 0.02985,
+        "retrieval_method": "hybrid_rrf"
+      },
+      {
+        "chunk_id": "con_2019_ch_chapter_i___preliminary_sec_section_2_6_",
+        "statute": "Consumer Protection Act, 2019",
+        "chapter": "Chapter I - Preliminary",
+        "section": "Section 2(6)",
+        "title": "Definition of Complainant",
+        "score": 0.02947,
+        "retrieval_method": "hybrid_rrf"
+      }
+    ],
+    "retrieval_confidence": {
+      "is_grounded": true,
+      "top_rrf_score": 0.0522664584959667,
+      "confidence_passed": true,
+      "retrieved_chunk_count": 8,
+      "abstention_triggered": false,
+      "abstention_message": null
+    },
+    "expected_statutory_sections": [
+      "Consumer Protection Act, 2019 Section 2(7)",
+      "Consumer Protection Act, 2019 Section 2(11)",
+      "Consumer Protection Act, 2019 Section 2(47)",
+      "Consumer Protection (E-Commerce) Rules, 2020 Rule 4(4)",
+      "Consumer Protection (E-Commerce) Rules, 2020 Rule 4(10)",
+      "Consumer Protection (E-Commerce) Rules, 2020 Rule 7(4)"
+    ],
+    "retrieved_sections": [
+      "Consumer Protection Act, 2019 Section 2(11)",
+      "Consumer Protection Act, 2019 Section 2(7)",
+      "Consumer Protection Act, 2019 Section 2(47)",
+      "Consumer Protection (E-Commerce) Rules, 2020 Rule 8",
+      "Consumer Protection Act, 2019 Preamble",
+      "Consumer Protection Act, 2019 Section 1",
+      "Consumer Protection Act, 2019 Section 2(16)",
+      "Consumer Protection Act, 2019 Section 2(6)"
+    ],
+    "retrieval_precision_percent": 50.0
+  },
+  "legal_standing": {
+    "is_consumer": true,
+    "consumer_rationale": "The complainant paid consideration of ₹1,800.00 for personal use, qualifying as a consumer under Section 2(7) of CPA 2019.",
+    "statutory_violations": [
+      {
+        "statute": "Consumer Protection Act, 2019",
+        "section_or_rule": "Section 2(11)",
+        "title": "Deficiency in Service",
+        "violation_nature": "deficiency_in_service",
+        "explanation": "Shortcoming in quality and manner of performance in servicing order.",
+        "confidence": 1.0
+      },
+      {
+        "statute": "Consumer Protection Act, 2019",
+        "section_or_rule": "Section 2(47)",
+        "title": "Unfair Trade Practice",
+        "violation_nature": "unfair_trade_practice",
+        "explanation": "Refusal to refund consideration for defective goods or services.",
+        "confidence": 1.0
+      },
+      {
+        "statute": "Consumer Protection (E-Commerce) Rules, 2020",
+        "section_or_rule": "Rule 6(3)",
+        "title": "Prohibition of Return / Refund Refusal",
+        "violation_nature": "rule_violation",
+        "explanation": "Seller refused to accept return or refund for defective goods.",
+        "confidence": 1.0
+      }
+    ],
+    "pecuniary_commission_forum": "District Consumer Disputes Redressal Commission",
+    "pecuniary_jurisdiction_limit": "District Commission (Up to ₹50 Lakhs) under 2021 Pecuniary Rules",
+    "jurisdiction_rationale": "Value of consideration paid (₹1,800.00) does not exceed ₹50 Lakhs. Jurisdiction lies with the District Consumer Disputes Redressal Commission under Rule 3 of the Consumer Protection (Jurisdiction of the District Commission, the State Commission and the National Commission) Rules, 2021.",
+    "limitation_period_days": 730,
+    "days_since_cause_of_action": 0,
+    "limitation_status": "within_limitation",
+    "limitation_rationale": "Complaint is well within the 2-year limitation period under Section 69(1) of CPA 2019 (0 days elapsed, 730 days remaining).",
+    "resolution_pathway": [
+      {
+        "step_number": 1,
+        "forum_or_action": "Platform Grievance Officer Escalation",
+        "description": "Submit formal written escalation to the designated Grievance Officer of the e-commerce marketplace citing the 48-hour acknowledgement and 30-day resolution mandate. Demand unique complaint ticket number.",
+        "statutory_basis": "Rule 4(4) and Rule 4(5), Consumer Protection (E-Commerce) Rules, 2020",
+        "expected_duration": "48 hours acknowledgement; 30 days final resolution",
+        "action_owner": "Consumer",
+        "cost_inr": 0.0
+      },
+      {
+        "step_number": 2,
+        "forum_or_action": "National Consumer Helpline (NCH 1915)",
+        "description": "Lodge an informal convergence grievance via Toll-Free 1915, official WhatsApp bot (+91 8800001915), or web portal (consumerhelpline.gov.in). Leverages network with 800+ companies for informal pre-litigation settlement.",
+        "statutory_basis": "NCH-INGRAM Convergence Framework (Department of Consumer Affairs)",
+        "expected_duration": "30 to 45 calendar days",
+        "action_owner": "Consumer",
+        "cost_inr": 0.0
+      },
+      {
+        "step_number": 3,
+        "forum_or_action": "Formal 15-Day Legal Notice",
+        "description": "Dispatch a formal Legal Demand Notice via Speed Post with AD and registered email to Seller and Marketplace headquarters. Demands full refund, 18% interest, and litigation costs within 15 days, warning of e-Daakhil filing.",
+        "statutory_basis": "Sections 2(10), 2(11), 2(47) CPA 2019 & Rule 6(3) E-Commerce Rules",
+        "expected_duration": "15 calendar days from date of receipt",
+        "action_owner": "Consumer / Advocate",
+        "cost_inr": 100.0
+      },
+      {
+        "step_number": 4,
+        "forum_or_action": "e-Daakhil Online Filing (District Consumer Disputes Redressal Commission)",
+        "description": "Institute a formal online consumer complaint on edaakhil.nic.in before the District Consumer Disputes Redressal Commission under Section 35(1) second proviso. Consumer may self-represent (party-in-person). Fee payable online via Bharatkosh.",
+        "statutory_basis": "Section 35 CPA 2019 read with 2021 Pecuniary Rules & Section 34(2)(d)",
+        "expected_duration": "3 to 12 months for final adjudication",
+        "action_owner": "Consumer (Party-in-Person) / Advocate",
+        "cost_inr": 0.0
+      }
+    ],
+    "estimated_timeline": "3 to 12 months for complete adjudication",
+    "estimated_costs": {
+      "court_fees_inr": 0.0,
+      "notice_costs_inr": 100.0,
+      "lawyer_required": false,
+      "total_estimated_out_of_pocket_inr": "₹0 e-Daakhil statutory fee + ~₹100 Speed Post AD (Advocate not required; party-in-person permitted under Section 35 CPA 2019)"
+    },
+    "reliefs_entitled": [
+      "Refund of ₹1,800.00 with 12-18% p.a. interest",
+      "Replacement of defective goods or removal of deficiency under Section 39(1)",
+      "Compensation for mental agony and emotional harassment under Section 39(1)(d)",
+      "Award of litigation costs and incidental expenses under Section 39(1)(m)"
+    ]
+  },
+  "drafted_documents": {
+    "grievance_email": {
+      "document_id": "doc_24d981a2",
+      "document_type": "grievance_email",
+      "title": "Grievance Escalation Email under Rule 4(5) - Consumer Dispute regarding Goods / Services",
+      "recipient": "Grievance Officer, Opposite Party (Merchant / Platform) (grievance-officer@ecommerce-platform.in)",
+      "subject": "FORMAL ESCALATION: Grievance under Rule 4(5) of Consumer Protection (E-Commerce) Rules, 2020 - Order regarding Consumer Dispute regarding Goods / Services",
+      "body_markdown": "**TO**: Grievance Redressal Officer, Opposite Party (Merchant / Platform)\n**EMAIL**: grievance-officer@ecommerce-platform.in\n**DATE**: 2026-11-07\n**SUBJECT**: FORMAL ESCALATION: Grievance under Rule 4(5) of Consumer Protection (E-Commerce) Rules, 2020 - Order regarding Consumer Dispute regarding Goods / Services\n\nDear Grievance Officer,\n\nI am writing to formally lodge a statutory consumer grievance pursuant to **Rule 4(4) and Rule 4(5) of the Consumer Protection (E-Commerce) Rules, 2020** regarding a transaction conducted on your platform.\n\n### 1. TRANSACTION DETAILS\n- **Complainant / Buyer**: Vikram Malhotra (9988776655, vikram.m@example.com)\n- **Transaction / Order Date**: 2026-11-07\n- **Item / Service Purchased**: Consumer Dispute regarding Goods / Services\n- **Valuable Consideration Paid**: ₹1,800.00\n- **Opposite Party Seller**: Opposite Party (Merchant / Platform)\n- **Opposite Party Marketplace**: Opposite Party (Merchant / Platform)\n\n### 2. FACTUAL SUMMARY OF GRIEVANCE\nMy name is Vikram Malhotra (vikram.m@example.com, +91-9988776655), residing at Flat 804, Tower B, Nirvana Country, Sector 50, Gurugram, Haryana. On the night of 15th July 2024 at 20:30 IST, I placed an emergency 10-minute grocery order on the QuickDrop mobile application (operated by QuickDrop Hyperlocal India Pvt Ltd) for a total consideration of Rs. 1,800/- (Order ID: QD-882194) paid via UPI. The order was critical because it contained infant essentials: one tin of Nestle NAN PRO baby formula milk powder (Rs. 850/-), one jumbo pack of Pampers diapers (Rs. 650/-), along with 2 litres of organic cow milk (Rs. 100/-) and fresh fruits (Rs. 200/-). At 20:46 IST, the delivery partner handed over a single sealed brown paper bag. When I opened the bag immediately in the presence of the rider, the baby formula and the diapers were completely missing; the bag only contained the milk and fruits worth Rs. 300/-. When I asked the rider, he shrugged, said the dark store gave him only one bag, and sped away. Within 5 minutes (at 20:51 IST), I raised an issue on QuickDrop's in-app chat support with photos of the delivered bag, the physical receipt, and a kitchen scale showing package weight of 2.1 kg (whereas the full order weighed over 4.8 kg). Instead of human assistance, an automated AI chatbot repeatedly posted: 'Our delivery partner confirmed complete delivery using your 4-digit OTP. As per company policy, items cannot be reported missing once the OTP is shared. Your refund request is rejected.' The chatbot automatically closed the chat session and blocked further replies. The platform took Rs. 1,800/- and refused to refund the Rs. 1,500/- for the undelivered infant supplies, leaving my 6-month-old infant without baby formula late at night.\n\nDespite bringing this matter to the attention of customer support, my legitimate request for refund / replacement was unlawfully denied.\n\n### 3. STATUTORY BREACHES\n1. **Rule 4(5)(b) & (c), Consumer Protection (E-Commerce) Rules, 2020**: Mandatory statutory obligation of the Grievance Officer to acknowledge receipt within forty-eight (48) hours with a ticket number, and redress within thirty (30) days.\n2. **Rule 6(3) & Rule 7(4), Consumer Protection (E-Commerce) Rules, 2020**: Absolute prohibition against refusal to refund consideration paid or take back goods that are defective, deficient, or spurious.\n3. **Section 2(11), Consumer Protection Act, 2019**: Gross deficiency in service by failing to deliver goods as represented and denying legitimate post-sale remedy.\n\n### 4. FORMAL DEMANDS\nPursuant to the mandatory statutory framework, you are hereby called upon to:\n1. **Acknowledge this grievance within forty-eight (48) hours** from receipt and issue an official Complaint Ticket Number.\n2. **Initiate and credit a full refund of ₹1,800.00** to my original payment source within **seven (7) working days**.\n3. **Provide full written resolution** within thirty (30) days as mandated under Rule 4(5)(c).\n\nPlease be advised that failure to resolve this complaint within the statutory window will constrain me to escalate this matter to the **National Consumer Helpline (NCH 1915)**, register a formal complaint with the **Central Consumer Protection Authority (CCPA)** under Section 18 of CPA 2019, and institute legal proceedings before the competent Consumer Commission via **e-Daakhil (`edaakhil.nic.in`)**, claiming full refund with 18% interest, compensation for mental agony, and litigation expenses.\n\nYours faithfully,\n\n**Vikram Malhotra**\nAddress on record\nEmail: vikram.m@example.com | Phone: 9988776655\n",
+      "statutory_citations": [
+        {
+          "statute": "Consumer Protection (E-Commerce) Rules, 2020",
+          "section": "Rule 4(4) & Rule 4(5)",
+          "title": "Grievance Redressal Mechanism & Nodal Officer",
+          "text_excerpt": "Mandatory appointment of Grievance Officer; 48-hour acknowledgement and 30-day redressed resolution.",
+          "is_verified": true,
+          "verification_source": null,
+          "confidence": 1.0
+        },
+        {
+          "statute": "Consumer Protection (E-Commerce) Rules, 2020",
+          "section": "Rule 6(3)",
+          "title": "Duties of Sellers & Prohibition of Return Refusal",
+          "text_excerpt": "No seller on marketplace shall refuse to take back goods or refund consideration if goods are defective, deficient, or spurious.",
+          "is_verified": true,
+          "verification_source": null,
+          "confidence": 1.0
+        },
+        {
+          "statute": "Consumer Protection Act, 2019",
+          "section": "Section 2(11)",
+          "title": "Deficiency in Service",
+          "text_excerpt": "Any fault, imperfection, shortcoming or inadequacy in the quality, nature and manner of performance.",
+          "is_verified": true,
+          "verification_source": null,
+          "confidence": 1.0
+        }
+      ],
+      "verification_statement": null,
+      "annexure_list": [
+        "Annexure 1: Tax Invoice & Payment Receipt",
+        "Annexure 2: Customer Support Denial Chat / Email",
+        "Annexure 3: Photographic / Unboxing Proof"
+      ],
+      "demand_summary": "Full refund of ₹1,800.00 within 7 days and 48-hr ticket number.",
+      "response_deadline_days": 2,
+      "metadata": {
+        "platform": "Opposite Party (Merchant / Platform)",
+        "amount_inr": 1800.0
+      }
+    },
+    "legal_notice": {
+      "document_id": "doc_e7700a3a",
+      "document_type": "legal_notice",
+      "title": "15-Day Formal Legal Notice under CPA 2019 - Consumer Dispute regarding Goods / Services",
+      "recipient": "Opposite Party (Merchant / Platform) & Opposite Party (Merchant / Platform)",
+      "subject": "FORMAL LEGAL DEMAND NOTICE: Under Section 35 CPA 2019 demanding refund of ₹1,800.00 with 18% interest and compensation regarding Order for Consumer Dispute regarding Goods / Services",
+      "body_markdown": "# FORMAL LEGAL DEMAND NOTICE\n**(ISSUED UNDER SECTIONS 2(10), 2(11), 2(47), AND 35 OF THE CONSUMER PROTECTION ACT, 2019 READ WITH RULES 4, 5, AND 6 OF THE CONSUMER PROTECTION (E-COMMERCE) RULES, 2020)**\n\n**SENT VIA REGISTERED POST WITH ACKNOWLEDGMENT DUE (RPAD) & SPEED POST & REGISTERED EMAIL**\n\n**Date**: 2026-11-07\n**Place**: New Delhi, India\n\n**TO**:\n1. **Opposite Party (Merchant / Platform)** (Opposite Party No. 1 / Seller)\n   Address: Address on invoice / Platform seller directory\n2. **Opposite Party (Merchant / Platform)** (Opposite Party No. 2 / Marketplace Entity)\n   Address: Corporate Headquarters / Principal Place of Business in India\n\n**FROM**:\n**Vikram Malhotra** (Complainant / Consumer)\nAddress: Residential Address on record, New Delhi\nEmail: vikram.m@example.com | Phone: 9988776655\n\n**SUBJECT**: FORMAL LEGAL DEMAND NOTICE: Under Section 35 CPA 2019 demanding refund of ₹1,800.00 with 18% interest and compensation regarding Order for Consumer Dispute regarding Goods / Services\n\n---\n\nSIRS / MADAM,\n\nUnder instructions and on behalf of myself, **Vikram Malhotra**, a bona fide consumer, I do hereby serve upon you this Formal Legal Notice:\n\n### 1. BONA FIDE CONSUMER STATUS (SECTION 2(7) CPA 2019)\nThat the Complainant is a bona fide \"consumer\" within the meaning of **Section 2(7) of the Consumer Protection Act, 2019**, having purchased goods/services for personal use for valuable consideration paid, and is not engaged in any commercial resale.\n\n### 2. TRANSACTION AND FACTUAL MATRIX\n1. That on **2026-11-07**, the Complainant ordered **Consumer Dispute regarding Goods / Services** from Opposite Party No. 1 through Opposite Party No. 2's platform, paying **₹1,800.00** electronically.\n2. That upon delivery, the Complainant discovered:\nMy name is Vikram Malhotra (vikram.m@example.com, +91-9988776655), residing at Flat 804, Tower B, Nirvana Country, Sector 50, Gurugram, Haryana. On the night of 15th July 2024 at 20:30 IST, I placed an emergency 10-minute grocery order on the QuickDrop mobile application (operated by QuickDrop Hyperlocal India Pvt Ltd) for a total consideration of Rs. 1,800/- (Order ID: QD-882194) paid via UPI. The order was critical because it contained infant essentials: one tin of Nestle NAN PRO baby formula milk powder (Rs. 850/-), one jumbo pack of Pampers diapers (Rs. 650/-), along with 2 litres of organic cow milk (Rs. 100/-) and fresh fruits (Rs. 200/-). At 20:46 IST, the delivery partner handed over a single sealed brown paper bag. When I opened the bag immediately in the presence of the rider, the baby formula and the diapers were completely missing; the bag only contained the milk and fruits worth Rs. 300/-. When I asked the rider, he shrugged, said the dark store gave him only one bag, and sped away. Within 5 minutes (at 20:51 IST), I raised an issue on QuickDrop's in-app chat support with photos of the delivered bag, the physical receipt, and a kitchen scale showing package weight of 2.1 kg (whereas the full order weighed over 4.8 kg). Instead of human assistance, an automated AI chatbot repeatedly posted: 'Our delivery partner confirmed complete delivery using your 4-digit OTP. As per company policy, items cannot be reported missing once the OTP is shared. Your refund request is rejected.' The chatbot automatically closed the chat session and blocked further replies. The platform took Rs. 1,800/- and refused to refund the Rs. 1,500/- for the undelivered infant supplies, leaving my 6-month-old infant without baby formula late at night.\n3. That the Complainant reported the issue immediately, but Opposite Parties unlawfully denied return/refund citing arbitrary internal policies.\n\n### 3. STATUTORY BREACHES AND UNLAWFUL CONDUCT\n1. **Defect in Goods (Section 2(10), CPA 2019)**: The goods supplied suffer from material faults, substandard quality, and non-conformity with representations made.\n2. **Gross Deficiency in Service (Section 2(11), CPA 2019)**: Opposite Parties failed to fulfill statutory post-sale duties and arbitrarily rejected return requests.\n3. **Unfair Trade Practice (Section 2(47)(viii), CPA 2019)**: Unlawful refusal to take back defective goods and refund consideration paid.\n4. **Violation of E-Commerce Rules, 2020**:\n   - **Rule 6(3)**: Explicit statutory bar prohibiting sellers from refusing refunds.\n   - **Rule 4(5)**: Mandatory grievance resolution timeline violated.\n   - **Non-Exemption under IT Act Section 79**: Under Rule 5(1), marketplace entities cannot seek intermediary safe harbor exemption while actively facilitating unfair trade practices.\n\n### 4. PEREMPTORY 15-DAY DEMAND\nYou are hereby jointly and severally called upon to comply with the following demands within **FIFTEEN (15) DAYS** from the date of receipt of this Legal Notice:\n1. **Full Refund**: Immediately refund **₹1,800.00** along with interest at the rate of **18% per annum** from the date of payment until realization.\n2. **Compensation**: Pay an amount of **₹25,000.00** towards mental agony, severe harassment, trauma, and loss of valuable time caused to the Complainant.\n3. **Legal Expenses**: Pay a sum of **₹5,000.00** towards legal notice expenses.\n\n### 5. NOTICE OF LEGAL ACTION (E-DAAKHIL FILING)\nPlease take notice that if you fail to comply with the aforesaid demands within the stipulated period of **15 days**, the Complainant shall institute an online consumer complaint before the competent **District Consumer Disputes Redressal Commission** under **Section 35 of CPA 2019 via e-Daakhil (`edaakhil.nic.in`)**.\n\nIn that event, you shall be held jointly and severally liable for all consequential damages, punitive damages, and full costs of litigation at your sole risk and peril.\n\n**Copy retained for official records and production before the Hon'ble Consumer Commission.**\n\nYours faithfully,\n\n**Vikram Malhotra**\n(Complainant / Party-in-Person)\n\n**LIST OF ANNEXURES**:\n- Annexure A: Copy of Tax Invoice & Proof of Purchase\n- Annexure B: Bank / UPI Electronic Payment Confirmation\n- Annexure C: Photographs / Video Proof of Defective Goods\n- Annexure D: Customer Support Chat / Rejection Email Trail\n",
+      "statutory_citations": [
+        {
+          "statute": "Consumer Protection Act, 2019",
+          "section": "Section 2(7)",
+          "title": "Consumer Status",
+          "text_excerpt": "Bona fide purchaser of goods for valuable consideration without commercial resale purpose.",
+          "is_verified": true,
+          "verification_source": null,
+          "confidence": 1.0
+        },
+        {
+          "statute": "Consumer Protection Act, 2019",
+          "section": "Section 2(10) & 2(11)",
+          "title": "Defect and Deficiency",
+          "text_excerpt": "Shortcoming in quality, standard, or performance required by law or contract.",
+          "is_verified": true,
+          "verification_source": null,
+          "confidence": 1.0
+        },
+        {
+          "statute": "Consumer Protection Act, 2019",
+          "section": "Section 2(47)(viii)",
+          "title": "Unfair Trade Practice",
+          "text_excerpt": "Refusal to take back defective goods or refund consideration paid.",
+          "is_verified": true,
+          "verification_source": null,
+          "confidence": 1.0
+        },
+        {
+          "statute": "Consumer Protection (E-Commerce) Rules, 2020",
+          "section": "Rule 6(3)",
+          "title": "Prohibition of Return/Refund Refusal",
+          "text_excerpt": "No seller on marketplace shall refuse refund for defective or non-conforming goods.",
+          "is_verified": true,
+          "verification_source": null,
+          "confidence": 1.0
+        }
+      ],
+      "verification_statement": null,
+      "annexure_list": [
+        "Annexure A: Tax Invoice with GSTIN",
+        "Annexure B: Bank / UPI Payment Receipt",
+        "Annexure C: Photographs / Proof of Defective Goods",
+        "Annexure D: Customer Support Chat / Rejection Email Trail"
+      ],
+      "demand_summary": "Full refund of ₹1,800.00 + 18% p.a. interest + ₹25,000.00 compensation within 15 days.",
+      "response_deadline_days": 15,
+      "metadata": {
+        "seller": "Opposite Party (Merchant / Platform)",
+        "platform": "Opposite Party (Merchant / Platform)",
+        "forum": "District Consumer Disputes Redressal Commission"
+      },
+      "notice_period_days": 15,
+      "claim_amount_inr": 26800.0
+    },
+    "edaakhil_complaint": {
+      "document_id": "doc_b11b20fc",
+      "document_type": "edaakhil_complaint",
+      "title": "e-Daakhil Complaint Petition before District Consumer Disputes Redressal Commission - Consumer Dispute regarding Goods / Services",
+      "recipient": "District Consumer Disputes Redressal Commission at New Delhi, Delhi",
+      "subject": "CONSUMER COMPLAINT UNDER SECTION 35 CPA 2019: Vikram Malhotra v. Opposite Party (Merchant / Platform) & Opposite Party (Merchant / Platform) regarding Consumer Dispute regarding Goods / Services",
+      "body_markdown": "# BEFORE THE HON'BLE DISTRICT CONSUMER DISPUTES REDRESSAL COMMISSION AT NEW DELHI, DELHI\n\n### CONSUMER COMPLAINT NO. _________ OF 2026\n**(INSTITUTED UNDER SECTION 35 READ WITH SECTION 34(2)(d) OF THE CONSUMER PROTECTION ACT, 2019)**\n\n---\n\n### PART I: MEMO OF PARTIES\n\n**IN THE MATTER OF:**\n\n**Vikram Malhotra**\nAge: Adult, S/o or D/o: [Parent/Spouse Name on record]\nResiding at: Address on file, New Delhi, Delhi\nMobile: 9988776655 | Email: vikram.m@example.com\n... **COMPLAINANT**\n\n**VERSUS**\n\n1. **Opposite Party (Merchant / Platform)** (Seller)\n   Registered Office: Address on file / Platform seller directory\n   ... **OPPOSITE PARTY NO. 1**\n\n2. **Opposite Party (Merchant / Platform)** (E-Commerce Marketplace Entity)\n   Principal Office: Corporate Headquarters in India\n   ... **OPPOSITE PARTY NO. 2**\n\n---\n\n### PART II: INDEX OF DOCUMENTS\n\n| Sl. No. | Description of Annexure | Annexure Marker |\n|:---:|:---|:---:|\n| 1. | Formal Consumer Complaint with Solemn Verification Affidavit | - |\n| 2. | Copy of Tax Invoice & Proof of Purchase dated 2026-11-07 | **Annexure C-1** |\n| 3. | Copy of Electronic Bank / UPI Payment Receipt of ₹1,800.00 | **Annexure C-2** |\n| 4. | Photographic Proof / Video Recording of Defective / Spurious Goods | **Annexure C-3** |\n| 5. | Email Communication & Customer Support Denial Records | **Annexure C-4** |\n| 6. | Copy of Formal 15-Day Legal Demand Notice dated 2026-11-07 with Postal Receipt | **Annexure C-5** |\n\n---\n\n### PART III: STATEMENT OF MATERIAL FACTS\n\nMOST RESPECTFULLY SHOWETH:\n\n1. **Status of Parties**:\n   The Complainant is an individual residing at New Delhi, Delhi, and is a bona fide \"consumer\" under **Section 2(7) of the Consumer Protection Act, 2019**. The goods/services were purchased solely for personal use for valuable consideration paid, and not for commercial resale. Opposite Party No. 1 is the registered seller, and Opposite Party No. 2 is the marketplace platform under the E-Commerce Rules, 2020.\n\n2. **Purchase Transaction & Consideration**:\n   On **2026-11-07**, the Complainant purchased **Consumer Dispute regarding Goods / Services** through Opposite Party No. 2's marketplace, paying valuable consideration of **₹1,800.00** (**Annexure C-1 and C-2**).\n\n3. **Defect & Grievance**:\n   My name is Vikram Malhotra (vikram.m@example.com, +91-9988776655), residing at Flat 804, Tower B, Nirvana Country, Sector 50, Gurugram, Haryana. On the night of 15th July 2024 at 20:30 IST, I placed an emergency 10-minute grocery order on the QuickDrop mobile application (operated by QuickDrop Hyperlocal India Pvt Ltd) for a total consideration of Rs. 1,800/- (Order ID: QD-882194) paid via UPI. The order was critical because it contained infant essentials: one tin of Nestle NAN PRO baby formula milk powder (Rs. 850/-), one jumbo pack of Pampers diapers (Rs. 650/-), along with 2 litres of organic cow milk (Rs. 100/-) and fresh fruits (Rs. 200/-). At 20:46 IST, the delivery partner handed over a single sealed brown paper bag. When I opened the bag immediately in the presence of the rider, the baby formula and the diapers were completely missing; the bag only contained the milk and fruits worth Rs. 300/-. When I asked the rider, he shrugged, said the dark store gave him only one bag, and sped away. Within 5 minutes (at 20:51 IST), I raised an issue on QuickDrop's in-app chat support with photos of the delivered bag, the physical receipt, and a kitchen scale showing package weight of 2.1 kg (whereas the full order weighed over 4.8 kg). Instead of human assistance, an automated AI chatbot repeatedly posted: 'Our delivery partner confirmed complete delivery using your 4-digit OTP. As per company policy, items cannot be reported missing once the OTP is shared. Your refund request is rejected.' The chatbot automatically closed the chat session and blocked further replies. The platform took Rs. 1,800/- and refused to refund the Rs. 1,500/- for the undelivered infant supplies, leaving my 6-month-old infant without baby formula late at night.\n\n4. **Arbitrary Denial & Statutory Breach**:\n   The Complainant immediately reported the grievance to Opposite Parties. Opposite Parties arbitrarily refused return/refund, directly violating Rule 4(5) and Rule 6(3) of the Consumer Protection (E-Commerce) Rules, 2020.\n\n5. **Exhaustion of Pre-Litigation Notice**:\n   The Complainant dispatched a formal 15-day Legal Demand Notice upon Opposite Parties on 2026-11-07 (**Annexure C-5**). Opposite Parties failed to remedy the grievance within the stipulated window.\n\n---\n\n### PART IV: STATUTORY GROUNDS OF CLAIM\n\nThe present complaint is instituted on the following distinct legal grounds:\n\n- **GROUND A (GROSS DEFICIENCY IN SERVICE - SECTION 2(11) CPA 2019)**:\n  Opposite Parties acted with gross deficiency, imperfection, and inadequacy in the quality and manner of performance required by law and contract.\n\n- **GROUND B (DEFECT IN GOODS - SECTION 2(10) CPA 2019)**:\n  The goods delivered were defective, substandard, and failed to conform to the representations.\n\n- **GROUND C (UNFAIR TRADE PRACTICE - SECTION 2(47)(viii) CPA 2019)**:\n  Opposite Parties adopted an unfair trade practice by unlawfully refusing to take back defective goods and refund consideration paid within thirty days.\n\n- **GROUND D (VIOLATION OF CONSUMER PROTECTION (E-COMMERCE) RULES, 2020)**:\n  Opposite Party No. 1 violated Rule 6(3) barring refusal of refunds. Opposite Party No. 2 breached Rule 4(4) and Rule 4(5) by failing to ensure proper grievance officer redressal.\n\n- **GROUND E (JOINT AND SEVERAL LIABILITY)**:\n  Pursuant to Rule 5(1) of the E-Commerce Rules, Opposite Party No. 2 cannot claim safe harbor under Section 79 of the Information Technology Act, 2000, and is jointly and severally liable.\n\n---\n\n### PART V: PECUNIARY & TERRITORIAL JURISDICTION\n\n1. **Pecuniary Jurisdiction**:\n   The value of consideration paid is **₹1,800.00**, which does not exceed ₹50,00,000/- (Rupees Fifty Lakhs). Hence, this Hon'ble District Commission has competent pecuniary jurisdiction under **Rule 3 of the 2021 Pecuniary Rules**.\n\n2. **Territorial Jurisdiction**:\n   The Complainant resides and personally works for gain at **New Delhi, Delhi**. Territorial jurisdiction is expressly conferred under **Section 34(2)(d) of the Consumer Protection Act, 2019**.\n\n3. **Statutory Filing Fee**:\n   The statutory filing fee is **₹0** under the statutory schedule, payable online via Bharatkosh on e-Daakhil (Nil fee for consideration up to ₹5,00,000/-).\n\n---\n\n### PART VI: LIMITATION STATEMENT (SECTION 69)\n\nThe cause of action first arose on **2026-11-07** when Opposite Parties rejected the return/refund. The present complaint is instituted within the mandatory 2-year limitation period (730 days) prescribed under **Section 69(1) of the Consumer Protection Act, 2019**.\n\n---\n\n### PART VII: PRAYER / RELIEF SOUGHT\n\nWHEREFORE, in light of the above facts, grounds, and statutory provisions, the Complainant most respectfully prays that this Hon'ble Commission may be pleased to:\n\na) **Direct Opposite Parties jointly and severally to refund** the full consideration amount of **₹1,800.00** along with interest @ **12% per annum** from the date of payment until realization;\nb) **Award compensation of ₹25,000.00** against Opposite Parties for mental harassment, trauma, agony, and hardship caused to the Complainant;\nc) **Award litigation costs of ₹5,000.00** incurred in pursuing these proceedings; and\nd) **Pass such other and further relief(s)** as this Hon'ble Commission may deem fit and proper in the interest of justice.\n\n**COMPLAINANT**\nThrough: Self (Party-in-Person)\nPlace: New Delhi\nDate: 2026-11-07\n\n---\n\n### VERIFICATION / SOLEMN AFFIDAVIT CLAUSE\n\nI, Vikram Malhotra, do hereby solemnly declare and verify on oath that the contents of Paragraphs 1 to 5 of the Statement of Facts and the Grounds of Claim are true and correct to the best of my personal knowledge and belief, based on official records, and no part thereof is false and nothing material has been concealed therefrom. Verified at New Delhi on this 7 day of November, 2026.\n\n**DEPONENT / COMPLAINANT**\n",
+      "statutory_citations": [
+        {
+          "statute": "Consumer Protection Act, 2019",
+          "section": "Section 35(1)",
+          "title": "Manner in which Complaint shall be made",
+          "text_excerpt": "Filing of consumer complaint electronically through e-Daakhil before District Commission.",
+          "is_verified": true,
+          "verification_source": null,
+          "confidence": 1.0
+        },
+        {
+          "statute": "Consumer Protection Act, 2019",
+          "section": "Section 34(2)(d)",
+          "title": "Territorial Jurisdiction",
+          "text_excerpt": "Complaint instituted where the complainant resides or personally works for gain.",
+          "is_verified": true,
+          "verification_source": null,
+          "confidence": 1.0
+        },
+        {
+          "statute": "Consumer Protection (Jurisdiction of Commissions) Rules, 2021",
+          "section": "Rule 3",
+          "title": "Pecuniary Jurisdiction of District Commission",
+          "text_excerpt": "Value of goods or services paid as consideration does not exceed fifty lakh rupees.",
+          "is_verified": true,
+          "verification_source": null,
+          "confidence": 1.0
+        },
+        {
+          "statute": "Consumer Protection Act, 2019",
+          "section": "Section 69(1)",
+          "title": "Limitation Period",
+          "text_excerpt": "Complaint shall be admitted within two years from the date on which cause of action has arisen.",
+          "is_verified": true,
+          "verification_source": null,
+          "confidence": 1.0
+        },
+        {
+          "statute": "Consumer Protection Act, 2019",
+          "section": "Section 39",
+          "title": "Findings of Commission & Reliefs",
+          "text_excerpt": "Orders directing refund of price, compensation for negligence, and payment of costs.",
+          "is_verified": true,
+          "verification_source": null,
+          "confidence": 1.0
+        }
+      ],
+      "verification_statement": "I, Vikram Malhotra, do hereby solemnly declare and verify on oath that the contents of Paragraphs 1 to 5 of the Statement of Facts and the Grounds of Claim are true and correct to the best of my personal knowledge and belief, based on official records, and no part thereof is false and nothing material has been concealed therefrom. Verified at New Delhi on this 7 day of November, 2026.",
+      "annexure_list": [
+        "Annexure C-1: Copy of Tax Invoice & Proof of Purchase",
+        "Annexure C-2: Bank / UPI Payment Confirmation Receipt",
+        "Annexure C-3: Photographic Proof / Video Recording of Defective Goods",
+        "Annexure C-4: Customer Support Denial Chat & Grievance Logs",
+        "Annexure C-5: Copy of 15-Day Legal Demand Notice with Postal Tracking Receipt"
+      ],
+      "demand_summary": "Full refund of ₹1,800.00 + 12% p.a. interest + ₹25,000.00 compensation + ₹5,000 costs.",
+      "response_deadline_days": 21,
+      "metadata": {
+        "forum": "District Consumer Disputes Redressal Commission",
+        "court_fee_inr": 0,
+        "territorial_jurisdiction": "New Delhi, Delhi"
+      }
+    }
+  },
+  "citation_verification": {
+    "cleaned_text": "**TO**: Grievance Redressal Officer, Opposite Party (Merchant / Platform)\n**EMAIL**: grievance-officer@ecommerce-platform.in\n**DATE**: 2026-11-07\n**SUBJECT**: FORMAL ESCALATION: Grievance under <flag>Rule 4(5): Unverified citation</flag> of Consumer Protection (E-Commerce) Rules, 2020 - Order regarding Consumer Dispute regarding Goods / Services\n\nDear Grievance Officer,\n\nI am writing to formally lodge a statutory consumer grievance pursuant to **<flag>Rule 4(4): Unverified citation</flag> and <flag>Rule 4(5): Unverified citation</flag> of the Consumer Protection (E-Commerce) Rules, 2020** regarding a transaction conducted on your platform.\n\n### 1. TRANSACTION DETAILS\n- **Complainant / Buyer**: Vikram Malhotra (9988776655, vikram.m@example.com)\n- **Transaction / Order Date**: 2026-11-07\n- **Item / Service Purchased**: Consumer Dispute regarding Goods / Services\n- **Valuable Consideration Paid**: ₹1,800.00\n- **Opposite Party Seller**: Opposite Party (Merchant / Platform)\n- **Opposite Party Marketplace**: Opposite Party (Merchant / Platform)\n\n### 2. FACTUAL SUMMARY OF GRIEVANCE\nMy name is Vikram Malhotra (vikram.m@example.com, +91-9988776655), residing at Flat 804, Tower B, Nirvana Country, Sector 50, Gurugram, Haryana. On the night of 15th July 2024 at 20:30 IST, I placed an emergency 10-minute grocery order on the QuickDrop mobile application (operated by QuickDrop Hyperlocal India Pvt Ltd) for a total consideration of Rs. 1,800/- (Order ID: QD-882194) paid via UPI. The order was critical because it contained infant essentials: one tin of Nestle NAN PRO baby formula milk powder (Rs. 850/-), one jumbo pack of Pampers diapers (Rs. 650/-), along with 2 litres of organic cow milk (Rs. 100/-) and fresh fruits (Rs. 200/-). At 20:46 IST, the delivery partner handed over a single sealed brown paper bag. When I opened the bag immediately in the presence of the rider, the baby formula and the diapers were completely missing; the bag only contained the milk and fruits worth Rs. 300/-. When I asked the rider, he shrugged, said the dark store gave him only one bag, and sped away. Within 5 minutes (at 20:51 IST), I raised an issue on QuickDrop's in-app chat support with photos of the delivered bag, the physical receipt, and a kitchen scale showing package weight of 2.1 kg (whereas the full order weighed over 4.8 kg). Instead of human assistance, an automated AI chatbot repeatedly posted: 'Our delivery partner confirmed complete delivery using your 4-digit OTP. As per company policy, items cannot be reported missing once the OTP is shared. Your refund request is rejected.' The chatbot automatically closed the chat session and blocked further replies. The platform took Rs. 1,800/- and refused to refund the Rs. 1,500/- for the undelivered infant supplies, leaving my 6-month-old infant without baby formula late at night.\n\nDespite bringing this matter to the attention of customer support, my legitimate request for refund / replacement was unlawfully denied.\n\n### 3. STATUTORY BREACHES\n1. **<flag>Rule 4(5)(b): Unverified citation</flag> & (c), Consumer Protection (E-Commerce) Rules, 2020**: Mandatory statutory obligation of the Grievance Officer to acknowledge receipt within forty-eight (48) hours with a ticket number, and redress within thirty (30) days.\n2. **<flag>Rule 6(3): Unverified citation</flag> & <flag>Rule 7(4): Unverified citation</flag>, Consumer Protection (E-Commerce) Rules, 2020**: Absolute prohibition against refusal to refund consideration paid or take back goods that are defective, deficient, or spurious.\n3. **Section 2(11), Consumer Protection Act, 2019**: Gross deficiency in service by failing to deliver goods as represented and denying legitimate post-sale remedy.\n\n### 4. FORMAL DEMANDS\nPursuant to the mandatory statutory framework, you are hereby called upon to:\n1. **Acknowledge this grievance within forty-eight (48) hours** from receipt and issue an official Complaint Ticket Number.\n2. **Initiate and credit a full refund of ₹1,800.00** to my original payment source within **seven (7) working days**.\n3. **Provide full written resolution** within thirty (30) days as mandated under <flag>Rule 4(5)(c): Unverified citation</flag>.\n\nPlease be advised that failure to resolve this complaint within the statutory window will constrain me to escalate this matter to the **National Consumer Helpline (NCH 1915)**, register a formal complaint with the **Central Consumer Protection Authority (CCPA)** under <flag>Section 18: Unverified citation</flag> of CPA 2019, and institute legal proceedings before the competent Consumer Commission via **e-Daakhil (`edaakhil.nic.in`)**, claiming full refund with 18% interest, compensation for mental agony, and litigation expenses.\n\nYours faithfully,\n\n**Vikram Malhotra**\nAddress on record\nEmail: vikram.m@example.com | Phone: 9988776655\n\n\n# FORMAL LEGAL DEMAND NOTICE\n**(ISSUED UNDER <flag>SECTIONS 2(10), 2(11), 2(47): Unverified citation</flag>, AND 35 OF THE CONSUMER PROTECTION ACT, 2019 READ WITH <flag>RULES 4, 5: Unverified citation</flag>, AND 6 OF THE CONSUMER PROTECTION (E-COMMERCE) RULES, 2020)**\n\n**SENT VIA REGISTERED POST WITH ACKNOWLEDGMENT DUE (RPAD) & SPEED POST & REGISTERED EMAIL**\n\n**Date**: 2026-11-07\n**Place**: New Delhi, India\n\n**TO**:\n1. **Opposite Party (Merchant / Platform)** (Opposite Party No. 1 / Seller)\n   Address: Address on invoice / Platform seller directory\n2. **Opposite Party (Merchant / Platform)** (Opposite Party No. 2 / Marketplace Entity)\n   Address: Corporate Headquarters / Principal Place of Business in India\n\n**FROM**:\n**Vikram Malhotra** (Complainant / Consumer)\nAddress: Residential Address on record, New Delhi\nEmail: vikram.m@example.com | Phone: 9988776655\n\n**SUBJECT**: FORMAL LEGAL DEMAND NOTICE: Under <flag>Section 35: Unverified citation</flag> CPA 2019 demanding refund of ₹1,800.00 with 18% interest and compensation regarding Order for Consumer Dispute regarding Goods / Services\n\n---\n\nSIRS / MADAM,\n\nUnder instructions and on behalf of myself, **Vikram Malhotra**, a bona fide consumer, I do hereby serve upon you this Formal Legal Notice:\n\n### 1. BONA FIDE CONSUMER STATUS (SECTION 2(7) CPA 2019)\nThat the Complainant is a bona fide \"consumer\" within the meaning of **Section 2(7) of the Consumer Protection Act, 2019**, having purchased goods/services for personal use for valuable consideration paid, and is not engaged in any commercial resale.\n\n### 2. TRANSACTION AND FACTUAL MATRIX\n1. That on **2026-11-07**, the Complainant ordered **Consumer Dispute regarding Goods / Services** from Opposite Party No. 1 through Opposite Party No. 2's platform, paying **₹1,800.00** electronically.\n2. That upon delivery, the Complainant discovered:\nMy name is Vikram Malhotra (vikram.m@example.com, +91-9988776655), residing at Flat 804, Tower B, Nirvana Country, Sector 50, Gurugram, Haryana. On the night of 15th July 2024 at 20:30 IST, I placed an emergency 10-minute grocery order on the QuickDrop mobile application (operated by QuickDrop Hyperlocal India Pvt Ltd) for a total consideration of Rs. 1,800/- (Order ID: QD-882194) paid via UPI. The order was critical because it contained infant essentials: one tin of Nestle NAN PRO baby formula milk powder (Rs. 850/-), one jumbo pack of Pampers diapers (Rs. 650/-), along with 2 litres of organic cow milk (Rs. 100/-) and fresh fruits (Rs. 200/-). At 20:46 IST, the delivery partner handed over a single sealed brown paper bag. When I opened the bag immediately in the presence of the rider, the baby formula and the diapers were completely missing; the bag only contained the milk and fruits worth Rs. 300/-. When I asked the rider, he shrugged, said the dark store gave him only one bag, and sped away. Within 5 minutes (at 20:51 IST), I raised an issue on QuickDrop's in-app chat support with photos of the delivered bag, the physical receipt, and a kitchen scale showing package weight of 2.1 kg (whereas the full order weighed over 4.8 kg). Instead of human assistance, an automated AI chatbot repeatedly posted: 'Our delivery partner confirmed complete delivery using your 4-digit OTP. As per company policy, items cannot be reported missing once the OTP is shared. Your refund request is rejected.' The chatbot automatically closed the chat session and blocked further replies. The platform took Rs. 1,800/- and refused to refund the Rs. 1,500/- for the undelivered infant supplies, leaving my 6-month-old infant without baby formula late at night.\n3. That the Complainant reported the issue immediately, but Opposite Parties unlawfully denied return/refund citing arbitrary internal policies.\n\n### 3. STATUTORY BREACHES AND UNLAWFUL CONDUCT\n1. **Defect in Goods (<flag>Section 2(10): Unverified citation</flag>, CPA 2019)**: The goods supplied suffer from material faults, substandard quality, and non-conformity with representations made.\n2. **Gross Deficiency in Service (Section 2(11), CPA 2019)**: Opposite Parties failed to fulfill statutory post-sale duties and arbitrarily rejected return requests.\n3. **Unfair Trade Practice (Section 2(47)(viii), CPA 2019)**: Unlawful refusal to take back defective goods and refund consideration paid.\n4. **Violation of E-Commerce Rules, 2020**:\n   - **<flag>Rule 6(3): Unverified citation</flag>**: Explicit statutory bar prohibiting sellers from refusing refunds.\n   - **<flag>Rule 4(5): Unverified citation</flag>**: Mandatory grievance resolution timeline violated.\n   - **Non-Exemption under IT Act <flag>Section 79: Unverified citation</flag>**: Under <flag>Rule 5(1): Unverified citation</flag>, marketplace entities cannot seek intermediary safe harbor exemption while actively facilitating unfair trade practices.\n\n### 4. PEREMPTORY 15-DAY DEMAND\nYou are hereby jointly and severally called upon to comply with the following demands within **FIFTEEN (15) DAYS** from the date of receipt of this Legal Notice:\n1. **Full Refund**: Immediately refund **₹1,800.00** along with interest at the rate of **18% per annum** from the date of payment until realization.\n2. **Compensation**: Pay an amount of **₹25,000.00** towards mental agony, severe harassment, trauma, and loss of valuable time caused to the Complainant.\n3. **Legal Expenses**: Pay a sum of **₹5,000.00** towards legal notice expenses.\n\n### 5. NOTICE OF LEGAL ACTION (E-DAAKHIL FILING)\nPlease take notice that if you fail to comply with the aforesaid demands within the stipulated period of **15 days**, the Complainant shall institute an online consumer complaint before the competent **District Consumer Disputes Redressal Commission** under **<flag>Section 35: Unverified citation</flag> of CPA 2019 via e-Daakhil (`edaakhil.nic.in`)**.\n\nIn that event, you shall be held jointly and severally liable for all consequential damages, punitive damages, and full costs of litigation at your sole risk and peril.\n\n**Copy retained for official records and production before the Hon'ble Consumer Commission.**\n\nYours faithfully,\n\n**Vikram Malhotra**\n(Complainant / Party-in-Person)\n\n**LIST OF ANNEXURES**:\n- Annexure A: Copy of Tax Invoice & Proof of Purchase\n- Annexure B: Bank / UPI Electronic Payment Confirmation\n- Annexure C: Photographs / Video Proof of Defective Goods\n- Annexure D: Customer Support Chat / Rejection Email Trail\n\n\n# BEFORE THE HON'BLE DISTRICT CONSUMER DISPUTES REDRESSAL COMMISSION AT NEW DELHI, DELHI\n\n### CONSUMER COMPLAINT NO. _________ OF 2026\n**(INSTITUTED UNDER <flag>SECTION 35: Unverified citation</flag> READ WITH <flag>SECTION 34(2)(d): Unverified citation</flag> OF THE CONSUMER PROTECTION ACT, 2019)**\n\n---\n\n### PART I: MEMO OF PARTIES\n\n**IN THE MATTER OF:**\n\n**Vikram Malhotra**\nAge: Adult, S/o or D/o: [Parent/Spouse Name on record]\nResiding at: Address on file, New Delhi, Delhi\nMobile: 9988776655 | Email: vikram.m@example.com\n... **COMPLAINANT**\n\n**VERSUS**\n\n1. **Opposite Party (Merchant / Platform)** (Seller)\n   Registered Office: Address on file / Platform seller directory\n   ... **OPPOSITE PARTY NO. 1**\n\n2. **Opposite Party (Merchant / Platform)** (E-Commerce Marketplace Entity)\n   Principal Office: Corporate Headquarters in India\n   ... **OPPOSITE PARTY NO. 2**\n\n---\n\n### PART II: INDEX OF DOCUMENTS\n\n| Sl. No. | Description of Annexure | Annexure Marker |\n|:---:|:---|:---:|\n| 1. | Formal Consumer Complaint with Solemn Verification Affidavit | - |\n| 2. | Copy of Tax Invoice & Proof of Purchase dated 2026-11-07 | **Annexure C-1** |\n| 3. | Copy of Electronic Bank / UPI Payment Receipt of ₹1,800.00 | **Annexure C-2** |\n| 4. | Photographic Proof / Video Recording of Defective / Spurious Goods | **Annexure C-3** |\n| 5. | Email Communication & Customer Support Denial Records | **Annexure C-4** |\n| 6. | Copy of Formal 15-Day Legal Demand Notice dated 2026-11-07 with Postal Receipt | **Annexure C-5** |\n\n---\n\n### PART III: STATEMENT OF MATERIAL FACTS\n\nMOST RESPECTFULLY SHOWETH:\n\n1. **Status of Parties**:\n   The Complainant is an individual residing at New Delhi, Delhi, and is a bona fide \"consumer\" under **Section 2(7) of the Consumer Protection Act, 2019**. The goods/services were purchased solely for personal use for valuable consideration paid, and not for commercial resale. Opposite Party No. 1 is the registered seller, and Opposite Party No. 2 is the marketplace platform under the E-Commerce Rules, 2020.\n\n2. **Purchase Transaction & Consideration**:\n   On **2026-11-07**, the Complainant purchased **Consumer Dispute regarding Goods / Services** through Opposite Party No. 2's marketplace, paying valuable consideration of **₹1,800.00** (**Annexure C-1 and C-2**).\n\n3. **Defect & Grievance**:\n   My name is Vikram Malhotra (vikram.m@example.com, +91-9988776655), residing at Flat 804, Tower B, Nirvana Country, Sector 50, Gurugram, Haryana. On the night of 15th July 2024 at 20:30 IST, I placed an emergency 10-minute grocery order on the QuickDrop mobile application (operated by QuickDrop Hyperlocal India Pvt Ltd) for a total consideration of Rs. 1,800/- (Order ID: QD-882194) paid via UPI. The order was critical because it contained infant essentials: one tin of Nestle NAN PRO baby formula milk powder (Rs. 850/-), one jumbo pack of Pampers diapers (Rs. 650/-), along with 2 litres of organic cow milk (Rs. 100/-) and fresh fruits (Rs. 200/-). At 20:46 IST, the delivery partner handed over a single sealed brown paper bag. When I opened the bag immediately in the presence of the rider, the baby formula and the diapers were completely missing; the bag only contained the milk and fruits worth Rs. 300/-. When I asked the rider, he shrugged, said the dark store gave him only one bag, and sped away. Within 5 minutes (at 20:51 IST), I raised an issue on QuickDrop's in-app chat support with photos of the delivered bag, the physical receipt, and a kitchen scale showing package weight of 2.1 kg (whereas the full order weighed over 4.8 kg). Instead of human assistance, an automated AI chatbot repeatedly posted: 'Our delivery partner confirmed complete delivery using your 4-digit OTP. As per company policy, items cannot be reported missing once the OTP is shared. Your refund request is rejected.' The chatbot automatically closed the chat session and blocked further replies. The platform took Rs. 1,800/- and refused to refund the Rs. 1,500/- for the undelivered infant supplies, leaving my 6-month-old infant without baby formula late at night.\n\n4. **Arbitrary Denial & Statutory Breach**:\n   The Complainant immediately reported the grievance to Opposite Parties. Opposite Parties arbitrarily refused return/refund, directly violating <flag>Rule 4(5): Unverified citation</flag> and <flag>Rule 6(3): Unverified citation</flag> of the Consumer Protection (E-Commerce) Rules, 2020.\n\n5. **Exhaustion of Pre-Litigation Notice**:\n   The Complainant dispatched a formal 15-day Legal Demand Notice upon Opposite Parties on 2026-11-07 (**Annexure C-5**). Opposite Parties failed to remedy the grievance within the stipulated window.\n\n---\n\n### PART IV: STATUTORY GROUNDS OF CLAIM\n\nThe present complaint is instituted on the following distinct legal grounds:\n\n- **GROUND A (GROSS DEFICIENCY IN SERVICE - SECTION 2(11) CPA 2019)**:\n  Opposite Parties acted with gross deficiency, imperfection, and inadequacy in the quality and manner of performance required by law and contract.\n\n- **GROUND B (DEFECT IN GOODS - <flag>SECTION 2(10): Unverified citation</flag> CPA 2019)**:\n  The goods delivered were defective, substandard, and failed to conform to the representations.\n\n- **GROUND C (UNFAIR TRADE PRACTICE - SECTION 2(47)(viii) CPA 2019)**:\n  Opposite Parties adopted an unfair trade practice by unlawfully refusing to take back defective goods and refund consideration paid within thirty days.\n\n- **GROUND D (VIOLATION OF CONSUMER PROTECTION (E-COMMERCE) RULES, 2020)**:\n  Opposite Party No. 1 violated <flag>Rule 6(3): Unverified citation</flag> barring refusal of refunds. Opposite Party No. 2 breached <flag>Rule 4(4): Unverified citation</flag> and <flag>Rule 4(5): Unverified citation</flag> by failing to ensure proper grievance officer redressal.\n\n- **GROUND E (JOINT AND SEVERAL LIABILITY)**:\n  Pursuant to <flag>Rule 5(1): Unverified citation</flag> of the E-Commerce Rules, Opposite Party No. 2 cannot claim safe harbor under <flag>Section 79: Unverified citation</flag> of the Information Technology Act, 2000, and is jointly and severally liable.\n\n---\n\n### PART V: PECUNIARY & TERRITORIAL JURISDICTION\n\n1. **Pecuniary Jurisdiction**:\n   The value of consideration paid is **₹1,800.00**, which does not exceed ₹50,00,000/- (Rupees Fifty Lakhs). Hence, this Hon'ble District Commission has competent pecuniary jurisdiction under **<flag>Rule 3: Unverified citation</flag> of the 2021 Pecuniary Rules**.\n\n2. **Territorial Jurisdiction**:\n   The Complainant resides and personally works for gain at **New Delhi, Delhi**. Territorial jurisdiction is expressly conferred under **<flag>Section 34(2)(d): Unverified citation</flag> of the Consumer Protection Act, 2019**.\n\n3. **Statutory Filing Fee**:\n   The statutory filing fee is **₹0** under the statutory schedule, payable online via Bharatkosh on e-Daakhil (Nil fee for consideration up to ₹5,00,000/-).\n\n---\n\n### PART VI: LIMITATION STATEMENT (<flag>SECTION 69: Unverified citation</flag>)\n\nThe cause of action first arose on **2026-11-07** when Opposite Parties rejected the return/refund. The present complaint is instituted within the mandatory 2-year limitation period (730 days) prescribed under **<flag>Section 69(1): Unverified citation</flag> of the Consumer Protection Act, 2019**.\n\n---\n\n### PART VII: PRAYER / RELIEF SOUGHT\n\nWHEREFORE, in light of the above facts, grounds, and statutory provisions, the Complainant most respectfully prays that this Hon'ble Commission may be pleased to:\n\na) **Direct Opposite Parties jointly and severally to refund** the full consideration amount of **₹1,800.00** along with interest @ **12% per annum** from the date of payment until realization;\nb) **Award compensation of ₹25,000.00** against Opposite Parties for mental harassment, trauma, agony, and hardship caused to the Complainant;\nc) **Award litigation costs of ₹5,000.00** incurred in pursuing these proceedings; and\nd) **Pass such other and further relief(s)** as this Hon'ble Commission may deem fit and proper in the interest of justice.\n\n**COMPLAINANT**\nThrough: Self (Party-in-Person)\nPlace: New Delhi\nDate: 2026-11-07\n\n---\n\n### VERIFICATION / SOLEMN AFFIDAVIT CLAUSE\n\nI, Vikram Malhotra, do hereby solemnly declare and verify on oath that the contents of Paragraphs 1 to 5 of the Statement of Facts and the Grounds of Claim are true and correct to the best of my personal knowledge and belief, based on official records, and no part thereof is false and nothing material has been concealed therefrom. Verified at New Delhi on this 7 day of November, 2026.\n\n**DEPONENT / COMPLAINANT**\n\n\nThe complainant paid consideration of ₹1,800.00 for personal use, qualifying as a consumer under Section 2(7) of CPA 2019.\n\nConsumer Protection Act, 2019 Section 2(7) Consumer Protection Act, 2019 Section 2(11) Consumer Protection Act, 2019 Section 2(47) Consumer Protection (E-Commerce) Rules, 2020 <flag>Rule 4(4): Unverified citation</flag> Consumer Protection (E-Commerce) Rules, 2020 <flag>Rule 4(10): Unverified citation</flag> Consumer Protection (E-Commerce) Rules, 2020 <flag>Rule 7(4): Unverified citation</flag>",
+    "verified_citations": [
+      "Section 2(11)",
+      "SECTION 2(7)",
+      "Section 2(7)",
+      "Section 2(47)(viii)",
+      "SECTION 2(11)",
+      "SECTION 2(47)(viii)",
+      "Section 2(47)",
+      "Central Consumer Protection Authority",
+      "CCPA"
+    ],
+    "flagged_citations": [
+      "Section 18",
+      "SECTIONS 2(10), 2(11), 2(47)",
+      "Section 35",
+      "Section 2(10)",
+      "Section 79",
+      "SECTION 35",
+      "SECTION 34(2)(d)",
+      "SECTION 2(10)",
+      "Section 34(2)(d)",
+      "SECTION 69",
+      "Section 69(1)",
+      "Rule 4(5)",
+      "Rule 4(4)",
+      "Rule 4(5)(b)",
+      "Rule 6(3)",
+      "Rule 7(4)",
+      "Rule 4(5)(c)",
+      "RULES 4, 5",
+      "Rule 5(1)",
+      "Rule 3",
+      "Rule 4(10)"
+    ],
+    "hallucination_detected": true,
+    "warning_message": "Warning: 21 unverified citation(s) detected and flagged."
+  },
+  "opposing_simulation": {
+    "turns": [
+      {
+        "turn_id": "turn_480d67",
+        "turn_number": 1,
+        "speaker": "opposing_counsel",
+        "content": "The delivery was completed and authenticated via One-Time Password (OTP) shared by the customer at the time of delivery. Sharing OTP constitutes conclusive legal acknowledgment that the package was received in sound condition.",
+        "defense_tactic": "otp_verification_acceptance",
+        "feedback": null,
+        "timestamp": "2026-11-07T10:04:17.069296Z"
+      },
+      {
+        "turn_id": "turn_59cf18",
+        "turn_number": 2,
+        "speaker": "consumer",
+        "content": "Under Section 2(7) of the Consumer Protection Act, 2019, sharing a delivery OTP merely confirms receipt of the sealed parcel from the courier, not satisfaction or acceptance of missing internal contents. Failing to deliver the infant formula and diapers constitutes a defect under Section 2(10) and deficiency in service under Section 2(11). Furthermore, under Rule 6(3) and Rule 7(4) of the Consumer Protection (E-Commerce) Rules, 2020, quick-commerce platforms cannot deny refunds for undelivered items by relying on automated OTP verification. Imposing blanket OTP disclaimers is void as an unfair contract under Section 2(46). I demand an immediate refund of Rs. 1,500 for the missing items.",
+        "defense_tactic": null,
+        "feedback": {
+          "score": 100.0,
+          "strengths": [
+            "Invoked statutory consumer protection frameworks (CPA 2019 / E-Commerce Rules).",
+            "Successfully cited relevant statutory provisions: Section 2(10), Section 2(11), Section 2(46), Rule 6(3).",
+            "Directly confronted opponent's tactic regarding Delivery Accepted via OTP Verification.",
+            "Clearly demanded statutory refund and identified defect / deficiency in service.",
+            "Maintained an assertive, professional, courtroom-appropriate tone."
+          ],
+          "weaknesses": [],
+          "statutory_sections_cited": [
+            "Section 2(46)",
+            "Section 2(7)",
+            "Section 2(10)",
+            "Rule 7(4)",
+            "Section 2(11)",
+            "Rule 6(3)"
+          ],
+          "missing_statutory_sections": [],
+          "flaws_in_merchant_defense": [
+            "OTP verification merely confirms receipt of the outer parcel from the delivery agent, not inspection or acceptance of internal contents.",
+            "Latent defects or delivery of spurious/wrong goods inside a sealed box cannot be detected prior to opening."
+          ],
+          "suggested_counter_arguments": [
+            "OTP verification confirms delivery of the outer package, not satisfaction with internal sealed goods.",
+            "Under Section 2(10) and Section 2(11), latent defects discovered upon opening entitle the consumer to full return and refund."
+          ],
+          "coaching_tip": "Outstanding rebuttal. Your argument is anchored in statutory law and dismantles the defense. You are ready to present this position to the Commission."
+        },
+        "timestamp": "2026-11-07T10:04:17.069296Z"
+      }
+    ],
+    "evaluation_score": 100.0,
+    "feedback": {
+      "score": 100.0,
+      "strengths": [
+        "Invoked statutory consumer protection frameworks (CPA 2019 / E-Commerce Rules).",
+        "Successfully cited relevant statutory provisions: Section 2(10), Section 2(11), Section 2(46), Rule 6(3).",
+        "Directly confronted opponent's tactic regarding Delivery Accepted via OTP Verification.",
+        "Clearly demanded statutory refund and identified defect / deficiency in service.",
+        "Maintained an assertive, professional, courtroom-appropriate tone."
+      ],
+      "weaknesses": [],
+      "statutory_sections_cited": [
+        "Section 2(46)",
+        "Section 2(7)",
+        "Section 2(10)",
+        "Rule 7(4)",
+        "Section 2(11)",
+        "Rule 6(3)"
+      ],
+      "missing_statutory_sections": [],
+      "flaws_in_merchant_defense": [
+        "OTP verification merely confirms receipt of the outer parcel from the delivery agent, not inspection or acceptance of internal contents.",
+        "Latent defects or delivery of spurious/wrong goods inside a sealed box cannot be detected prior to opening."
+      ],
+      "suggested_counter_arguments": [
+        "OTP verification confirms delivery of the outer package, not satisfaction with internal sealed goods.",
+        "Under Section 2(10) and Section 2(11), latent defects discovered upon opening entitle the consumer to full return and refund."
+      ],
+      "coaching_tip": "Outstanding rebuttal. Your argument is anchored in statutory law and dismantles the defense. You are ready to present this position to the Commission."
+    }
+  },
+  "guardrail_enforcement": {
+    "downstream_drafting_blocked": false,
+    "advocate_escalation_provided": false,
+    "exception_caught": null
+  },
+  "telemetry": {
+    "execution_duration_seconds": 0.0617,
+    "provider": "mock",
+    "model": "mock-llama3.1:8b",
+    "mock_llm": true,
+    "timestamp_utc": "2026-11-07T10:04:17.069296+00:00"
+  }
+}
