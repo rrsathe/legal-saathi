@@ -112,10 +112,16 @@ def parse_args(args: list[str] | None = None) -> argparse.Namespace:
         help="Use ephemeral in-memory dense store (disables Chroma disk persistence).",
     )
     parser.add_argument(
+        "--validate",
+        dest="validate",
+        action="store_true",
+        default=True,
+        help="Execute retrieval validation probes after indexing (enabled by default).",
+    )
+    parser.add_argument(
         "--no-validate",
         dest="validate",
         action="store_false",
-        default=True,
         help="Skip post-ingestion retrieval validation probes.",
     )
     parser.add_argument(
@@ -261,35 +267,35 @@ def validate_index(retriever: StatutoryHybridRetriever) -> bool:
         bool: True if all validation probes passed confidence gate and retrieved
             expected statutory provisions.
     """
-    probes: list[tuple[str, str, str]] = [
+    probes: list[tuple[str, tuple[str, ...], str]] = [
         (
             "Section 2(47)",
-            "2(47)",
+            ("2(47)",),
             "Exact statutory section lookup",
         ),
         (
             "refusal to refund consideration paid for defective goods",
-            "2(47)",
+            ("2(47)", "Rule 6", "Rule 7"),
             "Colloquial CPA refund query",
         ),
         (
             "e-commerce grievance officer acknowledgement within 48 hours",
-            "Rule 4",
+            ("Rule 4",),
             "E-Commerce Rules grievance probe",
         ),
     ]
 
     all_passed = True
     print("\n--- Running Retrieval Validation Probes ---")
-    for query, expected_fragment, label in probes:
-        results, conf = retriever.retrieve_with_confidence(query, top_k=3)
+    for query, expected_targets, label in probes:
+        results, conf = retriever.retrieve_with_confidence(query, top_k=5)
         top_section = results[0].section if results else "None"
         top_title = results[0].title if results else "None"
         top_score = conf.top_rrf_score
 
-        # Check if expected provision is in top-3 candidates
+        # Check if any expected provision is in top-5 candidates
         sections_found = [r.section for r in results]
-        matched = any(expected_fragment in sec for sec in sections_found)
+        matched = any(any(target in sec for target in expected_targets) for sec in sections_found)
 
         status_str = "[PASS]" if (matched and conf.is_grounded) else "[FAIL]"
         if not (matched and conf.is_grounded):

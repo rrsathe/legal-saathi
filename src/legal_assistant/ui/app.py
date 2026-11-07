@@ -108,9 +108,24 @@ def format_ui_provenance_with_marks(
         "BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;'>"
     ]
 
-    all_terms: set[str] = set(highlight_terms or [])
+    all_terms: set[str] = {t.strip() for t in (highlight_terms or []) if t and t.strip()}
     all_terms.update(CORE_HIGHLIGHT_TERMS)
     sorted_terms = sorted(all_terms, key=len, reverse=True)
+
+    combined_pattern: re.Pattern[str] | None = None
+    if sorted_terms:
+        term_patterns: list[str] = []
+        for term in sorted_terms:
+            escaped = re.escape(term)
+            prefix = r"\b" if re.match(r"^\w", term) else r"(?<!\w)"
+            suffix = r"\b" if re.search(r"\w$", term) else r"(?!\w)"
+            term_patterns.append(f"{prefix}{escaped}{suffix}")
+        combined_pattern = re.compile(f"({'|'.join(term_patterns)})", re.IGNORECASE)
+
+    mark_replacement = (
+        r"<mark style='background-color: #fff176; color: #1a237e; "
+        r"font-weight: 600; padding: 1px 3px; border-radius: 2px;'>\1</mark>"
+    )
 
     for chunk in chunks:
         is_cited = False
@@ -134,14 +149,8 @@ def format_ui_provenance_with_marks(
         )
 
         safe_content = html.escape(chunk.content)
-
-        for term in sorted_terms:
-            pattern = re.compile(rf"\b({re.escape(term)})\b", re.IGNORECASE)
-            safe_content = pattern.sub(
-                r"<mark style='background-color: #fff176; color: #1a237e; "
-                r"font-weight: 600; padding: 1px 3px; border-radius: 2px;'>\1</mark>",
-                safe_content,
-            )
+        if combined_pattern is not None:
+            safe_content = combined_pattern.sub(mark_replacement, safe_content)
 
         card_html = (
             f"<details class='statutory-provenance-card' style='margin-bottom: 10px; "
@@ -200,7 +209,14 @@ def apply_runtime_provider(
         cfg.llm_provider = "groq"
 
     if model_name:
-        setattr(cfg, f"{clean_provider}_model", model_name.strip())
+        clean_model = model_name.strip()
+        setattr(cfg, f"{clean_provider}_model", clean_model)
+        cfg.default_model_name = clean_model
+    else:
+        provider_model = getattr(cfg, f"{clean_provider}_model", None)
+        if provider_model and isinstance(provider_model, str):
+            cfg.default_model_name = provider_model
+
     if api_key:
         setattr(cfg, f"{clean_provider}_api_key", SecretStr(api_key.strip()))
     if base_url and clean_provider == "ollama":
@@ -1340,27 +1356,38 @@ def create_app(
             gem_model: str,
             gem_key: str,
         ) -> tuple[str, str, str]:
+            if g_model:
+                app_settings.groq_model = g_model.strip()
+            if g_key:
+                app_settings.groq_api_key = SecretStr(g_key.strip())
+            if o_model:
+                app_settings.ollama_model = o_model.strip()
+            if o_url:
+                app_settings.ollama_base_url = o_url.strip()
+            if oa_model:
+                app_settings.openai_model = oa_model.strip()
+            if oa_key:
+                app_settings.openai_api_key = SecretStr(oa_key.strip())
+            if gem_model:
+                app_settings.gemini_model = gem_model.strip()
+            if gem_key:
+                app_settings.gemini_api_key = SecretStr(gem_key.strip())
+
+            clean_p = provider.lower().strip()
+            model_map: dict[str, str] = {
+                "groq": g_model,
+                "ollama": o_model,
+                "openai": oa_model,
+                "gemini": gem_model,
+            }
+            chosen_model = model_map.get(clean_p) or getattr(app_settings, f"{clean_p}_model", None)
+
             active_msg = apply_runtime_provider(
                 provider=provider,
+                model_name=chosen_model,
                 settings=app_settings,
                 router=router,
             )
-            if g_model:
-                app_settings.groq_model = g_model
-            if g_key:
-                app_settings.groq_api_key = SecretStr(g_key)
-            if o_model:
-                app_settings.ollama_model = o_model
-            if o_url:
-                app_settings.ollama_base_url = o_url
-            if oa_model:
-                app_settings.openai_model = oa_model
-            if oa_key:
-                app_settings.openai_api_key = SecretStr(oa_key)
-            if gem_model:
-                app_settings.gemini_model = gem_model
-            if gem_key:
-                app_settings.gemini_api_key = SecretStr(gem_key)
 
             indicator = (
                 f"**Current Active Provider:** `{provider}` | "

@@ -185,6 +185,8 @@ def test_ingest_cli_help_flag() -> None:
     assert "--batch-size" in stdout
     assert "--rebuild" in stdout
     assert "--in-memory" in stdout
+    assert "--validate" in stdout
+    assert "--no-validate" in stdout
 
 
 def test_ingest_cli_execution_with_test_arguments(
@@ -317,5 +319,151 @@ def test_run_ingestion_programmatic(synthetic_corpus_dir: Path, tmp_path: Path) 
     assert metrics.total_chunks >= 3
     assert metrics.total_files == 3
     assert metrics.unique_statutes >= 2
+    assert metrics.validation_passed is True
+    assert metrics.total_time_seconds > 0.0
+
+
+def test_ingest_cli_with_validate_flag(
+    synthetic_corpus_dir: Path,
+    tmp_path: Path,
+) -> None:
+    """Verify CLI execution accepts and succeeds with explicit --validate flag."""
+    script_path = Path("scripts/ingest_corpus.py").resolve()
+    persist_dir = tmp_path / "test_chroma_val"
+    bm25_file = tmp_path / "test_bm25_val.pkl"
+
+    cmd = [
+        sys.executable,
+        str(script_path),
+        "--corpus-dir",
+        str(synthetic_corpus_dir),
+        "--persist-dir",
+        str(persist_dir),
+        "--bm25-path",
+        str(bm25_file),
+        "--in-memory",
+        "--validate",
+        "--batch-size",
+        "16",
+    ]
+
+    result = subprocess.run(
+        cmd,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, f"Error: {result.stderr}\nStdout: {result.stdout}"
+    assert "[PASS]" in result.stdout
+    assert "SUCCESS" in result.stdout
+
+
+def test_ingest_cli_with_no_validate_flag(
+    synthetic_corpus_dir: Path,
+    tmp_path: Path,
+) -> None:
+    """Verify CLI execution with --no-validate skips validation probes."""
+    script_path = Path("scripts/ingest_corpus.py").resolve()
+    persist_dir = tmp_path / "test_chroma_noval"
+    bm25_file = tmp_path / "test_bm25_noval.pkl"
+
+    cmd = [
+        sys.executable,
+        str(script_path),
+        "--corpus-dir",
+        str(synthetic_corpus_dir),
+        "--persist-dir",
+        str(persist_dir),
+        "--bm25-path",
+        str(bm25_file),
+        "--in-memory",
+        "--no-validate",
+        "--batch-size",
+        "16",
+    ]
+
+    result = subprocess.run(
+        cmd,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, f"Error: {result.stderr}\nStdout: {result.stdout}"
+    assert "Running Retrieval Validation Probes" not in result.stdout
+
+
+def test_ingest_cli_validate_and_no_validate_flags() -> None:
+    """Verify --validate and --no-validate flags are accepted by CLI parser."""
+    from scripts.ingest_corpus import parse_args
+
+    # Explicit --validate flag
+    args_validate = parse_args(["--in-memory", "--validate"])
+    assert args_validate.validate is True
+    assert args_validate.in_memory is True
+
+    # Explicit --no-validate flag
+    args_no_validate = parse_args(["--in-memory", "--no-validate"])
+    assert args_no_validate.validate is False
+
+    # Default without flags
+    args_default = parse_args(["--in-memory"])
+    assert args_default.validate is True
+
+
+def test_ingest_cli_real_corpus_in_memory_validate() -> None:
+    """Verify CLI ingests real statutory corpus in memory with --validate and exits 0."""
+    script_path = Path("scripts/ingest_corpus.py").resolve()
+    corpus_dir = Path("data/statutes").resolve()
+
+    assert script_path.exists(), f"Script not found at: {script_path}"
+    assert corpus_dir.exists(), f"Corpus directory not found at: {corpus_dir}"
+
+    cmd = [
+        sys.executable,
+        str(script_path),
+        "--corpus-dir",
+        str(corpus_dir),
+        "--in-memory",
+        "--validate",
+        "-v",
+    ]
+
+    result = subprocess.run(
+        cmd,
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+
+    err_msg = (
+        f"CLI failed with code {result.returncode}.\n"
+        f"Stderr: {result.stderr}\nStdout: {result.stdout}"
+    )
+    assert result.returncode == 0, err_msg
+    assert "[PASS]" in result.stdout
+    assert "SUCCESS" in result.stdout
+    assert "Total Chunks" in result.stdout or "TOTAL CHUNKS" in result.stdout
+
+
+def test_run_ingestion_programmatic_real_corpus() -> None:
+    """Verify run_ingestion processes real data/statutes corpus with validation probes."""
+    corpus_dir = Path("data/statutes").resolve()
+    args = argparse.Namespace(
+        corpus_dir=corpus_dir,
+        persist_dir=Path("data/index/test_chroma"),
+        bm25_path=Path("data/index/test_bm25.pkl"),
+        batch_size=32,
+        rebuild=True,
+        in_memory=True,
+        validate=True,
+        verbose=False,
+    )
+
+    metrics = run_ingestion(args)
+
+    assert isinstance(metrics, IngestionMetrics)
+    assert metrics.total_chunks == 46
+    assert metrics.total_files == 3
+    assert metrics.unique_statutes >= 3
     assert metrics.validation_passed is True
     assert metrics.total_time_seconds > 0.0

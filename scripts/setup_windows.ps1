@@ -180,7 +180,16 @@ if ($SkipIngestion) {
         Write-FailureAndExit "Corpus ingestion script not found at $IngestScript"
     }
 
-    $IngestArgs = @("run", "python", $IngestScript, "--corpus-dir", "data/statutes", "--persist-dir", "data/index/chroma")
+    $IngestArgs = @(
+        "run",
+        "python",
+        $IngestScript,
+        "--corpus-dir",
+        "data/statutes",
+        "--persist-dir",
+        "data/index/chroma",
+        "--validate"
+    )
     if ($RebuildIndex) {
         $IngestArgs += "--rebuild"
     }

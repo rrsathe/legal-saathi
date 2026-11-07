@@ -69,6 +69,7 @@ def test_settings() -> Settings:
     """
     return Settings(
         llm_provider="groq",
+        default_model_name=None,
         groq_model="llama-3.1-8b-instant",
         groq_api_key=SecretStr("gsk_test_api_key_1234567890"),
         ollama_model="llama3.1:8b",
@@ -503,6 +504,102 @@ def test_format_ui_provenance_custom_highlight_terms(
     assert re.search(r"<mark[^>]*>deceptive</mark>", html_output, re.IGNORECASE)
 
 
+def test_format_ui_provenance_avoids_nested_mark_tags() -> None:
+    """Verify overlapping highlight terms do not produce nested <mark> tags."""
+    chunk = RetrievedChunk(
+        chunk_id="test_nested_mark",
+        content=(
+            "The seller committed a grave deficiency in service by failing "
+            "to provide any replacement or refund within thirty days, constituting "
+            "an unfair trade practice under the Consumer Protection Act."
+        ),
+        statute="Consumer Protection Act, 2019",
+        chapter="Chapter I - Preliminary",
+        section="Section 2(11)",
+        title="Definition of Deficiency",
+        score=0.045,
+    )
+
+    html_output = format_ui_provenance_with_marks([chunk])
+
+    assert "<mark" in html_output
+    assert "</mark>" in html_output
+
+    nested_mark_pattern = re.compile(r"<mark[^>]*>[^<]*<mark", re.IGNORECASE)
+    assert not nested_mark_pattern.search(html_output), (
+        f"Found nested <mark> tags in HTML output: {html_output}"
+    )
+
+    assert html_output.count("<mark") == html_output.count("</mark>")
+
+    assert re.search(r"<mark[^>]*>deficiency in service</mark>", html_output, re.IGNORECASE)
+    assert re.search(r"<mark[^>]*>unfair trade practice</mark>", html_output, re.IGNORECASE)
+
+
+def test_format_ui_provenance_overlapping_custom_highlight_terms() -> None:
+    """Verify custom overlapping terms are highlighted longest-first without nesting."""
+    chunk = RetrievedChunk(
+        chunk_id="test_custom_overlap",
+        content="Refusal to refund consideration paid for defective goods is prohibited.",
+        statute="Consumer Protection Act, 2019",
+        chapter="Chapter I - Preliminary",
+        section="Section 2(47)",
+        title="Unfair Trade Practice",
+        score=0.048,
+    )
+
+    overlapping_terms = [
+        "defective goods",
+        "defective",
+        "refund consideration paid",
+        "refund",
+        "goods",
+    ]
+
+    html_output = format_ui_provenance_with_marks(
+        chunks=[chunk],
+        highlight_terms=overlapping_terms,
+    )
+
+    assert not re.search(r"<mark[^>]*>[^<]*<mark", html_output)
+    assert html_output.count("<mark") == html_output.count("</mark>")
+
+    assert re.search(r"<mark[^>]*>defective goods</mark>", html_output, re.IGNORECASE)
+    assert re.search(r"<mark[^>]*>refund consideration paid</mark>", html_output, re.IGNORECASE)
+
+
+def test_format_ui_provenance_css_keyword_collision_safe() -> None:
+    """Verify custom highlight terms matching CSS attribute keywords do not corrupt HTML."""
+    chunk = RetrievedChunk(
+        chunk_id="css_collision",
+        content="The color and font size of the warranty card were obscured.",
+        statute="CPA 2019",
+        chapter="General",
+        section="1",
+        title="Notice",
+        score=0.01,
+    )
+    html_output = format_ui_provenance_with_marks(
+        [chunk],
+        highlight_terms=["color", "font", "style", "background"],
+    )
+
+    assert not re.search(r"<mark[^>]*>[^<]*<mark", html_output)
+    assert "<details class='statutory-provenance-card'" in html_output
+
+
+def test_format_ui_provenance_empty_highlight_terms_safety(
+    sample_statutory_chunks: list[RetrievedChunk],
+) -> None:
+    """Verify formatting succeeds without error when highlight_terms is explicitly empty."""
+    html_output = format_ui_provenance_with_marks(
+        chunks=sample_statutory_chunks,
+        highlight_terms=[],
+    )
+    assert "<mark" in html_output
+    assert "</mark>" in html_output
+
+
 # ==============================================================================
 # 3. Model Switcher State Updates & Callbacks
 # ==============================================================================
@@ -537,7 +634,7 @@ def test_apply_runtime_provider_with_model_override(
     test_settings: Settings,
     mock_router: LLMRouter,
 ) -> None:
-    """Verify updating model identifier updates settings and active model."""
+    """Verify updating model identifier updates settings, active model, and default_model_name."""
     apply_runtime_provider(
         provider="groq",
         model_name="llama-3.3-70b-versatile",
@@ -546,7 +643,92 @@ def test_apply_runtime_provider_with_model_override(
     )
 
     assert test_settings.groq_model == "llama-3.3-70b-versatile"
+    assert test_settings.default_model_name == "llama-3.3-70b-versatile"
     assert test_settings.get_active_model("groq") == "llama-3.3-70b-versatile"
+
+
+def test_apply_runtime_provider_with_env_default_model_name(
+    monkeypatch: pytest.MonkeyPatch,
+    mock_router: LLMRouter,
+) -> None:
+    """Verify runtime model override supersedes DEFAULT_MODEL_NAME set in .env."""
+    monkeypatch.setenv("DEFAULT_MODEL_NAME", "llama-3.1-8b-instant")
+    settings = Settings(
+        llm_provider="groq",
+        groq_model="llama-3.1-8b-instant",
+        groq_api_key=SecretStr("gsk_test_api_key_1234567890"),
+        ollama_model="llama3.1:8b",
+        ollama_base_url="http://localhost:11434",
+    )
+    assert settings.default_model_name == "llama-3.1-8b-instant"
+    assert settings.get_active_model("groq") == "llama-3.1-8b-instant"
+
+    msg = apply_runtime_provider(
+        provider="groq",
+        model_name="llama-3.3-70b-versatile",
+        settings=settings,
+        router=mock_router,
+    )
+
+    assert settings.groq_model == "llama-3.3-70b-versatile"
+    assert settings.default_model_name == "llama-3.3-70b-versatile"
+    assert settings.get_active_model("groq") == "llama-3.3-70b-versatile"
+    assert "llama-3.3-70b-versatile" in msg
+
+
+def test_apply_runtime_provider_without_env_default_model_name(
+    monkeypatch: pytest.MonkeyPatch,
+    mock_router: LLMRouter,
+) -> None:
+    """Verify runtime model override works cleanly when DEFAULT_MODEL_NAME is absent."""
+    monkeypatch.delenv("DEFAULT_MODEL_NAME", raising=False)
+    settings = Settings(
+        llm_provider="groq",
+        groq_model="llama-3.1-8b-instant",
+        default_model_name=None,
+        groq_api_key=SecretStr("gsk_test_api_key_1234567890"),
+        ollama_model="llama3.1:8b",
+        ollama_base_url="http://localhost:11434",
+    )
+    assert settings.default_model_name is None
+    assert settings.get_active_model("groq") == "llama-3.1-8b-instant"
+
+    msg = apply_runtime_provider(
+        provider="groq",
+        model_name="llama-3.3-70b-versatile",
+        settings=settings,
+        router=mock_router,
+    )
+
+    assert settings.groq_model == "llama-3.3-70b-versatile"
+    assert settings.default_model_name == "llama-3.3-70b-versatile"
+    assert settings.get_active_model("groq") == "llama-3.3-70b-versatile"
+    assert "llama-3.3-70b-versatile" in msg
+
+
+def test_apply_runtime_provider_switching_without_model_override(
+    mock_router: LLMRouter,
+) -> None:
+    """Verify switching provider without model override updates default_model_name."""
+    settings = Settings(
+        llm_provider="groq",
+        groq_model="llama-3.1-8b-instant",
+        ollama_model="llama3.1:8b",
+        default_model_name="llama-3.1-8b-instant",
+    )
+    assert settings.get_active_model() == "llama-3.1-8b-instant"
+
+    msg = apply_runtime_provider(
+        provider="ollama",
+        model_name=None,
+        settings=settings,
+        router=mock_router,
+    )
+
+    assert settings.llm_provider == "ollama"
+    assert settings.get_active_model("ollama") == "llama3.1:8b"
+    assert settings.default_model_name == "llama3.1:8b"
+    assert "llama3.1:8b" in msg
 
 
 def test_apply_runtime_provider_cache_invalidation(
