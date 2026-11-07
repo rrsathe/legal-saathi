@@ -203,6 +203,216 @@ class TestScopeCheckerAdversarial:
         cat = exc_info.value.scope_result.out_of_scope_category
         assert cat == ScopeCategory.URGENT_INJUNCTION.value
 
+    # --------------------------------------------------------------------------
+    # Challenger 1 Remediation: Violent Crimes with Consumer Context
+    # --------------------------------------------------------------------------
+
+    @pytest.mark.parametrize(
+        ("query", "expected_category"),
+        [
+            (
+                "The shopkeeper assaulted me when I demanded a refund.",
+                ScopeCategory.CRIMINAL_OFFENSE,
+            ),
+            (
+                "The merchant gave me a threat to kill when I asked for a refund.",
+                ScopeCategory.CRIMINAL_OFFENSE,
+            ),
+        ],
+    )
+    def test_violent_crimes_with_consumer_words_rejected(
+        self,
+        checker: ScopeChecker,
+        query: str,
+        expected_category: ScopeCategory,
+    ) -> None:
+        """Verify physical assault and death threats are rejected even with consumer words.
+
+        Mandatory rule: Violent criminal acts must NEVER be overridden by consumer
+        context terms (e.g., 'shopkeeper', 'merchant', 'refund').
+        """
+        res: ScopeResult = checker.check_scope(query)
+        assert res.is_in_scope is False
+        assert res.out_of_scope_category == expected_category.value
+        assert res.escalation_advice is not None
+        assert "police" in res.escalation_advice.lower() or "fir" in res.escalation_advice.lower()
+
+    # --------------------------------------------------------------------------
+    # Challenger 1 Remediation: Cheque Dishonour Phrasing Variations
+    # --------------------------------------------------------------------------
+
+    @pytest.mark.parametrize(
+        "query",
+        [
+            "The supplier gave me a bad cheque that dishonoured.",
+            "A cheque was dishonoured due to stop payment.",
+            "I received a dishonoured cheque from the client.",
+        ],
+    )
+    def test_cheque_dishonour_variations_rejected(
+        self,
+        checker: ScopeChecker,
+        query: str,
+    ) -> None:
+        """Verify cheque dishonour grammatical variants are rejected under NI Act 138."""
+        res: ScopeResult = checker.check_scope(query)
+        assert res.is_in_scope is False
+        assert res.out_of_scope_category == ScopeCategory.CHEQUE_BOUNCE.value
+        assert res.escalation_advice is not None
+        assert (
+            "138" in res.escalation_advice
+            or "negotiable instruments" in res.escalation_advice.lower()
+        )
+
+    # --------------------------------------------------------------------------
+    # Challenger 1 Remediation: Commercial B2B Wholesale and Resale
+    # --------------------------------------------------------------------------
+
+    @pytest.mark.parametrize(
+        "query",
+        [
+            "We bought 500 units of widgets for wholesale resale.",
+            "We bought goods for resale to retailers.",
+            "Commercial contract dispute between two private limited companies.",
+        ],
+    )
+    def test_commercial_b2b_wholesale_and_contracts_rejected(
+        self,
+        checker: ScopeChecker,
+        query: str,
+    ) -> None:
+        """Verify commercial wholesale resale and inter-company contracts are rejected."""
+        res: ScopeResult = checker.check_scope(query)
+        assert res.is_in_scope is False
+        assert res.out_of_scope_category == ScopeCategory.COMMERCIAL_B2B.value
+        assert res.escalation_advice is not None
+        assert "commercial" in res.escalation_advice.lower()
+
+    # --------------------------------------------------------------------------
+    # Challenger 1 Remediation: Urgent Injunction Variations
+    # --------------------------------------------------------------------------
+
+    @pytest.mark.parametrize(
+        "query",
+        [
+            "We need an injunction to stop construction on our land.",
+            "The tenant refuses to vacate and we want an eviction order.",
+        ],
+    )
+    def test_injunction_variations_rejected(
+        self,
+        checker: ScopeChecker,
+        query: str,
+    ) -> None:
+        """Verify stop construction and eviction order injunctions are rejected."""
+        res: ScopeResult = checker.check_scope(query)
+        assert res.is_in_scope is False
+        assert res.out_of_scope_category == ScopeCategory.URGENT_INJUNCTION.value
+        assert res.escalation_advice is not None
+        assert (
+            "injunction" in res.escalation_advice.lower()
+            or "advocate" in res.escalation_advice.lower()
+        )
+
+    # --------------------------------------------------------------------------
+    # Challenger 1 Remediation: Genuine Consumer 100% Pass Invariant
+    # --------------------------------------------------------------------------
+
+    @pytest.mark.parametrize(
+        ("query", "scenario_name"),
+        [
+            (
+                "I ordered clothes on Instagram and paid Rs 4500 via UPI. "
+                "The seller blocked me without delivery.",
+                "Instagram UPI Scam (Rs)",
+            ),
+            (
+                "I paid ₹4,500 via UPI on Instagram and the seller stopped replying "
+                "and blocked the buyer.",
+                "Instagram UPI Scam (₹)",
+            ),
+            (
+                "I bought a defective laptop on Flipkart and platform refused refund "
+                "citing contact manufacturer.",
+                "Flipkart Defective Laptop",
+            ),
+            (
+                "EdTech subscription refusing refund despite cancellation within "
+                "7 day trial period.",
+                "EdTech Subscription Cancellation",
+            ),
+            (
+                "Small shopkeeper bought a Xerox photocopier machine for personal "
+                "self-employment livelihood.",
+                "Xerox Photocopier Livelihood",
+            ),
+            (
+                "Purchased a sewing machine for earning my personal living and livelihood.",
+                "Sewing Machine Personal Living",
+            ),
+        ],
+    )
+    def test_genuine_consumer_queries_retained_in_scope(
+        self,
+        checker: ScopeChecker,
+        query: str,
+        scenario_name: str,
+    ) -> None:
+        """Verify genuine consumer queries maintain a 100% pass rate in consumer forum."""
+        res: ScopeResult = checker.check_scope(query)
+        assert res.is_in_scope is True, f"Failed for {scenario_name}: {query}"
+        assert res.out_of_scope_category is None
+        assert res.escalation_advice is None
+
+    # --------------------------------------------------------------------------
+    # Challenger 1 Remediation: Blast Radius Downstream Integration Tests
+    # --------------------------------------------------------------------------
+
+    def test_blast_radius_downstream_casebuilder_rejects_violent_assault(
+        self,
+        checker: ScopeChecker,
+    ) -> None:
+        """Verify CaseBuilder raises OutOfScopeDisputeError for violent assault."""
+        builder = CaseBuilder(scope_checker=checker)
+        with pytest.raises(OutOfScopeDisputeError) as exc_info:
+            builder.build_case(
+                "The shopkeeper assaulted me when I demanded a refund.",
+                use_llm=False,
+            )
+        assert exc_info.value.scope_result is not None
+        cat = exc_info.value.scope_result.out_of_scope_category
+        assert cat == ScopeCategory.CRIMINAL_OFFENSE.value
+
+    def test_blast_radius_downstream_casebuilder_rejects_dishonoured_cheque(
+        self,
+        checker: ScopeChecker,
+    ) -> None:
+        """Verify CaseBuilder raises OutOfScopeDisputeError for cheque dishonour."""
+        builder = CaseBuilder(scope_checker=checker)
+        with pytest.raises(OutOfScopeDisputeError) as exc_info:
+            builder.build_case(
+                "The supplier gave me a bad cheque that dishonoured.",
+                use_llm=False,
+            )
+        assert exc_info.value.scope_result is not None
+        cat = exc_info.value.scope_result.out_of_scope_category
+        assert cat == ScopeCategory.CHEQUE_BOUNCE.value
+
+    def test_blast_radius_downstream_casebuilder_rejects_wholesale_resale(
+        self,
+        checker: ScopeChecker,
+    ) -> None:
+        """Verify CaseBuilder raises OutOfScopeDisputeError for wholesale resale."""
+        builder = CaseBuilder(scope_checker=checker)
+        with pytest.raises(OutOfScopeDisputeError) as exc_info:
+            builder.build_case(
+                "We bought 500 units of widgets for wholesale resale.",
+                use_llm=False,
+            )
+        assert exc_info.value.scope_result is not None
+        cat = exc_info.value.scope_result.out_of_scope_category
+        assert cat == ScopeCategory.COMMERCIAL_B2B.value
+
 
 # ==============================================================================
 # 2. LAYER 2: Retrieval Confidence Gate Adversarial Tests
@@ -439,3 +649,79 @@ class TestCitationVerifierAdversarial:
         res = verifier.verify_response(text, ground_truth_chunks)
         assert res.hallucination_detected is False
         assert "Sections 2(47) and 2(47)" in res.verified_citations
+
+    # --------------------------------------------------------------------------
+    # Challenger 1 Remediation: Fabricated Subclauses with Non-Alphanumerics
+    # --------------------------------------------------------------------------
+
+    @pytest.mark.parametrize(
+        ("fake_subclause", "full_text"),
+        [
+            (
+                "Section 2(47)(fake_subclause)",
+                "Under Section 2(47)(fake_subclause), seller is penalized.",
+            ),
+            (
+                "Section 2(47)(fake-subclause)",
+                "Under Section 2(47)(fake-subclause), unfair trade practice applies.",
+            ),
+        ],
+    )
+    def test_fabricated_subclauses_underscore_and_hyphen_flagged_and_stripped(
+        self,
+        verifier: CitationVerifier,
+        ground_truth_chunks: list[RetrievedChunk],
+        fake_subclause: str,
+        full_text: str,
+    ) -> None:
+        """Verify non-alphanumeric subclauses are detected, flagged, and stripped."""
+        # 1. Action = 'flag'
+        res_flag: VerifiedResponse = verifier.verify_response(
+            full_text, ground_truth_chunks, action="flag"
+        )
+        assert res_flag.hallucination_detected is True
+        assert fake_subclause in res_flag.flagged_citations
+        assert f"<flag>{fake_subclause}: Unverified citation</flag>" in res_flag.cleaned_text
+
+        # 2. Action = 'strip'
+        res_strip: VerifiedResponse = verifier.verify_response(
+            full_text, ground_truth_chunks, action="strip"
+        )
+        assert res_strip.hallucination_detected is True
+        assert fake_subclause in res_strip.flagged_citations
+        assert fake_subclause not in res_strip.cleaned_text
+        assert "[Citation omitted - unverified in statutory corpus]" in res_strip.cleaned_text
+
+    def test_ecommerce_rule_fabricated_subclause_detected(
+        self,
+        verifier: CitationVerifier,
+        ground_truth_chunks: list[RetrievedChunk],
+    ) -> None:
+        """Verify fabricated subrules like 'Rule 4(5)(fake_subrule)' are caught."""
+        text = "Under Rule 4(5)(fake_subrule), the platform is strictly liable."
+        res = verifier.verify_response(text, ground_truth_chunks, action="flag")
+        assert res.hallucination_detected is True
+        assert "Rule 4(5)(fake_subrule)" in res.flagged_citations
+        assert "<flag>Rule 4(5)(fake_subrule): Unverified citation</flag>" in res.cleaned_text
+
+    @pytest.mark.parametrize(
+        "fabricated_subclause_citation",
+        [
+            "Section 2(47)(fake_subclause)",
+            "Section 2(47)(fake-subclause)",
+            "Section 2(47)(xyz999)",
+            "Rule 4(5)(fake_subrule)",
+            "Section 35(fake_subclause)",
+        ],
+    )
+    def test_fabricated_subclauses_rejected(
+        self,
+        verifier: CitationVerifier,
+        ground_truth_chunks: list[RetrievedChunk],
+        fabricated_subclause_citation: str,
+    ) -> None:
+        """Verify fabricated subclauses with non-alphanumeric characters are caught."""
+        text = f"Under {fabricated_subclause_citation}, refund is mandatory."
+        res = verifier.verify_response(text, ground_truth_chunks)
+        assert res.hallucination_detected is True
+        assert any(fabricated_subclause_citation in f for f in res.flagged_citations)

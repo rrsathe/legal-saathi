@@ -146,7 +146,8 @@ class ScopeChecker:
                 re.I,
             ),
             re.compile(
-                r"\b(?:murder|homicide|assault|battery|physical\s+violence|grievous\s+hurt|stabbed)\b",
+                r"\b(?:murder|homicide|assault(?:ed|ing|s)?|battery|physical\s+violence|grievous\s+hurt|stabbed|"
+                r"threat\s+to\s+kill|death\s+threat(?:s)?|threatened\s+to\s+kill)\b",
                 re.I,
             ),
             re.compile(
@@ -168,8 +169,9 @@ class ScopeChecker:
                 re.I,
             ),
             re.compile(
-                r"\b(?:cheque\s+bounce|bounced\s+cheque|cheque\s+dishonou?r(?:ed)?|"
-                r"dishonou?r\s+of\s+cheque)\b",
+                r"\b(?:cheque\s+bounce|bounced\s+cheque|dishonou?red\s+cheque|bad\s+cheque|"
+                r"cheque\s+(?:\w+\s+){0,3}dishonou?r(?:ed)?|dishonou?r\s+of\s+cheque|"
+                r"stop\s+payment)\b",
                 re.I,
             ),
             re.compile(
@@ -193,11 +195,10 @@ class ScopeChecker:
                 re.I,
             ),
             re.compile(
-                r"\b(?:b2b|wholesale\s+(?:purchase|goods)(?:\s+for\s+resale)?|"
-                r"commercial\s+resale|factory\s+resale|"
-                r"raw\s+material(?:\s+for\s+(?:factory\s+)?resale)?|"
-                r"goods\s+purchased\s+for\s+resale|commercial\s+purpose|"
-                r"commercial\s+use)\b",
+                r"\b(?:b2b|wholesale\s+(?:purchase|goods|resale)|wholesale\s+resale|"
+                r"commercial\s+(?:resale|purpose|use|contract|lease|agreement|dispute)|"
+                r"factory\s+resale|raw\s+material(?:\s+for\s+(?:factory\s+)?resale)?|"
+                r"goods\s+(?:purchased\s+)?for\s+resale)\b",
                 re.I,
             ),
             re.compile(
@@ -249,7 +250,7 @@ class ScopeChecker:
         # 5. Urgent Injunctions / Demolition / Stay Orders
         self._injunction_patterns = [
             re.compile(
-                r"\b(?:urgent\s+stay\s+order|stay\s+order|interim\s+injunction|"
+                r"\b(?:urgent\s+stay\s+order|stay\s+order|interim\s+stay|interim\s+injunction|"
                 r"interlocutory\s+injunction|urgent\s+injunction)\b",
                 re.I,
             ),
@@ -264,10 +265,14 @@ class ScopeChecker:
                 re.I,
             ),
             re.compile(
-                r"\b(?:eviction\s+stay|eviction\s+injunction|"
+                r"\b(?:eviction\s+order|eviction\s+stay|eviction\s+injunction|"
                 r"stay\s+order\s+against\s+eviction|urgent\s+stay\s+(?:on|against)\s+eviction|"
                 r"injunction\s+against\s+(?:eviction|demolition)|"
                 r"order\s*39\s*rules?\s*1\s*and\s*2)\b",
+                re.I,
+            ),
+            re.compile(
+                r"\b(?:stop\s+construction|halt\s+construction|injunction\s+to\s+stop)\b",
                 re.I,
             ),
             re.compile(
@@ -458,8 +463,9 @@ class ScopeChecker:
             triggers = matches[ScopeCategory.CRIMINAL_OFFENSE]
 
             violent_pattern = (
-                r"\b(?:murder|assault|rape|violence|stabbed|pocso|fir|"
-                r"first\s+information\s+report|police\s+station|arrest|bail|physically\s+attacked)\b"
+                r"\b(?:murder|assault(?:ed|ing|s)?|rape|violence|stabbed|pocso|fir|"
+                r"first\s+information\s+report|police\s+station|arrest|bail|physically\s+attacked|"
+                r"threat\s+to\s+kill|death\s+threat(?:s)?|threatened\s+to\s+kill)\b"
             )
             violent_or_formal_police = any(re.search(violent_pattern, t, re.I) for t in triggers)
             direct_violent_or_police = bool(re.search(violent_pattern, text, re.I))

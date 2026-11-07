@@ -146,6 +146,65 @@ class TestScopeChecker:
         result_ws = checker.check_scope("    \n\t  ")
         assert result_ws.is_in_scope is False
 
+    def test_violent_assault_and_death_threat_with_refund_rejected(
+        self,
+        checker: ScopeChecker,
+    ) -> None:
+        """Verify violent crimes accompanied by consumer words are strictly rejected."""
+        q1 = "The shopkeeper assaulted me when I demanded a refund."
+        res1: ScopeResult = checker.check_scope(q1)
+        assert res1.is_in_scope is False
+        assert res1.out_of_scope_category == ScopeCategory.CRIMINAL_OFFENSE.value
+
+        q2 = "The merchant gave me a threat to kill when I asked for a refund."
+        res2: ScopeResult = checker.check_scope(q2)
+        assert res2.is_in_scope is False
+        assert res2.out_of_scope_category == ScopeCategory.CRIMINAL_OFFENSE.value
+
+    def test_cheque_dishonour_variations_rejected(
+        self,
+        checker: ScopeChecker,
+    ) -> None:
+        """Verify colloquial cheque dishonour phrasing is routed out of consumer forum."""
+        queries = [
+            "The supplier gave me a bad cheque that dishonoured.",
+            "A cheque was dishonoured due to stop payment.",
+            "I received a dishonoured cheque from the client.",
+        ]
+        for q in queries:
+            res = checker.check_scope(q)
+            assert res.is_in_scope is False
+            assert res.out_of_scope_category == ScopeCategory.CHEQUE_BOUNCE.value
+
+    def test_commercial_b2b_wholesale_and_contracts_rejected(
+        self,
+        checker: ScopeChecker,
+    ) -> None:
+        """Verify commercial wholesale resale and B2B contracts are rejected."""
+        queries = [
+            "We bought 500 units of widgets for wholesale resale.",
+            "We bought goods for resale to retailers.",
+            "Commercial contract dispute between two private limited companies.",
+        ]
+        for q in queries:
+            res = checker.check_scope(q)
+            assert res.is_in_scope is False
+            assert res.out_of_scope_category == ScopeCategory.COMMERCIAL_B2B.value
+
+    def test_urgent_injunction_stop_construction_and_eviction_orders_rejected(
+        self,
+        checker: ScopeChecker,
+    ) -> None:
+        """Verify stop construction orders and tenant eviction orders are rejected."""
+        queries = [
+            "We need an injunction to stop construction on our land.",
+            "The tenant refuses to vacate and we want an eviction order.",
+        ]
+        for q in queries:
+            res = checker.check_scope(q)
+            assert res.is_in_scope is False
+            assert res.out_of_scope_category == ScopeCategory.URGENT_INJUNCTION.value
+
 
 # ==============================================================================
 # Layer 2: Retrieval Confidence Gate Unit Tests
@@ -562,3 +621,22 @@ class TestCitationVerifier:
         )
         assert res2.hallucination_detected is True
         assert any("CCPA Guidelines" in c for c in res2.flagged_citations)
+
+    def test_fabricated_subclauses_with_underscores_and_hyphens_flagged(
+        self,
+        verifier: CitationVerifier,
+        sample_source_chunks: list[RetrievedChunk],
+    ) -> None:
+        """Verify non-alphanumeric subclauses are flagged and stripped appropriately."""
+        text_underscore = "Under Section 2(47)(fake_subclause), seller is penalized."
+        res_u = verifier.verify_response(text_underscore, sample_source_chunks, flag_mode="flag")
+        assert res_u.hallucination_detected is True
+        assert "Section 2(47)(fake_subclause)" in res_u.flagged_citations
+        flagged_tag = "<flag>Section 2(47)(fake_subclause): Unverified citation</flag>"
+        assert flagged_tag in res_u.cleaned_text
+
+        text_hyphen = "Under Section 2(47)(fake-subclause), unfair trade applies."
+        res_h = verifier.verify_response(text_hyphen, sample_source_chunks, flag_mode="strip")
+        assert res_h.hallucination_detected is True
+        assert "Section 2(47)(fake-subclause)" not in res_h.cleaned_text
+        assert "[Citation omitted - unverified in statutory corpus]" in res_h.cleaned_text

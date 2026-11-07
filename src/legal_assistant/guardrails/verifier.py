@@ -116,14 +116,13 @@ class CitationVerifier:
 
     # Robust regular expressions for citation extraction
     _CPA_SECTION_PATTERN = re.compile(
-        r"\b(?:Section|Sec\.?|s\.)\s*(\d+[A-Z]?(?:\([a-zA-Z0-9]+\))*"
-        r"(?:\s*(?:and|&|,)\s*\d+[A-Z]?(?:\([a-zA-Z0-9]+\))*)*)"
-        r"|(?:\b(?:Sections|Secs\.?)\s*(\d+[A-Z]?(?:\([a-zA-Z0-9]+\))*(?:\s*(?:and|&|,)\s*\d+[A-Z]?(?:\([a-zA-Z0-9]+\))*)*))",
+        r"\b(?:Sections?|Secs?\.?|s\.)\s*(\d+[A-Z]?(?:\([^)\n]+\))*"
+        r"(?:\s*(?:and|&|,)\s*\d+[A-Z]?(?:\([^)\n]+\))*)*)",
         re.IGNORECASE,
     )
 
     _ECOMMERCE_RULE_PATTERN = re.compile(
-        r"\b(?:Rules|Rule|r\.)\s*(\d+[A-Z]?(?:\([a-zA-Z0-9]+\))*(?:\s*(?:and|&|,)\s*\d+[A-Z]?(?:\([a-zA-Z0-9]+\))*)*)",
+        r"\b(?:Rules?|r\.)\s*(\d+[A-Z]?(?:\([^)\n]+\))*(?:\s*(?:and|&|,)\s*\d+[A-Z]?(?:\([^)\n]+\))*)*)",
         re.IGNORECASE,
     )
 
@@ -228,7 +227,7 @@ class CitationVerifier:
                 ).strip()
                 ground_truth_sections.add(norm_sec)
                 # Parent section: e.g. 2(47)(viii) -> 2(47)
-                parent_match = re.match(r"^(\d+[a-z]?(?:\([a-z0-9]+\)))", norm_sec)
+                parent_match = re.match(r"^(\d+[a-z]?(?:\([^)\n]+\)))", norm_sec)
                 if parent_match:
                     ground_truth_sections.add(parent_match.group(1))
 
@@ -457,28 +456,36 @@ class CitationVerifier:
         ):
             return True
 
-        # 2. Check base section with subclause (e.g. 2(47)(xyz999) vs 2(47))
-        base_match = re.match(r"^(\d+[a-z]?(?:\([a-z0-9]+\)))", norm_can)
-        if base_match:
-            base_sec = base_match.group(1)
-            # If citation claims a subclause beyond base section (e.g. 2(47)(xyz999)):
-            if len(norm_can) > len(base_sec):
-                subclause = norm_can[len(base_sec) :]
-                # Base section must be verified in metadata, AND subclause must be in content
+        # 2. Check base section with subclause (e.g. 2(47)(fake_subclause) or 35(1))
+        lead_match = re.match(r"^(\d+[a-z]?)", norm_can)
+        if lead_match:
+            lead_num = lead_match.group(1)
+            subclause_tokens = re.findall(r"\([^)\n]+\)", norm_can)
+            candidates = [lead_num]
+            curr = lead_num
+            for tok in subclause_tokens:
+                curr += tok
+                candidates.append(curr)
+
+            # Match longest grounded candidate prefix in retrieved chunk metadata
+            for cand in reversed(candidates):
                 if (
-                    base_sec in ground_truth_sections
-                    or f"section {base_sec}" in ground_truth_sections
+                    cand in ground_truth_sections
+                    or f"section {cand}" in ground_truth_sections
+                    or f"rule {cand}" in ground_truth_sections
                 ):
-                    sub_escaped = re.escape(subclause)
-                    sub_pat = re.compile(rf"{sub_escaped}(?!\w)", re.I)
-                    return any(sub_pat.search(content) for content in ground_truth_contents)
-            else:
-                # Citation is the base section itself (e.g. 2(47))
-                if (
-                    base_sec in ground_truth_sections
-                    or f"section {base_sec}" in ground_truth_sections
-                ):
-                    return True
+                    remainder = norm_can[len(cand) :]
+                    if not remainder:
+                        return True
+                    declared_subclauses = re.findall(r"\([^)\n]+\)", remainder)
+                    # Every declared subclause must physically exist in retrieved chunk content
+                    return all(
+                        any(
+                            re.search(rf"{re.escape(sub)}(?!\w)", content, re.IGNORECASE)
+                            for content in ground_truth_contents
+                        )
+                        for sub in declared_subclauses
+                    )
 
         # 3. Direct mention in chunk content with statutory prefix and word boundary
         escaped = re.escape(norm_can)
