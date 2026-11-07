@@ -918,5 +918,3 @@ class StatutoryHybridRetriever:
         )
 
         return retrieved_results, confidence
-
-        return retrieved_results, confidence
