@@ -22,3 +22,8 @@ def __getattr__(name: str) -> typing.Any:
         mod = importlib.import_module("legal_assistant.ui.app")
         return getattr(mod, name)
     raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
+
+
+def __dir__() -> list[str]:
+    """Return list of public symbols for PEP 562 conformance and tab completion."""
+    return list(__all__)

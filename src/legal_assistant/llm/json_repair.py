@@ -10,13 +10,11 @@ from __future__ import annotations
 import json
 import logging
 import re
-from typing import Any, TypeVar
+from typing import Any
 
 from pydantic import BaseModel, ValidationError
 
 logger = logging.getLogger(__name__)
-
-T = TypeVar("T", bound=BaseModel)
 
 
 def clean_markdown_fences(text: str) -> str:
@@ -100,7 +98,7 @@ def repair_json_string(text: str) -> str:
     return cleaned.strip()
 
 
-def parse_and_unwrap_dict(raw_json: str, schema: type[T]) -> dict[str, Any]:
+def parse_and_unwrap_dict[T: BaseModel](raw_json: str, schema: type[T]) -> dict[str, Any]:
     """Parse JSON string and unwrap single-key envelope wrappers if necessary.
 
     Args:
@@ -134,7 +132,7 @@ def parse_and_unwrap_dict(raw_json: str, schema: type[T]) -> dict[str, Any]:
     return data
 
 
-def repair_and_parse_json(text: str, schema: type[T] | None = None) -> Any:
+def repair_and_parse_json[T: BaseModel](text: str, schema: type[T] | None = None) -> Any:
     """Execute multi-pass repair and parse text into Python object/dict.
 
     Args:
@@ -150,7 +148,7 @@ def repair_and_parse_json(text: str, schema: type[T] | None = None) -> Any:
     return json.loads(repaired)
 
 
-def parse_and_validate(text: str, schema: type[T]) -> T:
+def parse_and_validate[T: BaseModel](text: str, schema: type[T]) -> T:
     """Parse, repair, and validate an LLM text output into a Pydantic model instance.
 
     Args:

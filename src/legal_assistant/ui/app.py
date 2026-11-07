@@ -537,7 +537,7 @@ def handle_simulator_turn(
     tactic: str = "auto",
     opponent_name: str = "Corporate Defense Counsel",
     opponent_entity: str = "Merchant / Platform Legal Team",
-) -> tuple[SimulatorState, list[list[str | None]], str, str, str, str]:
+) -> tuple[SimulatorState, list[dict[str, str]], str, str, str, str]:
     """Advance Opposing Counsel practice session by evaluating user's rebuttal.
 
     Args:
@@ -551,7 +551,7 @@ def handle_simulator_turn(
     Returns:
         Tuple containing:
             - Updated SimulatorState.
-            - Chatbot transcript list of [user, bot] turn pairs.
+            - Chatbot transcript list of message dicts with role and content.
             - Score display string.
             - Strengths markdown.
             - Weaknesses markdown.
@@ -594,24 +594,11 @@ def handle_simulator_turn(
         use_llm=False,
     )
 
-    # Build chat transcript pairs for gr.Chatbot
-    chat_history: list[list[str | None]] = []
-    current_user_msg: str | None = None
-
+    # Build chat transcript messages for gr.Chatbot
+    chat_history: list[dict[str, str]] = []
     for turn in updated_state.turns:
-        if turn.speaker == "opposing_counsel":
-            if current_user_msg is not None:
-                chat_history.append([current_user_msg, turn.content])
-                current_user_msg = None
-            else:
-                chat_history.append([None, turn.content])
-        elif turn.speaker == "consumer":
-            if current_user_msg is not None:
-                chat_history.append([current_user_msg, None])
-            current_user_msg = turn.content
-
-    if current_user_msg is not None:
-        chat_history.append([current_user_msg, None])
+        role = "assistant" if turn.speaker == "opposing_counsel" else "user"
+        chat_history.append({"role": role, "content": turn.content})
 
     # Extract feedback from latest consumer turn
     latest_feedback = None
@@ -708,7 +695,6 @@ def create_app(
 
     with gr.Blocks(
         title="Legal Saathi - AI Consumer Lawyer for India",
-        theme=gr.themes.Soft(primary_hue="blue", secondary_hue="indigo"),
     ) as app:
         # App-level state holders
         case_state = gr.State(value=None)
@@ -902,7 +888,7 @@ def create_app(
                     with gr.Column(scale=1):
                         gr.Markdown("### ✏️ Raw Editable Document")
                         doc_raw_editor = gr.Textbox(
-                            label="Raw Text (Editable)", lines=20, show_copy_button=True
+                            label="Raw Text (Editable)", lines=20, buttons=["copy"]
                         )
 
                 with gr.Row():
@@ -938,7 +924,10 @@ def create_app(
 
                 with gr.Row():
                     with gr.Column(scale=3):
-                        sim_chatbot = gr.Chatbot(label="Courtroom Debate Transcript", height=420)
+                        sim_chatbot = gr.Chatbot(
+                            label="Courtroom Debate Transcript",
+                            height=420,
+                        )
                         user_argument_in = gr.Textbox(
                             label="Your Legal Rebuttal / Argument",
                             placeholder="State your counter-argument citing specific facts...",
@@ -1311,7 +1300,7 @@ def create_app(
             tactic_choice: str,
             opp_name: str,
             opp_entity: str,
-        ) -> tuple[SimulatorState, list[list[str | None]], str, str, str, str]:
+        ) -> tuple[SimulatorState, list[dict[str, str]], str, str, str, str]:
             sim = OpposingCounselSimulator(router=router)
             eff_case = c_file or CaseFile(
                 case_id="sim_case_001",
@@ -1338,7 +1327,9 @@ def create_app(
                 opponent_name=opp_name,
                 opponent_entity=opp_entity,
             )
-            transcript: list[list[str | None]] = [[None, new_state.turns[0].content]]
+            transcript: list[dict[str, str]] = [
+                {"role": "assistant", "content": new_state.turns[0].content}
+            ]
             return (
                 new_state,
                 transcript,
@@ -1364,7 +1355,7 @@ def create_app(
         def on_submit_argument_click(
             user_arg: str,
             s_state: SimulatorState | None,
-        ) -> tuple[SimulatorState, list[list[str | None]], str, str, str, str, str]:
+        ) -> tuple[SimulatorState, list[dict[str, str]], str, str, str, str, str]:
             u_state, chat, score_txt, strengths, weaknesses, advice = handle_simulator_turn(
                 user_argument=user_arg,
                 state=s_state,
@@ -1461,7 +1452,7 @@ def create_app(
             outputs=[active_provider_indicator, ping_status_display, active_provider_state],
         )
 
-    return app
+    return app  # type: ignore[no-any-return]
 
 
 if __name__ == "__main__":
@@ -1470,4 +1461,5 @@ if __name__ == "__main__":
         server_name="127.0.0.1",
         server_port=7860,
         share=False,
+        theme=gr.themes.Soft(primary_hue="blue", secondary_hue="indigo"),
     )
