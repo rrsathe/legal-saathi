@@ -97,7 +97,8 @@ def format_ui_provenance_with_marks(
     """
     if not chunks:
         msg = (
-            "<div style='padding: 16px; color: #757575; font-style: italic;'>"
+            "<div style='padding: 16px; color: #64748b; font-style: italic; "
+            "background-color: #f8fafc; border-radius: 8px; border: 1px dashed #cbd5e1;'>"
             "No statutory grounds retrieved. "
             "Enter case facts in Tab 1 to retrieve provisions.</div>"
         )
@@ -123,8 +124,8 @@ def format_ui_provenance_with_marks(
         combined_pattern = re.compile(f"({'|'.join(term_patterns)})", re.IGNORECASE)
 
     mark_replacement = (
-        r"<mark style='background-color: #fff176; color: #1a237e; "
-        r"font-weight: 600; padding: 1px 3px; border-radius: 2px;'>\1</mark>"
+        r"<mark style='background-color: #fef3c7; color: #92400e; font-weight: 600; "
+        r"padding: 1px 4px; border-radius: 3px; border: 1px solid #fde68a;'>\1</mark>"
     )
 
     for chunk in chunks:
@@ -139,11 +140,13 @@ def format_ui_provenance_with_marks(
                     is_cited = True
                     break
 
-        border_color = "#1e88e5" if is_cited else "#cfd8dc"
-        bg_card = "#f0f7ff" if is_cited else "#fafafa"
+        border_color = "#059669" if is_cited else "#e2e8f0"
+        bg_card = "#f0fdf4" if is_cited else "#ffffff"
         cited_badge = (
-            "<span style='background-color: #1565c0; color: white; padding: 2px 8px; "
-            "border-radius: 12px; font-size: 0.75rem; margin-left: 8px;'>CITED IN ADVICE</span>"
+            "<span style='background-color: #059669; color: white; padding: 2px 8px; "
+            "border-radius: 9999px; font-size: 0.72rem; font-weight: 700; "
+            "letter-spacing: 0.03em; margin-left: 8px; "
+            "box-shadow: 0 1px 2px rgba(5,150,105,0.25);'>CITED IN ADVICE</span>"
             if is_cited
             else ""
         )
@@ -153,19 +156,30 @@ def format_ui_provenance_with_marks(
             safe_content = combined_pattern.sub(mark_replacement, safe_content)
 
         card_html = (
-            f"<details class='statutory-provenance-card' style='margin-bottom: 10px; "
+            f"<details class='statutory-provenance-card' style='margin-bottom: 12px; "
             f"border: 1.5px solid {border_color}; border-radius: 8px; "
-            f"background-color: {bg_card}; padding: 8px 12px;'>\n"
-            f"  <summary style='cursor: pointer; font-weight: 600; color: #0d47a1; "
+            f"background-color: {bg_card}; padding: 10px 14px; "
+            f"box-shadow: 0 1px 3px rgba(0,0,0,0.04);'>\n"
+            f"  <summary style='cursor: pointer; font-weight: 600; color: #312e81; "
             f"display: flex; justify-content: space-between; align-items: center;'>\n"
-            f"    <span>#{chunk.rank}: [{html.escape(chunk.statute)} | "
-            f"Sec {html.escape(chunk.section)}] {html.escape(chunk.title)} {cited_badge}</span>\n"
-            f"    <span style='color: #2e7d32; font-size: 0.85rem; font-weight: 500;'>"
+            f"    <span>\n"
+            f"      <strong style='color: #4338ca; margin-right: 4px;'>#{chunk.rank}:</strong>\n"
+            f"      <span style='background-color: #e0e7ff; color: #3730a3; padding: 2px 7px; "
+            f"border-radius: 4px; font-size: 0.78rem; font-weight: 600; margin-right: 6px;'>"
+            f"[{html.escape(chunk.statute)} | Sec {html.escape(chunk.section)}]</span>\n"
+            f"      <span style='color: #1e1b4b; font-weight: 600;'>"
+            f"{html.escape(chunk.title)}</span>\n"
+            f"      {cited_badge}\n"
+            f"    </span>\n"
+            f"    <span style='background-color: #dcfce7; color: #166534; "
+            f"border: 1px solid #bbf7d0; padding: 2px 8px; border-radius: 12px; "
+            f"font-size: 0.78rem; font-weight: 600; white-space: nowrap;'>"
             f"RRF: {chunk.score:.4f}</span>\n"
             f"  </summary>\n"
-            f"  <div style='margin-top: 8px; padding: 10px; background: white; "
-            f"border-radius: 4px; border-left: 4px solid #1e88e5; font-size: 0.88rem; "
-            f"line-height: 1.5; color: #263238; white-space: pre-wrap;'>\n"
+            f"  <div style='margin-top: 10px; padding: 12px; background: #ffffff; "
+            f"border-radius: 6px; border-left: 4px solid #4338ca; border-top: 1px solid #f1f5f9; "
+            f"border-right: 1px solid #f1f5f9; border-bottom: 1px solid #f1f5f9; "
+            f"font-size: 0.88rem; line-height: 1.55; color: #1e293b; white-space: pre-wrap;'>\n"
             f"{safe_content}\n"
             f"  </div>\n"
             f"</details>"
@@ -831,12 +845,21 @@ def create_app(
                         gr.Markdown("### 🔍 Kotaemon Visual Provenance Inspector")
                         provenance_html_viewer = gr.HTML(
                             value=(
-                                "<div style='padding: 16px; color: #757575; font-style: italic;'>"
+                                "<div style='padding: 16px; color: #64748b; font-style: italic; "
+                                "background-color: #f8fafc; border-radius: 8px; "
+                                "border: 1px dashed #cbd5e1;'>"
                                 "Statutory citations and grounding excerpts appear here.</div>"
                             )
                         )
                         citation_verification_box = gr.Markdown(
-                            value="*Citation telemetry: Ground-truth verified against corpus.*"
+                            value=(
+                                "<div style='display: inline-flex; align-items: center; "
+                                "gap: 8px; padding: 6px 12px; background-color: #f8fafc; "
+                                "border: 1px solid #e2e8f0; border-radius: 6px; "
+                                "color: #475569; font-size: 0.85rem; font-weight: 500;'>"
+                                "🛡️ <em>Citation telemetry: Ground-truth verified "
+                                "against corpus.</em></div>"
+                            )
                         )
 
             # ------------------------------------------------------------------
@@ -1151,10 +1174,30 @@ def create_app(
             verifier = CitationVerifier()
             v_chunks, _ = active_retriever.retrieve_with_confidence(overview, top_k=5)
             telemetry = verifier.verify_response(response_text=overview, source_chunks=v_chunks)
-            telemetry_str = (
-                f"**Citation Telemetry:** {len(telemetry.verified_citations)} verified, "
-                f"{len(telemetry.flagged_citations)} ungrounded citations."
-            )
+            if len(telemetry.flagged_citations) == 0:
+                v_count = len(telemetry.verified_citations)
+                telemetry_str = (
+                    f"<div style='display: flex; align-items: center; gap: 8px; padding: 8px 14px; "
+                    f"background-color: #f0fdf4; border: 1px solid #86efac; border-radius: 6px; "
+                    f"color: #166534; font-size: 0.88rem; font-weight: 500;'>\n"
+                    f"  <span>🛡️ <strong>Citation Telemetry:</strong> "
+                    f"<span style='color: #15803d; font-weight: 700;'>{v_count} verified</span>, "
+                    f"<span style='color: #15803d;'>0 ungrounded citations</span>.</span>\n"
+                    f"</div>"
+                )
+            else:
+                v_count = len(telemetry.verified_citations)
+                f_count = len(telemetry.flagged_citations)
+                telemetry_str = (
+                    f"<div style='display: flex; align-items: center; gap: 8px; padding: 8px 14px; "
+                    f"background-color: #fef2f2; border: 1px solid #fca5a5; border-radius: 6px; "
+                    f"color: #991b1b; font-size: 0.88rem; font-weight: 500;'>\n"
+                    f"  <span>⚠️ <strong>Citation Telemetry:</strong> "
+                    f"<strong>{v_count} verified</strong>, "
+                    f"<strong style='color: #b91c1c;'>{f_count} ungrounded citations</strong>."
+                    f"</span>\n"
+                    f"</div>"
+                )
             return standing, overview, viol, path, prov, telemetry_str
 
         evaluate_standing_btn.click(

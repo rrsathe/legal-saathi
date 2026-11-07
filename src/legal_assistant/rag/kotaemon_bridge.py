@@ -300,13 +300,16 @@ class KotaemonLegalBridge(FlowFunction):
         """
         if not chunks:
             return (
-                "<div style='padding: 12px; color: #757575; font-style: italic;'>"
+                "<div style='padding: 16px; color: #64748b; font-style: italic; "
+                "background-color: #f8fafc; border-radius: 8px; border: 1px dashed #cbd5e1;'>"
                 "No statutory provisions retrieved.</div>"
             )
 
         html_blocks: list[str] = [
-            "<div class='legal-provenance-panel' style='font-family: system-ui, sans-serif;'>",
-            "<h4 style='margin: 0 0 10px 0; color: #1a237e;'>Verified Statutory Grounds</h4>",
+            "<div class='legal-provenance-panel' style='font-family: -apple-system, "
+            "BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;'>",
+            "<h4 style='margin: 0 0 12px 0; color: #312e81; font-weight: 700;'>"
+            "Verified Statutory Grounds</h4>",
         ]
 
         for chunk in chunks:
@@ -334,30 +337,47 @@ class KotaemonLegalBridge(FlowFunction):
                         is_active_citation = True
                         break
 
-            border_color = "#3f51b5" if is_active_citation else "#e0e0e0"
-            bg_color = "#e8eaf6" if is_active_citation else "#f9f9f9"
-            badge = " [CITED IN RESPONSE]" if is_active_citation else ""
+            border_color = "#059669" if is_active_citation else "#e2e8f0"
+            bg_color = "#f0fdf4" if is_active_citation else "#ffffff"
+            badge = (
+                "<span style='background-color: #059669; color: white; padding: 2px 8px; "
+                "border-radius: 9999px; font-size: 0.72rem; font-weight: 700; "
+                "letter-spacing: 0.03em; margin-left: 8px;'>[CITED IN RESPONSE]</span>"
+                if is_active_citation
+                else ""
+            )
 
             safe_text = html.escape(content_text)
             e_stat = html.escape(statute)
             e_sec = html.escape(section)
             e_title = html.escape(title)
             score_badge = (
-                f"<span style='float: right; color: #2e7d32; font-weight: 500;'>"
+                f"<span style='background-color: #dcfce7; color: #166534; "
+                f"border: 1px solid #bbf7d0; padding: 2px 8px; border-radius: 12px; "
+                f"font-size: 0.78rem; font-weight: 600; white-space: nowrap;'>"
                 f"RRF: {score:.4f}</span>"
             )
             card_html = (
-                f"<details class='statutory-card' style='margin-bottom: 8px; "
-                f"border: 1px solid {border_color}; border-radius: 6px; padding: 6px 10px; "
-                f"background: {bg_color};'>\n"
-                f"  <summary style='font-weight: 600; cursor: pointer; color: #1a237e; "
-                f"font-size: 0.9em;'>\n"
-                f"    #{rank}: [{e_stat} | Sec {e_sec}] {e_title}{badge}\n"
+                f"<details class='statutory-card' style='margin-bottom: 10px; "
+                f"border: 1.5px solid {border_color}; border-radius: 8px; padding: 10px 14px; "
+                f"background: {bg_color}; box-shadow: 0 1px 3px rgba(0,0,0,0.04);'>\n"
+                f"  <summary style='font-weight: 600; cursor: pointer; color: #312e81; "
+                f"display: flex; justify-content: space-between; align-items: center;'>\n"
+                f"    <span>\n"
+                f"      <strong style='color: #4338ca; margin-right: 4px;'>#{rank}:</strong>\n"
+                f"      <span style='background-color: #e0e7ff; color: #3730a3; padding: 2px 7px; "
+                f"border-radius: 4px; font-size: 0.78rem; font-weight: 600; margin-right: 6px;'>"
+                f"[{e_stat} | Sec {e_sec}]</span>\n"
+                f"      <span style='color: #1e1b4b; font-weight: 600;'>{e_title}</span>\n"
+                f"      {badge}\n"
+                f"    </span>\n"
                 f"    {score_badge}\n"
                 f"  </summary>\n"
-                f"  <div style='margin-top: 6px; font-size: 0.85em; line-height: 1.4; "
-                f"color: #212121; background: #ffffff; padding: 8px; border-radius: 4px; "
-                f"border-left: 3px solid #3f51b5; white-space: pre-wrap;'>{safe_text}</div>\n"
+                f"  <div style='margin-top: 10px; font-size: 0.88rem; line-height: 1.55; "
+                f"color: #1e293b; background: #ffffff; padding: 12px; border-radius: 6px; "
+                f"border-left: 4px solid #4338ca; border-top: 1px solid #f1f5f9; "
+                f"border-right: 1px solid #f1f5f9; border-bottom: 1px solid #f1f5f9; "
+                f"white-space: pre-wrap;'>{safe_text}</div>\n"
                 f"</details>"
             )
             html_blocks.append(card_html)
