@@ -928,5 +928,8 @@ def test_handle_simulator_turn(
 
     assert isinstance(updated_state, SimulatorState)
     assert len(chat_history) >= 2
+    assert all(isinstance(msg, dict) and "role" in msg and "content" in msg for msg in chat_history)
+    assert chat_history[0]["role"] == "assistant"
+    assert chat_history[1]["role"] == "user"
     assert "score" in score_text.lower() or any(char.isdigit() for char in score_text)
     assert strengths_md != ""

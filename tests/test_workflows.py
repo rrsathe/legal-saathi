@@ -26,6 +26,7 @@ from legal_assistant.schemas import (
     PecuniaryForum,
     ScopeResult,
     SimulationSession,
+    TimelineEvent,
     calculate_edaakhil_fee,
     check_limitation_status,
     determine_pecuniary_forum,
@@ -118,6 +119,152 @@ class TestCaseBuilder:
         assert CaseFile.parse_inr_amount("Rs. 1,25,000.50") == 125000.5
         assert CaseFile.parse_inr_amount("INR 4500") == 4500.0
         assert CaseFile.parse_inr_amount(15000) == 15000.0
+
+    def test_update_case_with_clarifications_deterministic(
+        self,
+        builder: CaseBuilder,
+        monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        """Verify update_case_with_clarifications updates facts_summary and timeline."""
+        initial_case = CaseFile(
+            case_id="case_clarify_001",
+            title="Laptop Screen Crack Dispute",
+            disputed_amount_inr=50000.0,
+            transaction_date="2024-03-10",
+            facts_summary="Laptop delivered with cracked screen; refund refused.",
+            opposite_parties=[OppositeParty(name="Seller Corp", role="Seller")],
+            timeline=[
+                TimelineEvent(
+                    date="2024-03-10",
+                    description="Laptop ordered",
+                    significance="Purchase",
+                )
+            ],
+            complainant=PartyDetails(name="Consumer", city="Delhi", state="Delhi"),
+        )
+        mocked_return = initial_case.model_copy(deep=True)
+        mocked_return.facts_summary = (
+            "Laptop delivered with cracked screen; refund refused. "
+            "Item was purchased strictly for personal study use. "
+            "Seller was notified within 2 hours of delivery on 2024-03-12."
+        )
+        mocked_return.timeline.append(
+            TimelineEvent(
+                date="2024-03-12",
+                description="Delivery accepted with damaged screen; notified seller on 2024-03-12",
+                significance="Notification",
+            )
+        )
+        monkeypatch.setattr(
+            builder.router,
+            "generate_structured_with_fallback",
+            lambda **kwargs: mocked_return,
+        )
+
+        answers = {
+            "Was the item purchased for personal use or resale?": (
+                "Strictly for personal study use."
+            ),
+            "Did you notify the seller within 48 hours?": (
+                "Yes, notified within 2 hours of delivery on 2024-03-12."
+            ),
+        }
+        updated = builder.update_case_with_clarifications(initial_case, answers)
+        assert updated.case_id == "case_clarify_001"
+        assert "personal study use" in updated.facts_summary
+        assert "2024-03-12" in updated.facts_summary
+        assert any(
+            "2024-03-12" in (e.date or "") or "2024-03-12" in e.description
+            for e in updated.timeline
+        )
+
+    def test_update_case_with_clarifications_exception_fallback(
+        self,
+        builder: CaseBuilder,
+        monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        """Verify update_case_with_clarifications raw fallback on router exception."""
+        initial_case = CaseFile(
+            case_id="case_clarify_fallback",
+            title="Exception Fallback Dispute",
+            disputed_amount_inr=15000.0,
+            transaction_date="2024-04-01",
+            facts_summary="Original facts summary.",
+            opposite_parties=[OppositeParty(name="Seller Corp", role="Seller")],
+            complainant=PartyDetails(name="Consumer", city="Delhi", state="Delhi"),
+        )
+        monkeypatch.setattr(
+            builder.router,
+            "generate_structured_with_fallback",
+            lambda **kwargs: (_ for _ in ()).throw(RuntimeError("LLM unavailable")),
+        )
+        answers = {"Did you send legal notice?": "Yes on 2024-04-05."}
+        updated = builder.update_case_with_clarifications(initial_case, answers)
+        assert updated.case_id == "case_clarify_fallback"
+        assert "Additional Clarifications:" in updated.facts_summary
+        assert "Yes on 2024-04-05." in updated.facts_summary
+
+    def test_update_case_with_clarifications_structured(
+        self,
+        builder: CaseBuilder,
+        monkeypatch: pytest.MonkeyPatch,
+    ) -> None:
+        """Verify update_case_with_clarifications updates facts and timeline with LLM output."""
+        initial_case = CaseFile(
+            case_id="case_clarify_002",
+            title="Mixer Grinder Defect",
+            disputed_amount_inr=3000.0,
+            transaction_date="2024-01-05",
+            facts_summary="Mixer jar cracked on delivery.",
+            opposite_parties=[OppositeParty(name="Merchant", role="Seller")],
+            timeline=[
+                TimelineEvent(date="2024-01-05", description="Order placed", significance="Order")
+            ],
+            complainant=PartyDetails(name="Priya", city="Jaipur", state="Rajasthan"),
+        )
+
+        mocked_return = initial_case.model_copy(deep=True)
+        mocked_return.facts_summary = (
+            "Mixer jar cracked on delivery. Consumer confirmed personal household use."
+        )
+        mocked_return.timeline.append(
+            TimelineEvent(
+                date="2024-01-06",
+                description="Consumer confirmed personal household use and delivery condition",
+                significance="Clarification",
+            )
+        )
+
+        monkeypatch.setattr(
+            builder.router,
+            "generate_structured_with_fallback",
+            lambda **kwargs: mocked_return,
+        )
+
+        answers = {"Purpose of purchase": "Personal household cooking"}
+        updated = builder.update_case_with_clarifications(initial_case, answers)
+
+        assert updated.case_id == "case_clarify_002"
+        assert "personal household use" in updated.facts_summary
+        assert len(updated.timeline) == 2
+        assert updated.timeline[1].significance == "Clarification"
+
+    def test_update_case_with_clarifications_empty_answers(self, builder: CaseBuilder) -> None:
+        """Verify update_case_with_clarifications returns unchanged case when answers are empty."""
+        initial_case = CaseFile(
+            case_id="case_clarify_003",
+            title="Empty Answer Test",
+            disputed_amount_inr=1000.0,
+            transaction_date="2024-01-01",
+            facts_summary="Base summary.",
+            opposite_parties=[OppositeParty(name="Seller", role="Seller")],
+            complainant=PartyDetails(name="Consumer", city="Pune", state="Maharashtra"),
+        )
+        assert builder.update_case_with_clarifications(initial_case, {}) == initial_case
+        assert (
+            builder.update_case_with_clarifications(initial_case, {"Question": "  "})
+            == initial_case
+        )
 
 
 # ==============================================================================
