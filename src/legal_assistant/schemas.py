@@ -567,6 +567,16 @@ class DraftedDocument(BaseModel):
         description="Additional template metadata",
     )
 
+    @property
+    def doc_type(self) -> str:
+        """Alias for document_type."""
+        return self.document_type
+
+    @property
+    def content_markdown(self) -> str:
+        """Alias for body_markdown."""
+        return self.body_markdown
+
 
 class LegalNotice(DraftedDocument):
     """Specialized schema for 15-day formal Legal Notice demand letter."""
@@ -584,6 +594,11 @@ class LegalNotice(DraftedDocument):
         ge=0.0,
         description="Total monetary demand including refund and damages in INR",
     )
+
+
+# Schema Aliases for backward and prompt specification compatibility
+DraftDocument = DraftedDocument
+LegalAnalysisResult = LegalStanding
 
 
 # ==============================================================================
@@ -717,6 +732,10 @@ class VerifiedResponse(BaseModel):
         default=None,
         description="User-facing notice if ungrounded statements were sanitized",
     )
+
+
+# Citation verifier schema alias
+CitationVerificationResult = VerifiedResponse
 
 
 # ==============================================================================
