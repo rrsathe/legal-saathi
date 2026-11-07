@@ -16,7 +16,11 @@ from __future__ import annotations
 import pytest
 
 from legal_assistant.guardrails.scope_checker import ScopeChecker
-from legal_assistant.guardrails.verifier import CitationVerifier
+from legal_assistant.guardrails.verifier import (
+    CitationVerifier,
+    RetrievalConfidenceGate,
+    RetrievalUngroundedError,
+)
 from legal_assistant.rag.chunker import StatutoryChunk, StatutoryChunkMetadata
 from legal_assistant.rag.hybrid_retriever import (
     InMemoryDenseRetriever,
@@ -250,6 +254,92 @@ class TestRetrievalConfidenceGate:
         assert conf_strict.abstention_triggered is True
 
 
+class TestRetrievalConfidenceGateDirect:
+    """Offline unit tests for standalone RetrievalConfidenceGate class."""
+
+    @pytest.fixture
+    def sample_chunks(self) -> list[RetrievedChunk]:
+        """Provide sample retrieved chunks for direct evaluation."""
+        return [
+            RetrievedChunk(
+                chunk_id="chunk_1",
+                statute="CPA 2019",
+                chapter="Chapter I",
+                section="Section 2(47)",
+                title="Unfair Trade Practice",
+                content="Section 2(47) defines unfair trade practice as adopting unfair methods.",
+                score=0.035,
+                retrieval_method="hybrid_rrf",
+            ),
+            RetrievedChunk(
+                chunk_id="chunk_2",
+                statute="E-Commerce Rules 2020",
+                chapter="Rules",
+                section="Rule 4(5)",
+                title="Grievance Redressal Mechanism",
+                content="Rule 4(5) Every e-commerce entity shall acknowledge within 48 hours.",
+                score=0.031,
+                retrieval_method="hybrid_rrf",
+            ),
+        ]
+
+    def test_direct_evaluate_with_grounded_chunks(
+        self, sample_chunks: list[RetrievedChunk]
+    ) -> None:
+        """Verify evaluate with high-confidence chunks passes gate."""
+        gate = RetrievalConfidenceGate(min_rrf_threshold=0.012)
+        res = gate.evaluate(sample_chunks, query="refund refusal under Section 2(47)")
+        assert res.is_grounded is True
+        assert res.confidence_passed is True
+        assert res.abstention_triggered is False
+        assert res.top_rrf_score == 0.035
+        assert res.retrieved_chunk_count == 2
+        assert res.abstention_message is None
+
+    def test_direct_evaluate_with_low_score_abstains(
+        self, sample_chunks: list[RetrievedChunk]
+    ) -> None:
+        """Verify evaluate abstains when scores fall below threshold."""
+        gate = RetrievalConfidenceGate(min_rrf_threshold=0.050)
+        res = gate.evaluate(sample_chunks)
+        assert res.is_grounded is False
+        assert res.confidence_passed is False
+        assert res.abstention_triggered is True
+        assert res.top_rrf_score == 0.035
+        assert res.abstention_message is not None
+
+    def test_direct_evaluate_empty_chunk_list(self) -> None:
+        """Verify evaluate returns abstention on empty chunk list."""
+        gate = RetrievalConfidenceGate()
+        res = gate.evaluate([])
+        assert res.is_grounded is False
+        assert res.confidence_passed is False
+        assert res.abstention_triggered is True
+        assert res.top_rrf_score == 0.0
+        assert res.retrieved_chunk_count == 0
+        assert res.abstention_message is not None
+
+    def test_direct_is_grounded_method(self, sample_chunks: list[RetrievedChunk]) -> None:
+        """Verify is_grounded boolean convenience helper."""
+        gate = RetrievalConfidenceGate(min_rrf_threshold=0.012)
+        assert gate.is_grounded(sample_chunks) is True
+        assert gate.is_grounded([]) is False
+
+    def test_direct_get_abstention_response_behavior(
+        self, sample_chunks: list[RetrievedChunk]
+    ) -> None:
+        """Verify get_abstention_response_if_ungrounded returns appropriate text."""
+        gate = RetrievalConfidenceGate(min_rrf_threshold=0.012)
+        assert gate.get_abstention_response_if_ungrounded(sample_chunks) is None
+        assert gate.get_abstention_response_if_ungrounded([]) is not None
+
+    def test_retrieval_ungrounded_error_instantiation(self) -> None:
+        """Verify RetrievalUngroundedError can be instantiated and caught."""
+        with pytest.raises(RetrievalUngroundedError) as exc_info:
+            raise RetrievalUngroundedError("Confidence score below threshold")
+        assert "Confidence score below threshold" in str(exc_info.value)
+
+
 # ==============================================================================
 # Layer 3: Citation Verifier Unit Tests
 # ==============================================================================
@@ -364,3 +454,111 @@ class TestCitationVerifier:
         result = verifier.verify_response(llm_text, sample_source_chunks)
         assert result.hallucination_detected is True
         assert any("Ramesh Sharma" in f or "CPJ" in f for f in result.flagged_citations)
+
+    def test_repeated_unverified_citations_no_nested_tags(self, verifier: CitationVerifier) -> None:
+        """Verify repeated unverified citations do not produce nested <flag><flag> tags."""
+        text = "Section 999 applies. In fact, Section 999 is crucial. As noted, Section 999."
+        res = verifier.verify_response(text, [])
+        assert "<flag><flag>" not in res.cleaned_text
+        assert res.cleaned_text.count("<flag>") == 3
+        assert res.flagged_citations == ["Section 999"]
+        assert res.hallucination_detected is True
+
+    def test_substring_matching_year_and_numbers_not_grounded(
+        self, verifier: CitationVerifier
+    ) -> None:
+        """Verify numbers inside year 2019 or amounts do not verify single/double digit sections."""
+        chunk = RetrievedChunk(
+            chunk_id="c_year",
+            statute="CPA 2019",
+            chapter="Chapter I",
+            section="Section 86",
+            title="Product Liability",
+            content="Enacted in 2019 for claims up to Rs 21000. Section 86 applies.",
+            score=0.03,
+            retrieval_method="hybrid_rrf",
+        )
+        res = verifier.verify_response(
+            "Under Section 2, Section 19, Section 20, and Section 21 of CPA",
+            [chunk],
+        )
+        assert res.hallucination_detected is True
+        assert "Section 2" in res.flagged_citations
+        assert "Section 19" in res.flagged_citations
+        assert "Section 20" in res.flagged_citations
+        assert "Section 21" in res.flagged_citations
+
+    def test_fabricated_subclause_on_valid_base_section_flagged(
+        self, verifier: CitationVerifier, sample_source_chunks: list[RetrievedChunk]
+    ) -> None:
+        """Verify fabricated subclause attached to valid Section 2(47) is flagged."""
+        text = "Under Section 2(47)(xyz999), deceptive algorithmic pricing is prohibited."
+        res = verifier.verify_response(text, sample_source_chunks)
+        assert res.hallucination_detected is True
+        assert "Section 2(47)(xyz999)" in res.flagged_citations
+
+    def test_parenthesized_case_law_flagged(self, verifier: CitationVerifier) -> None:
+        """Verify parenthesized case law citations like (2022) CPJ 105 SC are detected."""
+        text = "As held in (2022) CPJ 105 SC, e-commerce platforms cannot disclaim liability."
+        res = verifier.verify_response(text, [])
+        assert res.hallucination_detected is True
+        assert any("(2022) CPJ 105 SC" in f for f in res.flagged_citations)
+
+    def test_plural_sections_clean_extraction_and_verification(
+        self, verifier: CitationVerifier
+    ) -> None:
+        """Verify plural citations Sections 2(11) and 2(47) are verified when both present."""
+        chunks = [
+            RetrievedChunk(
+                chunk_id="c1",
+                statute="CPA 2019",
+                chapter="Chapter I",
+                section="Section 2(11)",
+                title="Deficiency",
+                content="Section 2(11) defines deficiency in service.",
+                score=0.03,
+                retrieval_method="hybrid_rrf",
+            ),
+            RetrievedChunk(
+                chunk_id="c2",
+                statute="CPA 2019",
+                chapter="Chapter I",
+                section="Section 2(47)",
+                title="Unfair Trade Practice",
+                content="Section 2(47) defines unfair trade practice.",
+                score=0.03,
+                retrieval_method="hybrid_rrf",
+            ),
+        ]
+        res = verifier.verify_response(
+            "Under Sections 2(11) and 2(47), refunds must be processed.",
+            chunks,
+        )
+        assert res.hallucination_detected is False
+        assert "Sections 2(11) and 2(47)" in res.verified_citations
+
+    def test_ccpa_guidelines_extraction_and_verification(self, verifier: CitationVerifier) -> None:
+        """Verify CCPA Guidelines are extracted and verified against CCPA ground truth."""
+        ccpa_chunk = RetrievedChunk(
+            chunk_id="ccpa_1",
+            statute="CCPA Guidelines",
+            chapter="Dark Patterns",
+            section="Guidelines 2022",
+            title="Prevention of Dark Patterns",
+            content="Central Consumer Protection Authority CCPA Guidelines 2022 on Dark Patterns.",
+            score=0.03,
+            retrieval_method="hybrid_rrf",
+        )
+        res1 = verifier.verify_response(
+            "Under CCPA Guidelines 2022 on Dark Patterns, drip pricing is illegal.",
+            [ccpa_chunk],
+        )
+        assert res1.hallucination_detected is False
+        assert any("CCPA Guidelines" in c for c in res1.verified_citations)
+
+        res2 = verifier.verify_response(
+            "Under CCPA Guidelines 2022 on Dark Patterns, drip pricing is illegal.",
+            [],
+        )
+        assert res2.hallucination_detected is True
+        assert any("CCPA Guidelines" in c for c in res2.flagged_citations)

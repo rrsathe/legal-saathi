@@ -193,7 +193,11 @@ class ScopeChecker:
                 re.I,
             ),
             re.compile(
-                r"\b(?:b2b|wholesale\s+(?:purchase|goods)\s+for\s+resale|commercial\s+resale)\b",
+                r"\b(?:b2b|wholesale\s+(?:purchase|goods)(?:\s+for\s+resale)?|"
+                r"commercial\s+resale|factory\s+resale|"
+                r"raw\s+material(?:\s+for\s+(?:factory\s+)?resale)?|"
+                r"goods\s+purchased\s+for\s+resale|commercial\s+purpose|"
+                r"commercial\s+use)\b",
                 re.I,
             ),
             re.compile(
@@ -220,7 +224,12 @@ class ScopeChecker:
                 r"\b(?:hindu\s+marriage\s+act|special\s+marriage\s+act|matrimonial\s+dispute)\b",
                 re.I,
             ),
-            re.compile(r"\b(?:child\s+custody|visitation\s+rights|guardianship|adoption)\b", re.I),
+            re.compile(
+                r"\b(?:child\s+custody|custody\s+of\s+(?:the\s+|our\s+|my\s+|a\s+)?children|"
+                r"custody\s+of\s+(?:the\s+|our\s+|my\s+|a\s+)?child|"
+                r"visitation\s+rights|guardianship|adoption)\b",
+                re.I,
+            ),
             re.compile(
                 r"\b(?:alimony|maintenance|section\s*125\s*crpc|section\s*144\s*bnss)\b",
                 re.I,
@@ -241,7 +250,7 @@ class ScopeChecker:
         self._injunction_patterns = [
             re.compile(
                 r"\b(?:urgent\s+stay\s+order|stay\s+order|interim\s+injunction|"
-                r"interlocutory\s+injunction)\b",
+                r"interlocutory\s+injunction|urgent\s+injunction)\b",
                 re.I,
             ),
             re.compile(
@@ -255,8 +264,10 @@ class ScopeChecker:
                 re.I,
             ),
             re.compile(
-                r"\b(?:eviction\s+stay|order\s*39\s*rules?\s*1\s*and\s*2|"
-                r"urgent\s+stay\s+on\s+eviction)\b",
+                r"\b(?:eviction\s+stay|eviction\s+injunction|"
+                r"stay\s+order\s+against\s+eviction|urgent\s+stay\s+(?:on|against)\s+eviction|"
+                r"injunction\s+against\s+(?:eviction|demolition)|"
+                r"order\s*39\s*rules?\s*1\s*and\s*2)\b",
                 re.I,
             ),
             re.compile(

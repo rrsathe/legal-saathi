@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import logging
 import re
-from typing import Literal
+from typing import Literal, TypedDict
 
 from pydantic import ConfigDict, Field
 
@@ -21,6 +21,16 @@ from legal_assistant.rag.hybrid_retriever import (
 from legal_assistant.schemas import VerifiedResponse
 
 logger = logging.getLogger(__name__)
+
+
+class ExtractedCitation(TypedDict):
+    """Internal representation of an extracted statutory or judicial citation."""
+
+    raw_text: str
+    type: str
+    canonical: str
+    start: int
+    end: int
 
 
 class CitationVerificationResult(VerifiedResponse):
@@ -106,13 +116,14 @@ class CitationVerifier:
 
     # Robust regular expressions for citation extraction
     _CPA_SECTION_PATTERN = re.compile(
-        r"\b(?:Section|Sec\.?|s\.)\s*(\d+[A-Z]?(?:\([a-zA-Z0-9]+\))*)"
+        r"\b(?:Section|Sec\.?|s\.)\s*(\d+[A-Z]?(?:\([a-zA-Z0-9]+\))*"
+        r"(?:\s*(?:and|&|,)\s*\d+[A-Z]?(?:\([a-zA-Z0-9]+\))*)*)"
         r"|(?:\b(?:Sections|Secs\.?)\s*(\d+[A-Z]?(?:\([a-zA-Z0-9]+\))*(?:\s*(?:and|&|,)\s*\d+[A-Z]?(?:\([a-zA-Z0-9]+\))*)*))",
         re.IGNORECASE,
     )
 
     _ECOMMERCE_RULE_PATTERN = re.compile(
-        r"\b(?:Rule|Rules)\s*(\d+[A-Z]?(?:\([a-zA-Z0-9]+\))*)",
+        r"\b(?:Rules|Rule|r\.)\s*(\d+[A-Z]?(?:\([a-zA-Z0-9]+\))*(?:\s*(?:and|&|,)\s*\d+[A-Z]?(?:\([a-zA-Z0-9]+\))*)*)",
         re.IGNORECASE,
     )
 
@@ -128,8 +139,8 @@ class CitationVerifier:
     )
 
     _CASE_LAW_PATTERN = re.compile(
-        r"\b([A-Z][a-zA-Z0-9\.\s]{2,40}\s+(?:v\.|vs\.?|versus)\s+[A-Z][a-zA-Z0-9\.\s]{2,40}(?:,\s*(?:\(\d{4}\)|\d{4})[^\.\n;]*)?)"
-        r"|\b(?:\(\d{4}\)|\d{4})\s*(?:\d+\s+)?(?:SCC|CPJ|CPR|AIR|SCR|SCALE)\s*(?:\d+|[A-Z]+(?:\s*\d+)?)",
+        r"\b([A-Z][a-zA-Z0-9\.\s]{2,40}\s+(?:v\.|vs\.?|versus)\s+[A-Z][a-zA-Z0-9\.\s]{2,40}(?:,?\s*(?:\(\d{4}\)|\d{4})[^\.\n;]*)?)"
+        r"|(?:(?:\b|\()(?:\d{4}\)|\d{4})|\(\d{4}\))\s*(?:\d+\s+)?(?:SCC|CPJ|CPR|AIR|SCR|SCALE)\s*(?:\d+|[A-Z]+(?:\s*\d+)?)(?:\s+(?:SC|NCDRC|NC|SCDRC|HC|[A-Z]{2,10}))?",
         re.IGNORECASE,
     )
 
@@ -212,7 +223,9 @@ class CitationVerifier:
             if sec:
                 ground_truth_sections.add(sec)
                 # Normalize Section 2(47) -> 2(47)
-                norm_sec = re.sub(r"^(?:section|sec\.?|rule)\s*", "", sec, flags=re.I).strip()
+                norm_sec = re.sub(
+                    r"^(?:sections?|sec\.?|rules?|r\.)\s*", "", sec, flags=re.I
+                ).strip()
                 ground_truth_sections.add(norm_sec)
                 # Parent section: e.g. 2(47)(viii) -> 2(47)
                 parent_match = re.match(r"^(\d+[a-z]?(?:\([a-z0-9]+\)))", norm_sec)
@@ -227,13 +240,15 @@ class CitationVerifier:
 
         verified_citations: list[str] = []
         flagged_citations: list[str] = []
-        cleaned_text = response_text
+        replacements: list[tuple[int, int, str]] = []
 
         # 3. Cross-verify each citation against ground truth
         for citation_info in extracted_citations:
             raw_citation = citation_info["raw_text"]
             cit_type = citation_info["type"]
             canonical = citation_info["canonical"]
+            start_pos = citation_info["start"]
+            end_pos = citation_info["end"]
 
             is_verified = self._is_citation_grounded(
                 cit_type=cit_type,
@@ -250,14 +265,18 @@ class CitationVerifier:
                 if raw_citation not in flagged_citations:
                     flagged_citations.append(raw_citation)
 
-                # Sanitize text
+                # Prepare replacement string
                 if act == "flag":
-                    flagged_replacement = f"<flag>{raw_citation}: Unverified citation</flag>"
-                    cleaned_text = cleaned_text.replace(raw_citation, flagged_replacement)
-                elif act == "strip":
-                    cleaned_text = cleaned_text.replace(
-                        raw_citation, "[Citation omitted - unverified in statutory corpus]"
-                    )
+                    replacement_str = f"<flag>{raw_citation}: Unverified citation</flag>"
+                else:
+                    replacement_str = "[Citation omitted - unverified in statutory corpus]"
+                replacements.append((start_pos, end_pos, replacement_str))
+
+        # Perform span-based sanitization in reverse start-position order
+        # to prevent nested tags or offset corruption
+        cleaned_text = response_text
+        for start_pos, end_pos, repl_str in sorted(replacements, key=lambda x: x[0], reverse=True):
+            cleaned_text = cleaned_text[:start_pos] + repl_str + cleaned_text[end_pos:]
 
         hallucination_detected = len(flagged_citations) > 0
         warning_msg = (
@@ -275,70 +294,100 @@ class CitationVerifier:
             warning_message=warning_msg,
         )
 
-    def _extract_citations(self, text: str) -> list[dict[str, str]]:
+    def _extract_citations(self, text: str) -> list[ExtractedCitation]:
         """Extract all statutory sections, rules, guidelines, and precedents."""
-        citations: list[dict[str, str]] = []
-        seen_spans: set[tuple[int, int]] = set()
+        citations: list[ExtractedCitation] = []
+        seen_spans: list[tuple[int, int]] = []
+
+        def _overlaps(start: int, end: int) -> bool:
+            return any(max(start, s) < min(end, e) for s, e in seen_spans)
 
         # 1. Repealed CPA 1986 references (Always caught)
         for match in self._REPEALED_ACT_PATTERN.finditer(text):
             span = match.span()
-            if span in seen_spans:
+            if _overlaps(span[0], span[1]):
                 continue
-            seen_spans.add(span)
+            seen_spans.append(span)
             raw = match.group(0).strip()
             citations.append(
                 {
                     "raw_text": raw,
                     "type": "repealed_act",
                     "canonical": raw.lower(),
+                    "start": span[0],
+                    "end": span[1],
                 }
             )
 
         # 2. Statutory Sections (CPA 2019)
         for match in self._CPA_SECTION_PATTERN.finditer(text):
             span = match.span()
-            if span in seen_spans:
+            if _overlaps(span[0], span[1]):
                 continue
-            seen_spans.add(span)
+            seen_spans.append(span)
             raw = match.group(0).strip()
-            clean_sec = re.sub(r"^(?:section|sec\.?|s\.)\s*", "", raw, flags=re.I).strip()
+            clean_sec = re.sub(
+                r"^(?:sections|section|secs\.?|sec\.?|s\.)\s*", "", raw, flags=re.I
+            ).strip()
             citations.append(
                 {
                     "raw_text": raw,
                     "type": "section",
                     "canonical": clean_sec.lower(),
+                    "start": span[0],
+                    "end": span[1],
                 }
             )
 
         # 3. E-Commerce Rules
         for match in self._ECOMMERCE_RULE_PATTERN.finditer(text):
             span = match.span()
-            if span in seen_spans:
+            if _overlaps(span[0], span[1]):
                 continue
-            seen_spans.add(span)
+            seen_spans.append(span)
             raw = match.group(0).strip()
-            rule_num = match.group(1).strip()
+            clean_rule = re.sub(r"^(?:rules|rule|r\.)\s*", "", raw, flags=re.I).strip()
             citations.append(
                 {
                     "raw_text": raw,
                     "type": "rule",
-                    "canonical": f"rule {rule_num}".lower(),
+                    "canonical": clean_rule.lower(),
+                    "start": span[0],
+                    "end": span[1],
                 }
             )
 
-        # 4. Case Laws / Fabricated Precedents
+        # 4. CCPA Guidelines / Orders
+        for match in self._CCPA_GUIDELINE_PATTERN.finditer(text):
+            span = match.span()
+            if _overlaps(span[0], span[1]):
+                continue
+            seen_spans.append(span)
+            raw = match.group(0).strip()
+            citations.append(
+                {
+                    "raw_text": raw,
+                    "type": "ccpa_guideline",
+                    "canonical": raw.lower(),
+                    "start": span[0],
+                    "end": span[1],
+                }
+            )
+
+        # 5. Case Laws / Fabricated Precedents
         for match in self._CASE_LAW_PATTERN.finditer(text):
             span = match.span()
-            if span in seen_spans:
+            if _overlaps(span[0], span[1]):
                 continue
-            seen_spans.add(span)
+            seen_spans.append(span)
             raw = match.group(0).strip()
             citations.append(
                 {
                     "raw_text": raw,
                     "type": "case_law",
                     "canonical": raw.lower(),
+                    "start": span[0],
+                    "end": span[1],
                 }
             )
 
@@ -357,31 +406,84 @@ class CitationVerifier:
         if cit_type == "repealed_act":
             return False
 
-        clean_raw = raw_text.lower().strip()
-
-        # Rule / Section Check
-        if cit_type in ("section", "rule"):
-            # 1. Exact match in chunk section metadata
-            if canonical in ground_truth_sections or clean_raw in ground_truth_sections:
-                return True
-
-            # 2. Base section match (e.g. 2(47) matches 2(47)(viii))
-            base_match = re.match(r"^(\d+[a-z]?(?:\([a-z0-9]+\)))", canonical)
-            if base_match and base_match.group(1) in ground_truth_sections:
-                # Also verify subclause text exists in content
-                for content in ground_truth_contents:
-                    if canonical in content or base_match.group(1) in content:
-                        return True
-
-            # 3. Direct verbatim mention in any chunk content
-            for content in ground_truth_contents:
-                if clean_raw in content or canonical in content:
-                    return True
-
-            return False
+        # CCPA Guidelines / Orders
+        if cit_type == "ccpa_guideline":
+            return any(
+                "ccpa" in content or "central consumer protection authority" in content
+                for content in ground_truth_contents
+            )
 
         # Case Law Precedent Check
         if cit_type == "case_law":
+            clean_raw = raw_text.lower().strip()
             return any(clean_raw in content for content in ground_truth_contents)
 
+        # Rule / Section Check
+        if cit_type in ("section", "rule"):
+            # Check for plural citations: e.g. "35 and 36" or "2(11) and 2(47)"
+            sub_canonical = [
+                s.strip() for s in re.split(r"\s*(?:and|&|,)\s*", canonical) if s.strip()
+            ]
+            if len(sub_canonical) > 1:
+                return all(
+                    self._is_single_provision_grounded(
+                        sub, ground_truth_sections, ground_truth_contents
+                    )
+                    for sub in sub_canonical
+                )
+
+            return self._is_single_provision_grounded(
+                canonical, ground_truth_sections, ground_truth_contents
+            )
+
         return False
+
+    def _is_single_provision_grounded(
+        self,
+        canonical: str,
+        ground_truth_sections: set[str],
+        ground_truth_contents: list[str],
+    ) -> bool:
+        """Verify an individual section or rule provision."""
+        clean_can = canonical.lower().strip()
+        norm_can = re.sub(r"^(?:rules?|r\.)\s*", "", clean_can).strip()
+
+        # 1. Exact match in chunk section metadata
+        if (
+            clean_can in ground_truth_sections
+            or norm_can in ground_truth_sections
+            or f"section {norm_can}" in ground_truth_sections
+            or f"rule {norm_can}" in ground_truth_sections
+        ):
+            return True
+
+        # 2. Check base section with subclause (e.g. 2(47)(xyz999) vs 2(47))
+        base_match = re.match(r"^(\d+[a-z]?(?:\([a-z0-9]+\)))", norm_can)
+        if base_match:
+            base_sec = base_match.group(1)
+            # If citation claims a subclause beyond base section (e.g. 2(47)(xyz999)):
+            if len(norm_can) > len(base_sec):
+                subclause = norm_can[len(base_sec) :]
+                # Base section must be verified in metadata, AND subclause must be in content
+                if (
+                    base_sec in ground_truth_sections
+                    or f"section {base_sec}" in ground_truth_sections
+                ):
+                    sub_escaped = re.escape(subclause)
+                    sub_pat = re.compile(rf"{sub_escaped}(?!\w)", re.I)
+                    return any(sub_pat.search(content) for content in ground_truth_contents)
+            else:
+                # Citation is the base section itself (e.g. 2(47))
+                if (
+                    base_sec in ground_truth_sections
+                    or f"section {base_sec}" in ground_truth_sections
+                ):
+                    return True
+
+        # 3. Direct mention in chunk content with statutory prefix and word boundary
+        escaped = re.escape(norm_can)
+        sec_pattern = re.compile(
+            rf"\b(?:sections?|sec\.?|s\.|rules?|r\.)\s*{escaped}(?!\w|\()",
+            re.I,
+        )
+        return any(sec_pattern.search(content) for content in ground_truth_contents)
