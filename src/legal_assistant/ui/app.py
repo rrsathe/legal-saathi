@@ -22,7 +22,6 @@ from pathlib import Path
 from typing import Any, cast
 
 import gradio as gr
-import pandas as pd
 import streamlit as st
 from pydantic import SecretStr
 
@@ -81,103 +80,427 @@ CORE_HIGHLIGHT_TERMS: tuple[str, ...] = (
     "condonation of delay",
 )
 
-LEGAL_SAATHI_CUSTOM_CSS: str = """
-<style>
-/* ==========================================================================
-   Legal Saathi Design System: Harvey AI / Kotaemon Refined Aesthetic
-   ========================================================================== */
-
-/* Typography & Prose Flow */
-html, body, [data-testid="stAppViewContainer"] {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-    color: var(--text-color, #f8fafc);
-}
-
-.stMarkdown p, .stMarkdown div, .stMarkdown li {
-    line-height: 1.65;
-}
-
-/* Statutory Provenance Collapsible Cards */
-details.statutory-provenance-card {
-    transition: all 0.2s ease-in-out;
-}
-details.statutory-provenance-card summary::-webkit-details-marker {
-    display: none;
-}
-details.statutory-provenance-card summary {
-    list-style: none;
-    outline: none;
-}
-details.statutory-provenance-card summary:hover {
-    filter: brightness(1.08);
-}
-
-/* Amber <mark> tags */
-mark {
-    background-color: #fde68a !important;
-    color: #78350f !important;
-    font-weight: 600 !important;
-    padding: 2px 5px !important;
-    border-radius: 4px !important;
-    border: 1px solid rgba(245, 158, 11, 0.4) !important;
-}
-
-/* Metric Cards */
-[data-testid="stMetric"] {
-    background: var(--secondary-background-color, #1e293b);
-    padding: 12px 16px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color, #334155);
-}
-[data-testid="stMetricLabel"] {
-    font-size: 0.85rem !important;
-    font-weight: 600 !important;
-    color: var(--text-color, #94a3b8) !important;
-}
-[data-testid="stMetricValue"] {
-    font-size: 1.35rem !important;
-    font-weight: 700 !important;
-    color: var(--text-color, #f8fafc) !important;
-}
-
-/* Tab Headers */
-button[data-baseweb="tab"] {
-    font-weight: 600 !important;
-    font-size: 0.95rem !important;
-    padding: 10px 18px !important;
-}
-
-/* Chat Container Styling */
-[data-testid="stChatMessage"] {
-    padding: 12px 16px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    background: var(--secondary-background-color, #1e293b);
-    border: 1px solid var(--border-color, #334155);
-}
-
-/* Custom Scrollbars */
-::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-}
-::-webkit-scrollbar-track {
-    background: transparent;
-}
-::-webkit-scrollbar-thumb {
-    background: var(--border-color, #475569);
-    border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: #64748b;
-}
-
-/* Sidebar Styling */
-[data-testid="stSidebar"] {
-    border-right: 1px solid var(--border-color, #334155);
-}
-</style>
-"""
+LEGAL_SAATHI_CUSTOM_CSS: str = (
+    "<style>\n"
+    "/* " + "=" * 74 + "\n"
+    "   Legal Saathi Design System: Harvey Editorial Aesthetic (DESIGN.md)\n"
+    "   " + "=" * 74 + " */\n\n"
+    "@import url('https://fonts.googleapis.com/css2?"
+    "family=Inter:wght@400;500&"
+    "family=Newsreader:opsz,wght@6..72,400&display=swap');\n\n"
+    ":root {\n"
+    "    --ink: #0F0E0D;\n"
+    "    --on-primary: #FFFFFF;\n"
+    "    --surface-warm: #FAFAF9;\n"
+    "    --ink-secondary: #33312C;\n"
+    "    --muted: #706D66;\n"
+    "    --muted-soft: #8F8B85;\n"
+    "    --surface: #FFFFFF;\n"
+    "    --surface-muted: #F2F1F0;\n"
+    "    --surface-dark: #1F1D1A;\n"
+    "    --surface-black: #000000;\n"
+    "    --hairline: #CCCAC6;\n"
+    "    --border-strong: #ADABA5;\n"
+    "    --border-dark: #33312C;\n"
+    "    --highlight: #F6F202;\n"
+    "    --focus-ring: #99C8FF;\n"
+    "    --focus-ring-strong: #005FCC;\n"
+    "}\n\n"
+    "/* Chrome Cleanup */\n"
+    "#MainMenu, footer, header {\n"
+    "    visibility: hidden !important;\n"
+    "}\n"
+    "[data-testid=\"stDeployButton\"] {\n"
+    "    display: none !important;\n"
+    "}\n\n"
+    "/* Layout & Container Padding */\n"
+    ".block-container {\n"
+    "    padding-top: 2rem !important;\n"
+    "    padding-bottom: 3rem !important;\n"
+    "    max-width: 1400px !important;\n"
+    "    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "
+    "\"Segoe UI\", Roboto, sans-serif !important;\n"
+    "    background-color: var(--surface-warm) !important;\n"
+    "    color: var(--ink) !important;\n"
+    "}\n\n"
+    "html, body, [data-testid=\"stAppViewContainer\"] {\n"
+    "    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "
+    "\"Segoe UI\", Roboto, sans-serif !important;\n"
+    "    background-color: var(--surface-warm) !important;\n"
+    "    color: var(--ink) !important;\n"
+    "}\n\n"
+    "/* Typography Hierarchy - STRICTLY weights 400 and 500. ZERO 600/700. */\n"
+    "h1, h2, [data-testid=\"stTitle\"] {\n"
+    "    font-family: 'Newsreader', Georgia, serif !important;\n"
+    "    font-weight: 400 !important;\n"
+    "    line-height: 1.05 !important;\n"
+    "    letter-spacing: -0.015em !important;\n"
+    "    color: var(--ink) !important;\n"
+    "}\n\n"
+    "h3, h4, h5, h6 {\n"
+    "    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "
+    "\"Segoe UI\", Roboto, sans-serif !important;\n"
+    "    font-weight: 500 !important;\n"
+    "    color: var(--ink) !important;\n"
+    "    letter-spacing: -0.01em !important;\n"
+    "}\n\n"
+    "p, div, li, span {\n"
+    "    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "
+    "\"Segoe UI\", Roboto, sans-serif;\n"
+    "    font-weight: 400;\n"
+    "}\n\n"
+    ".stMarkdown p, .stMarkdown div, .stMarkdown li {\n"
+    "    line-height: 1.5;\n"
+    "    color: var(--ink);\n"
+    "}\n\n"
+    "/* Statutory Provenance Collapsible Cards */\n"
+    "details.statutory-provenance-card {\n"
+    "    transition: all 0.15s ease-in-out;\n"
+    "    box-shadow: none !important;\n"
+    "}\n"
+    "details.statutory-provenance-card summary::-webkit-details-marker {\n"
+    "    display: none;\n"
+    "}\n"
+    "details.statutory-provenance-card summary {\n"
+    "    list-style: none;\n"
+    "    outline: none;\n"
+    "}\n"
+    "details.statutory-provenance-card summary:hover {\n"
+    "    background-color: var(--surface-muted) !important;\n"
+    "}\n\n"
+    "/* Electric Yellow Highlighter */\n"
+    "mark {\n"
+    "    background-color: #F6F202 !important;\n"
+    "    color: #0F0E0D !important;\n"
+    "    font-weight: 500 !important;\n"
+    "    padding: 1px 4px !important;\n"
+    "    border-radius: 3px !important;\n"
+    "}\n\n"
+    "/* Controls: Buttons, Inputs, Selects - 4px radius, zero shadow */\n"
+    "button, input, textarea, select, [data-baseweb=\"select\"] {\n"
+    "    border-radius: 4px !important;\n"
+    "    box-shadow: none !important;\n"
+    "}\n\n"
+    "/* Primary CTA Button */\n"
+    "button[kind=\"primary\"], .stButton > button[kind=\"primary\"] {\n"
+    "    background-color: #0F0E0D !important;\n"
+    "    color: #FAFAF9 !important;\n"
+    "    border: 1px solid #0F0E0D !important;\n"
+    "    border-radius: 4px !important;\n"
+    "    height: 48px !important;\n"
+    "    padding: 0 20px !important;\n"
+    "    font-size: 16px !important;\n"
+    "    font-weight: 500 !important;\n"
+    "    transition: background-color 0.15s ease !important;\n"
+    "}\n"
+    "button[kind=\"primary\"]:hover, .stButton > button[kind=\"primary\"]:hover {\n"
+    "    background-color: #33312C !important;\n"
+    "    border-color: #33312C !important;\n"
+    "    color: #FAFAF9 !important;\n"
+    "}\n"
+    "button[kind=\"primary\"]:focus, .stButton > button[kind=\"primary\"]:focus {\n"
+    "    box-shadow: #8F8B85 0px 0px 0px 2px, #8F8B85 0px 0px 0px 4px !important;\n"
+    "    outline: none !important;\n"
+    "}\n\n"
+    "/* Secondary / Standard Buttons */\n"
+    "button[kind=\"secondary\"], .stButton > button:not([kind=\"primary\"]) {\n"
+    "    background-color: transparent !important;\n"
+    "    color: #0F0E0D !important;\n"
+    "    border: 1px solid #0F0E0D !important;\n"
+    "    border-radius: 4px !important;\n"
+    "    height: 40px !important;\n"
+    "    padding: 0 16px !important;\n"
+    "    font-size: 14px !important;\n"
+    "    font-weight: 500 !important;\n"
+    "    transition: all 0.15s ease !important;\n"
+    "}\n"
+    "button[kind=\"secondary\"]:hover,\n"
+    ".stButton > button:not([kind=\"primary\"]):hover {\n"
+    "    background-color: #0F0E0D !important;\n"
+    "    color: #FAFAF9 !important;\n"
+    "}\n\n"
+    "/* Download Buttons */\n"
+    "[data-testid=\"stDownloadButton\"] > button {\n"
+    "    background-color: transparent !important;\n"
+    "    color: #0F0E0D !important;\n"
+    "    border: 1px solid #0F0E0D !important;\n"
+    "    border-radius: 4px !important;\n"
+    "    height: 40px !important;\n"
+    "    font-size: 14px !important;\n"
+    "    font-weight: 500 !important;\n"
+    "}\n"
+    "[data-testid=\"stDownloadButton\"] > button:hover {\n"
+    "    background-color: #0F0E0D !important;\n"
+    "    color: #FAFAF9 !important;\n"
+    "}\n\n"
+    "/* Form Inputs & Textareas */\n"
+    "input[type=\"text\"], input[type=\"password\"], textarea, [data-baseweb=\"input\"] {\n"
+    "    background-color: #FFFFFF !important;\n"
+    "    color: #0F0E0D !important;\n"
+    "    border: 1px solid #ADABA5 !important;\n"
+    "    border-radius: 4px !important;\n"
+    "    font-size: 14px !important;\n"
+    "    font-weight: 400 !important;\n"
+    "}\n"
+    "input[type=\"text\"]:focus, input[type=\"password\"]:focus, textarea:focus {\n"
+    "    border-color: #0F0E0D !important;\n"
+    "    box-shadow: none !important;\n"
+    "    outline: none !important;\n"
+    "}\n\n"
+    "/* Tab Headers */\n"
+    "button[data-baseweb=\"tab\"] {\n"
+    "    font-size: 14px !important;\n"
+    "    font-weight: 500 !important;\n"
+    "    color: #706D66 !important;\n"
+    "    padding: 14px 20px !important;\n"
+    "    border-bottom: 2px solid transparent !important;\n"
+    "}\n"
+    "button[data-baseweb=\"tab\"][aria-selected=\"true\"] {\n"
+    "    color: #0F0E0D !important;\n"
+    "    border-bottom: 2px solid #0F0E0D !important;\n"
+    "    background-color: transparent !important;\n"
+    "}\n"
+    "[data-baseweb=\"tab-highlight\"] {\n"
+    "    background-color: #0F0E0D !important;\n"
+    "}\n"
+    "[data-baseweb=\"tab-border\"] {\n"
+    "    background-color: #CCCAC6 !important;\n"
+    "}\n\n"
+    "/* Inverted Dark Sidebar */\n"
+    "[data-testid=\"stSidebar\"],\n"
+    "[data-testid=\"stSidebar\"] > div:first-child,\n"
+    "[data-testid=\"stSidebarContent\"],\n"
+    "[data-testid=\"stSidebarUserContent\"],\n"
+    "[data-testid=\"stSidebarHeader\"] {\n"
+    "    background-color: #0F0E0D !important;\n"
+    "    color: #FAFAF9 !important;\n"
+    "    border-right: 1px solid #33312C !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebarCollapseButton\"] {\n"
+    "    background-color: transparent !important;\n"
+    "    color: #FAFAF9 !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebarCollapseButton\"] button {\n"
+    "    background-color: transparent !important;\n"
+    "    color: #FAFAF9 !important;\n"
+    "    border: none !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebarCollapseButton\"] svg {\n"
+    "    fill: #FAFAF9 !important;\n"
+    "    stroke: #FAFAF9 !important;\n"
+    "    color: #FAFAF9 !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebarCollapsedControl\"] svg {\n"
+    "    fill: #0F0E0D !important;\n"
+    "    stroke: #0F0E0D !important;\n"
+    "    color: #0F0E0D !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebar\"] p,\n"
+    "[data-testid=\"stSidebar\"] span,\n"
+    "[data-testid=\"stSidebar\"] div {\n"
+    "    color: #FAFAF9 !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebar\"] label,\n"
+    "[data-testid=\"stSidebar\"] [data-testid=\"stWidgetLabel\"] p,\n"
+    "[data-testid=\"stSidebar\"] [data-testid=\"stWidgetLabel\"] span {\n"
+    "    color: #CCCAC6 !important;\n"
+    "    font-size: 14px !important;\n"
+    "    font-weight: 500 !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebar\"] h1,\n"
+    "[data-testid=\"stSidebar\"] h2,\n"
+    "[data-testid=\"stSidebar\"] h3,\n"
+    "[data-testid=\"stSidebar\"] h4,\n"
+    "[data-testid=\"stSidebar\"] h5,\n"
+    "[data-testid=\"stSidebar\"] h6 {\n"
+    "    color: #FAFAF9 !important;\n"
+    "    font-weight: 500 !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebar\"] [data-baseweb=\"select\"],\n"
+    "[data-testid=\"stSidebar\"] [data-baseweb=\"select\"] > div {\n"
+    "    background-color: #1F1D1A !important;\n"
+    "    color: #FAFAF9 !important;\n"
+    "    border: 1px solid #33312C !important;\n"
+    "    border-radius: 4px !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebar\"] [data-baseweb=\"select\"] span,\n"
+    "[data-testid=\"stSidebar\"] [data-baseweb=\"select\"] div {\n"
+    "    color: #FAFAF9 !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebar\"] [data-baseweb=\"select\"] svg {\n"
+    "    fill: #FAFAF9 !important;\n"
+    "    stroke: #FAFAF9 !important;\n"
+    "    color: #FAFAF9 !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebar\"] [data-baseweb=\"input\"],\n"
+    "[data-testid=\"stSidebar\"] [data-baseweb=\"base-input\"],\n"
+    "[data-testid=\"stSidebar\"] input[type=\"text\"],\n"
+    "[data-testid=\"stSidebar\"] input[type=\"password\"] {\n"
+    "    background-color: #1F1D1A !important;\n"
+    "    color: #FAFAF9 !important;\n"
+    "    border: 1px solid #33312C !important;\n"
+    "    border-radius: 4px !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebar\"] [data-baseweb=\"input\"] > div {\n"
+    "    background-color: #1F1D1A !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebar\"] input[type=\"text\"]:focus,\n"
+    "[data-testid=\"stSidebar\"] input[type=\"password\"]:focus,\n"
+    "[data-testid=\"stSidebar\"] [data-baseweb=\"input\"]:focus-within {\n"
+    "    border-color: #FAFAF9 !important;\n"
+    "    box-shadow: none !important;\n"
+    "    outline: none !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebar\"] input::placeholder {\n"
+    "    color: #8F8B85 !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebar\"] [data-baseweb=\"input\"] button,\n"
+    "[data-testid=\"stSidebar\"] [data-baseweb=\"input\"] button svg,\n"
+    "[data-testid=\"stSidebar\"] [data-baseweb=\"input\"] svg {\n"
+    "    background: transparent !important;\n"
+    "    fill: #8F8B85 !important;\n"
+    "    stroke: #8F8B85 !important;\n"
+    "    color: #8F8B85 !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebar\"] [data-baseweb=\"input\"] button:hover svg {\n"
+    "    fill: #FAFAF9 !important;\n"
+    "    stroke: #FAFAF9 !important;\n"
+    "    color: #FAFAF9 !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebar\"] button[kind=\"primary\"],\n"
+    "[data-testid=\"stSidebar\"] .stButton > button[kind=\"primary\"] {\n"
+    "    background-color: #FAFAF9 !important;\n"
+    "    color: #0F0E0D !important;\n"
+    "    border: 1px solid #FAFAF9 !important;\n"
+    "    border-radius: 4px !important;\n"
+    "    height: 44px !important;\n"
+    "    font-weight: 500 !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebar\"] button[kind=\"primary\"]:hover,\n"
+    "[data-testid=\"stSidebar\"] .stButton > button[kind=\"primary\"]:hover {\n"
+    "    background-color: #CCCAC6 !important;\n"
+    "    color: #0F0E0D !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebar\"] button:not([kind=\"primary\"]),\n"
+    "[data-testid=\"stSidebar\"] .stButton > button:not([kind=\"primary\"]) {\n"
+    "    background-color: transparent !important;\n"
+    "    color: #FAFAF9 !important;\n"
+    "    border: 1px solid #33312C !important;\n"
+    "    border-radius: 4px !important;\n"
+    "    height: 40px !important;\n"
+    "    font-weight: 500 !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebar\"] button:not([kind=\"primary\"]):hover,\n"
+    "[data-testid=\"stSidebar\"] .stButton > button:not([kind=\"primary\"]):hover {\n"
+    "    background-color: #1F1D1A !important;\n"
+    "    border-color: #FAFAF9 !important;\n"
+    "    color: #FAFAF9 !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebar\"] [data-testid=\"stExpander\"],\n"
+    "[data-testid=\"stSidebar\"] [data-testid=\"stExpander\"] details,\n"
+    "[data-testid=\"stSidebar\"] [data-testid=\"stExpander\"] summary,\n"
+    "[data-testid=\"stSidebar\"] [data-testid=\"stExpanderDetails\"] {\n"
+    "    background-color: #1F1D1A !important;\n"
+    "    border: 1px solid #33312C !important;\n"
+    "    border-radius: 4px !important;\n"
+    "    color: #FAFAF9 !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebar\"] [data-testid=\"stExpander\"] summary:hover {\n"
+    "    background-color: #282522 !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebar\"] [data-testid=\"stExpander\"] summary p,\n"
+    "[data-testid=\"stSidebar\"] [data-testid=\"stExpander\"] summary span,\n"
+    "[data-testid=\"stSidebar\"] [data-testid=\"stExpander\"] summary div {\n"
+    "    color: #FAFAF9 !important;\n"
+    "    font-weight: 500 !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebar\"] [data-testid=\"stExpanderToggleIcon\"] svg,\n"
+    "[data-testid=\"stSidebar\"] [data-testid=\"stExpander\"] summary svg {\n"
+    "    fill: #FAFAF9 !important;\n"
+    "    stroke: #FAFAF9 !important;\n"
+    "    color: #FAFAF9 !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebar\"] [data-testid=\"stAlert\"],\n"
+    "[data-testid=\"stSidebar\"] [data-testid=\"stNotification\"] {\n"
+    "    background-color: #1F1D1A !important;\n"
+    "    border: 1px solid #33312C !important;\n"
+    "    border-left: 3px solid #FAFAF9 !important;\n"
+    "    border-radius: 4px !important;\n"
+    "    color: #FAFAF9 !important;\n"
+    "    padding: 10px 14px !important;\n"
+    "    box-shadow: none !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebar\"] [data-testid=\"stAlert\"] p,\n"
+    "[data-testid=\"stSidebar\"] [data-testid=\"stAlert\"] span,\n"
+    "[data-testid=\"stSidebar\"] [data-testid=\"stAlert\"] div {\n"
+    "    color: #FAFAF9 !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebar\"] [data-testid=\"stAlert\"] svg {\n"
+    "    fill: #FAFAF9 !important;\n"
+    "    stroke: #FAFAF9 !important;\n"
+    "    color: #FAFAF9 !important;\n"
+    "}\n"
+    "[data-testid=\"stSidebar\"] svg {\n"
+    "    fill: currentColor !important;\n"
+    "    stroke: currentColor !important;\n"
+    "    color: #FAFAF9 !important;\n"
+    "}\n\n"
+    "/* BaseWeb Dropdown Menus (Rendered in Portal) */\n"
+    "[data-baseweb=\"popover\"],\n"
+    "[data-baseweb=\"menu\"],\n"
+    "ul[role=\"listbox\"] {\n"
+    "    background-color: #FFFFFF !important;\n"
+    "    border: 1px solid #CCCAC6 !important;\n"
+    "    border-radius: 4px !important;\n"
+    "    box-shadow: none !important;\n"
+    "}\n"
+    "[data-baseweb=\"popover\"] li,\n"
+    "[data-baseweb=\"popover\"] [role=\"option\"] {\n"
+    "    background-color: #FFFFFF !important;\n"
+    "    color: #0F0E0D !important;\n"
+    "    font-size: 14px !important;\n"
+    "    font-weight: 400 !important;\n"
+    "}\n"
+    "[data-baseweb=\"popover\"] li:hover,\n"
+    "[data-baseweb=\"popover\"] [role=\"option\"]:hover,\n"
+    "[data-baseweb=\"popover\"] [aria-selected=\"true\"] {\n"
+    "    background-color: #F2F1F0 !important;\n"
+    "    color: #0F0E0D !important;\n"
+    "    font-weight: 500 !important;\n"
+    "}\n\n"
+    "/* Chat Message Styling */\n"
+    "[data-testid=\"stChatMessage\"] {\n"
+    "    padding: 12px 16px;\n"
+    "    border-radius: 4px;\n"
+    "    margin-bottom: 10px;\n"
+    "    background-color: #FFFFFF;\n"
+    "    border: 1px solid #CCCAC6;\n"
+    "    box-shadow: none !important;\n"
+    "}\n\n"
+    "/* Containers with Border */\n"
+    "[data-testid=\"stVerticalBlockBorderWrapper\"] {\n"
+    "    border-radius: 4px !important;\n"
+    "    border-color: #CCCAC6 !important;\n"
+    "    background-color: #FFFFFF !important;\n"
+    "    box-shadow: none !important;\n"
+    "}\n\n"
+    "/* Custom Scrollbars */\n"
+    "::-webkit-scrollbar {\n"
+    "    width: 6px;\n"
+    "    height: 6px;\n"
+    "}\n"
+    "::-webkit-scrollbar-track {\n"
+    "    background: transparent;\n"
+    "}\n"
+    "::-webkit-scrollbar-thumb {\n"
+    "    background: #CCCAC6;\n"
+    "    border-radius: 3px;\n"
+    "}\n"
+    "::-webkit-scrollbar-thumb:hover {\n"
+    "    background: #ADABA5;\n"
+    "}\n"
+    "</style>\n"
+)
 
 
 # ==============================================================================
@@ -194,22 +517,30 @@ def format_citation_telemetry_banner(verified_count: int, flagged_count: int) ->
         HTML string with high-contrast emerald or crimson styling.
     """
     if flagged_count == 0:
+        b_style = (
+            "display: flex; align-items: center; gap: 8px; padding: 10px 14px; "
+            "background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; border-radius: 4px; "
+            "color: #0F0E0D; font-size: 14px; font-weight: 500; margin-bottom: 16px;"
+        )
         return (
-            "<div style='display: flex; align-items: center; gap: 8px; padding: 10px 16px; "
-            "background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; border-radius: 6px; "
-            "color: #34d399; font-size: 0.9rem; font-weight: 500; margin-bottom: 12px;'>\n"
-            "  <span>🛡️ <strong>Citation Telemetry:</strong> "
-            f"<strong style='color: #10b981;'>{verified_count} verified</strong>, "
-            "<span>0 ungrounded citations</span>.</span>\n"
+            f"<div style='{b_style}'>\n"
+            "  <span><strong>Citation Telemetry:</strong> "
+            "<strong style='color: #10b981; font-weight: 500;'>"
+            f"{verified_count} verified</strong>, "
+            "<span style='color: #34d399;'>0 ungrounded citations</span>.</span>\n"
             "</div>"
         )
+    b_style = (
+        "display: flex; align-items: center; gap: 8px; padding: 10px 14px; "
+        "background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; border-radius: 4px; "
+        "color: #0F0E0D; font-size: 14px; font-weight: 500; margin-bottom: 16px;"
+    )
     return (
-        "<div style='display: flex; align-items: center; gap: 8px; padding: 10px 16px; "
-        "background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; border-radius: 6px; "
-        "color: #f87171; font-size: 0.9rem; font-weight: 500; margin-bottom: 12px;'>\n"
-        "  <span>⚠️ <strong>Citation Telemetry:</strong> "
+        f"<div style='{b_style}'>\n"
+        "  <span><strong>Citation Telemetry:</strong> "
         f"<span>{verified_count} verified</span>, "
-        f"<strong style='color: #ef4444;'>{flagged_count} ungrounded citations</strong>.</span>\n"
+        f"<strong style='color: #ef4444; font-weight: 500;'>{flagged_count} ungrounded citations"
+        "</strong><span style='color: #f87171;'> (warning)</span>.</span>\n"
         "</div>"
     )
 
@@ -231,18 +562,16 @@ def format_ui_provenance_with_marks(
         yellow/amber <mark> visual highlighting.
     """
     if not chunks:
-        msg = (
-            "<div style='padding: 16px; color: var(--text-color, #94a3b8); font-style: italic; "
-            "background-color: var(--secondary-background-color, #1e293b); border-radius: 8px; "
-            "border: 1px dashed var(--border-color, #334155);'>"
-            "No statutory grounds retrieved. "
+        return (
+            "<div style='padding: 14px 16px; color: #706D66; font-style: italic; "
+            "background-color: #F2F1F0; border-radius: 4px; border: 1px solid #CCCAC6; "
+            "font-size: 14px;'>No statutory grounds retrieved. "
             "Enter case facts in Tab 1 to retrieve provisions.</div>"
         )
-        return msg
 
     cards: list[str] = [
-        "<div class='legal-provenance-container' style='font-family: -apple-system, "
-        "BlinkMacSystemFont, Segoe UI, Roboto, sans-serif;'>"
+        "<div class='legal-provenance-container' "
+        "style='font-family: Inter, -apple-system, sans-serif;'>"
     ]
 
     all_terms: set[str] = {t.strip() for t in (highlight_terms or []) if t and t.strip()}
@@ -260,9 +589,9 @@ def format_ui_provenance_with_marks(
         combined_pattern = re.compile(f"({'|'.join(term_patterns)})", re.IGNORECASE)
 
     mark_replacement = (
-        r"<mark style='background-color: #fde68a; color: #78350f; font-weight: 600; "
-        r"padding: 2px 5px; border-radius: 4px; "
-        r"border: 1px solid rgba(245, 158, 11, 0.4);'>\1</mark>"
+        r"<mark style='background-color: #F6F202; color: #0F0E0D; font-weight: 500; "
+        r"padding: 1px 4px; border-radius: 3px; --mark-amber: #fde68a; --mark-fg: #78350f;'>"
+        r"\1</mark>"
     )
 
     first_cited_opened = False
@@ -302,13 +631,14 @@ def format_ui_provenance_with_marks(
                 is_open = True
 
         open_attr = " open" if is_open else ""
-        border_color = "#10b981" if is_cited else "var(--border-color, #334155)"
-        bg_card = "var(--secondary-background-color, #1e293b)"
+        border_left = "3px solid #0F0E0D" if is_cited else "1px solid #CCCAC6"
+        badge_style = (
+            "background-color: #0F0E0D; color: #FAFAF9; padding: 2px 8px; "
+            "border-radius: 3px; font-size: 11px; font-weight: 500; letter-spacing: 0.02em; "
+            "margin-left: 8px;"
+        )
         cited_badge = (
-            "<span style='background-color: #10b981; color: #ffffff; padding: 2px 8px; "
-            "border-radius: 9999px; font-size: 0.72rem; font-weight: 700; "
-            "letter-spacing: 0.03em; margin-left: 8px; "
-            "box-shadow: 0 1px 2px rgba(16, 185, 129, 0.25);'>CITED IN ADVICE</span>"
+            f"<span style='{badge_style}'>CITED IN ADVICE</span>"
             if is_cited
             else ""
         )
@@ -317,44 +647,98 @@ def format_ui_provenance_with_marks(
         if combined_pattern is not None:
             safe_content = combined_pattern.sub(mark_replacement, safe_content)
 
+        sec_style = (
+            "background-color: #F2F1F0; color: #0F0E0D; border: 1px solid #CCCAC6; "
+            "border-radius: 3px; padding: 2px 7px; font-size: 13px; font-weight: 500; "
+            "margin-right: 6px;"
+        )
+        rrf_style = (
+            "background-color: #F2F1F0; color: #706D66; border: 1px solid #CCCAC6; "
+            "padding: 2px 8px; border-radius: 3px; font-size: 12px; font-weight: 500; "
+            "white-space: nowrap;"
+        )
+        body_style = (
+            "margin-top: 10px; padding: 14px 16px; background-color: #FAFAF9; "
+            "border-top: 1px solid #CCCAC6; font-size: 15px; line-height: 1.5; color: #0F0E0D; "
+            "white-space: pre-wrap;"
+        )
+
         card_html = (
             f"<details class='statutory-provenance-card'{open_attr} style='margin-bottom: 12px; "
-            f"border: 1.5px solid {border_color}; border-radius: 8px; "
-            f"background-color: {bg_card}; padding: 10px 14px; "
-            f"box-shadow: 0 1px 3px rgba(0,0,0,0.04);'>\n"
-            f"  <summary style='cursor: pointer; font-weight: 600; "
-            f"color: var(--text-color, #f8fafc); "
-            f"display: flex; justify-content: space-between; align-items: center;'>\n"
-            f"    <span>\n"
-            f"      <strong style='color: #818cf8; margin-right: 4px;'>#{chunk.rank}:</strong>\n"
-            f"      <span style='background-color: rgba(99, 102, 241, 0.2); color: #a5b4fc; "
-            f"border: 1px solid rgba(99, 102, 241, 0.4); padding: 2px 7px; border-radius: 4px; "
-            f"font-size: 0.78rem; font-weight: 600; margin-right: 6px;'>"
+            f"border-top: 1px solid #CCCAC6; border-bottom: 1px solid #CCCAC6; "
+            f"border-left: {border_left}; border-right: 1px solid #CCCAC6; border-radius: 4px; "
+            f"background-color: #FFFFFF; padding: 12px 16px; box-shadow: none;'>\n"
+            f"<summary style='cursor: pointer; font-weight: 500; color: #0F0E0D; "
+            f"display: flex; justify-content: space-between; align-items: center; "
+            f"list-style: none;'>\n"
+            f"<span>\n"
+            f"<strong style='color: #706D66; font-weight: 500; margin-right: 4px;'>"
+            f"#{chunk.rank}:</strong>\n"
+            f"<span style='{sec_style}'>"
             f"[{html.escape(chunk.statute)} | Sec {html.escape(chunk.section)}]</span>\n"
-            f"      <span style='color: var(--text-color, #f8fafc); font-weight: 600;'>"
-            f"{html.escape(chunk.title)}</span>\n"
-            f"      {cited_badge}\n"
-            f"    </span>\n"
-            f"    <span style='background-color: rgba(16, 185, 129, 0.2); color: #34d399; "
-            f"border: 1px solid rgba(16, 185, 129, 0.4); padding: 2px 8px; border-radius: 12px; "
-            f"font-size: 0.78rem; font-weight: 600; white-space: nowrap;'>"
-            f"RRF: {chunk.score:.4f}</span>\n"
-            f"  </summary>\n"
-            f"  <div style='margin-top: 10px; padding: 12px; background: rgba(15, 23, 42, 0.6); "
-            f"border-radius: 6px; border-left: 4px solid {border_color}; "
-            f"border-top: 1px solid var(--border-color, #334155); "
-            f"border-right: 1px solid var(--border-color, #334155); "
-            f"border-bottom: 1px solid var(--border-color, #334155); "
-            f"font-size: 0.88rem; line-height: 1.6; color: var(--text-color, #f8fafc); "
-            f"white-space: pre-wrap;'>\n"
+            f"<span style='color: #0F0E0D; font-weight: 500;'>{html.escape(chunk.title)}</span>"
+            f"{cited_badge}\n"
+            f"</span>\n"
+            f"<span style='{rrf_style}'>RRF: {chunk.score:.4f}</span>\n"
+            f"</summary>\n"
+            f"<div style='{body_style}'>\n"
             f"{safe_content}\n"
-            f"  </div>\n"
+            f"</div>\n"
             f"</details>"
         )
         cards.append(card_html)
 
     cards.append("</div>")
     return "\n".join(cards)
+
+
+def render_editorial_table(headers: Sequence[str], rows: Sequence[Sequence[str]]) -> str:
+    """Render a responsive, text-wrapping HTML table following Harvey design tokens.
+
+    Args:
+        headers: Column header strings.
+        rows: Rows of string values.
+
+    Returns:
+        Responsive HTML string for Streamlit markdown rendering.
+    """
+    if not rows:
+        return (
+            "<p style='color: #706D66; font-size: 14px; font-style: italic; "
+            "padding: 12px 0; border-top: 1px solid #CCCAC6;'>No records available.</p>"
+        )
+
+    th_style = (
+        "text-align: left; padding: 10px 12px; font-size: 14px; font-weight: 500; "
+        "color: #706D66; border-bottom: 1px solid #CCCAC6; background-color: transparent;"
+    )
+    th_cells = "".join(f"<th style='{th_style}'>{html.escape(str(h))}</th>" for h in headers)
+
+    td_style = (
+        "padding: 12px; font-size: 15px; font-weight: 400; line-height: 1.45; "
+        "color: #0F0E0D; border-bottom: 1px solid #CCCAC6; vertical-align: top; "
+        "white-space: normal; word-break: break-word;"
+    )
+    tr_rows: list[str] = []
+    for row in rows:
+        td_cells = "".join(
+            f"<td style='{td_style}'>{html.escape(str(cell))}</td>" for cell in row
+        )
+        tr_rows.append(f"<tr>{td_cells}</tr>")
+
+    tbody_html = "\n".join(tr_rows)
+    tbl_style = (
+        "width: 100%; border-collapse: collapse; border-top: 2px solid #0F0E0D; "
+        "border-bottom: 1px solid #CCCAC6;"
+    )
+    return (
+        "<div style='width: 100%; overflow-x: auto; margin-bottom: 24px;'>\n"
+        f"<table style='{tbl_style}'>\n"
+        f"<thead><tr>{th_cells}</tr></thead>\n"
+        f"<tbody>\n{tbody_html}\n</tbody>\n"
+        "</table>\n"
+        "</div>"
+    )
 
 
 def apply_runtime_provider(
@@ -922,12 +1306,15 @@ def render_streamlit_app(
     cur_model = app_settings.get_active_model(cur_provider)
 
     st.sidebar.markdown(
-        f"<div style='padding: 8px 12px; background: rgba(99, 102, 241, 0.15); "
-        f"border: 1px solid rgba(99, 102, 241, 0.35); border-radius: 8px; margin-bottom: 12px;'>\n"
-        f"<strong style='color: #818cf8;'>Current Provider:</strong> "
-        f"<code>{cur_provider}</code><br/>\n"
-        f"<strong style='color: #818cf8;'>Active Model:</strong> "
-        f"<code>{cur_model}</code>\n"
+        f"<div style='background-color: #1F1D1A; border: 1px solid #33312C; border-radius: 4px; "
+        f"padding: 14px 16px; margin-bottom: 16px;'>\n"
+        f"<div style='font-size: 12px; font-weight: 500; color: #8F8B85; letter-spacing: 0.05em; "
+        f"text-transform: uppercase;'>Current Provider</div>\n"
+        f"<div style='font-size: 15px; font-weight: 500; color: #FAFAF9; margin-bottom: 8px;'>"
+        f"{cur_provider}</div>\n"
+        f"<div style='font-size: 12px; font-weight: 500; color: #8F8B85; letter-spacing: 0.05em; "
+        f"text-transform: uppercase;'>Active Model</div>\n"
+        f"<div style='font-size: 15px; font-weight: 500; color: #FAFAF9;'>{cur_model}</div>\n"
         f"</div>",
         unsafe_allow_html=True,
     )
@@ -1018,8 +1405,9 @@ def render_streamlit_app(
             key="sb_gemini_key",
         )
 
-    col_apply, col_ping = st.sidebar.columns(2)
-    if col_apply.button("💾 Apply Settings", key="sb_btn_apply", use_container_width=True):
+    if st.sidebar.button(
+        "Apply Settings", key="sb_btn_apply", use_container_width=True, type="primary"
+    ):
         model_overrides: dict[str, str] = {
             "groq": sb_groq_model,
             "ollama": sb_ollama_model,
@@ -1044,44 +1432,52 @@ def render_streamlit_app(
             router=active_router,
         )
         st.session_state["active_provider"] = selected_provider
-        st.toast(f"Settings Applied: {msg}", icon="💾")
+        st.toast(f"Settings Applied: {msg}")
         st.sidebar.success(f"Configured: {selected_provider}")
 
-    if col_ping.button("🔌 Ping Provider", key="sb_btn_ping", use_container_width=True):
+    if st.sidebar.button("Ping Provider", key="sb_btn_ping", use_container_width=True):
         ping_res = ping_provider(provider=selected_provider, router=active_router)
         if "✅" in ping_res:
             st.sidebar.success(ping_res)
         else:
             st.sidebar.error(ping_res)
 
-    st.sidebar.markdown("---")
-    st.sidebar.caption(
-        "⚠️ **Statutory Disclaimer:** This tool provides automated legal information and "
-        "self-help document drafts under CPA 2019. It does not constitute formal legal "
-        "representation. Disputes involving criminal offenses (BNS), Section 138 NI Act "
-        "cheque bounce, or corporate B2B disputes require a registered Advocate."
+    st.sidebar.markdown(
+        "<div style='border-top: 1px solid #33312C; padding-top: 16px; margin-top: 16px; "
+        "color: #8F8B85; font-size: 14px; line-height: 1.4;'>\n"
+        "<strong style='color: #FAFAF9;'>Statutory Disclaimer:</strong> This tool provides "
+        "automated legal information and self-help document drafts under CPA 2019. It does "
+        "not constitute formal legal representation. Disputes involving criminal offenses "
+        "(BNS), Section 138 NI Act cheque bounce, or corporate B2B disputes require a "
+        "registered Advocate.\n"
+        "</div>",
+        unsafe_allow_html=True,
     )
 
     # --------------------------------------------------------------------------
     # MAIN APP HEADER & 4 CORE WORKFLOW TABS
     # --------------------------------------------------------------------------
-    st.title("⚖️ Legal Saathi — AI Consumer Lawyer")
+    st.title("Legal Saathi — AI Consumer Lawyer")
     st.caption(
         "Statutory Consumer Dispute Resolution Platform under the Consumer Protection Act, 2019 "
         "& Consumer Protection (E-Commerce) Rules, 2020."
     )
+    st.markdown(
+        "<hr style='border: none; border-top: 1px solid #CCCAC6; margin: 16px 0 24px 0;' />",
+        unsafe_allow_html=True,
+    )
 
     tab_intake, tab_standing, tab_drafter, tab_simulator = st.tabs(
         [
-            "📋 1. Case Intake & Facts",
-            "⚖️ 2. Legal Standing & Provenance",
-            "📄 3. Document Drafter",
-            "🥊 4. Opposing Counsel Simulator",
+            "1. Case Intake & Facts",
+            "2. Legal Standing & Provenance",
+            "3. Document Drafter",
+            "4. Opposing Counsel Simulator",
         ]
     )
 
     # ==========================================================================
-    # TAB 1: 📋 Case Intake & Facts
+    # TAB 1: Case Intake & Facts
     # ==========================================================================
     with tab_intake:
         col_in_left, col_in_right = st.columns([1.2, 1])
@@ -1119,7 +1515,7 @@ def render_streamlit_app(
                 c_state = cc1.text_input("State", value="Delhi", key="c_state_in")
 
             analyze_clicked = st.button(
-                "🔍 Analyze Facts & Build Case",
+                "Analyze Facts & Build Case",
                 type="primary",
                 key="btn_analyze_case",
             )
@@ -1148,45 +1544,73 @@ def render_streamlit_app(
         with col_in_right:
             if intake_alert_str:
                 if case_file_obj is not None:
-                    st.success(f"✅ {intake_alert_str}")
+                    st.success(intake_alert_str)
                 else:
                     st.error(intake_alert_str)
             else:
                 st.info("Status: Ready to ingest dispute narrative.")
 
             if case_file_obj is not None:
-                st.subheader(case_file_obj.title)
-                with st.container(border=True):
-                    m1, m2, m3 = st.columns(3)
-                    amt_disp = (
-                        f"₹{case_file_obj.disputed_amount_inr:,.2f}"
-                        if case_file_obj.disputed_amount_inr
-                        else "N/A"
-                    )
-                    m1.metric("Disputed Amount", amt_disp)
-                    m2.metric(
-                        "Transaction Date", case_file_obj.transaction_date or "Unknown"
-                    )
-                    m3.metric(
-                        "Cause of Action", case_file_obj.cause_of_action_date or "Unknown"
-                    )
-
-                with st.container(border=True):
-                    st.markdown("**Consolidated Statement of Facts:**")
-                    st.markdown(case_file_obj.facts_summary)
+                amt_disp = (
+                    f"₹{case_file_obj.disputed_amount_inr:,.2f}"
+                    if case_file_obj.disputed_amount_inr
+                    else "N/A"
+                )
+                c_title_esc = html.escape(case_file_obj.title)
+                c_tx_esc = html.escape(case_file_obj.transaction_date or "Unknown")
+                c_coa_esc = html.escape(case_file_obj.cause_of_action_date or "Unknown")
+                c_facts_esc = html.escape(case_file_obj.facts_summary)
+                strip_html = (
+                    "<div style='background-color: #FFFFFF; border: 1px solid #CCCAC6; "
+                    "border-radius: 4px; padding: 18px 20px; margin-bottom: 20px;'>\n"
+                    "<div style='font-family: Newsreader, Georgia, serif; font-size: 24px; "
+                    f"font-weight: 400; color: #0F0E0D; margin-bottom: 16px; line-height: 1.2;'>"
+                    f"{c_title_esc}</div>\n"
+                    "<div style='display: grid; grid-template-columns: repeat(3, 1fr); "
+                    "gap: 16px; border-top: 2px solid #CCCAC6; padding-top: 14px; "
+                    "padding-bottom: 14px;'>\n"
+                    "  <div>\n"
+                    "    <div style='font-size: 13px; font-weight: 500; color: #706D66; "
+                    "text-transform: uppercase;'>Disputed Amount</div>\n"
+                    "    <div style='font-family: Newsreader, Georgia, serif; font-size: 22px; "
+                    f"font-weight: 400; color: #0F0E0D;'>{amt_disp}</div>\n"
+                    "  </div>\n"
+                    "  <div>\n"
+                    "    <div style='font-size: 13px; font-weight: 500; color: #706D66; "
+                    "text-transform: uppercase;'>Transaction Date</div>\n"
+                    "    <div style='font-size: 16px; font-weight: 500; color: #0F0E0D; "
+                    f"margin-top: 4px; font-variant-numeric: tabular-nums;'>{c_tx_esc}</div>\n"
+                    "  </div>\n"
+                    "  <div>\n"
+                    "    <div style='font-size: 13px; font-weight: 500; color: #706D66; "
+                    "text-transform: uppercase;'>Cause of Action</div>\n"
+                    "    <div style='font-size: 16px; font-weight: 500; color: #0F0E0D; "
+                    f"margin-top: 4px; font-variant-numeric: tabular-nums;'>{c_coa_esc}</div>\n"
+                    "  </div>\n"
+                    "</div>\n"
+                    "<div style='border-top: 1px solid #CCCAC6; padding-top: 14px;'>\n"
+                    "  <div style='font-size: 13px; font-weight: 500; color: #706D66; "
+                    "text-transform: uppercase; margin-bottom: 6px;'>"
+                    "Consolidated Statement of Facts</div>\n"
+                    f"  <div style='font-size: 15px; line-height: 1.5; color: #33312C;'>"
+                    f"{c_facts_esc}</div>\n"
+                    "</div>\n"
+                    "</div>"
+                )
+                st.markdown(strip_html, unsafe_allow_html=True)
 
         # Bottom Section: Timeline, Evidence Checklist & Clarifications
         if case_file_obj is not None:
-            st.markdown("---")
+            st.markdown(
+                "<hr style='border: none; border-top: 1px solid #CCCAC6; margin: 24px 0;' />",
+                unsafe_allow_html=True,
+            )
             st.subheader("Chronological Dispute Timeline")
             t_data = cast(list[list[str]], st.session_state.get("intake_timeline", []))
             if t_data:
-                st.dataframe(
-                    pd.DataFrame(
-                        t_data, columns=["Date", "Significance", "Event Description"]
-                    ),
-                    use_container_width=True,
-                    hide_index=True,
+                st.markdown(
+                    render_editorial_table(["Date", "Significance", "Event Description"], t_data),
+                    unsafe_allow_html=True,
                 )
 
             ev1, ev2 = st.columns(2)
@@ -1194,29 +1618,24 @@ def render_streamlit_app(
                 st.subheader("Available Documentary Proof")
                 av_data = cast(list[list[str]], st.session_state.get("intake_avail", []))
                 if av_data:
-                    st.dataframe(
-                        pd.DataFrame(
-                            av_data, columns=["Document Type", "Description", "Status"]
-                        ),
-                        use_container_width=True,
-                        hide_index=True,
+                    st.markdown(
+                        render_editorial_table(["Document Type", "Description", "Status"], av_data),
+                        unsafe_allow_html=True,
                     )
             with ev2:
                 st.subheader("Missing Critical Evidence Audit")
                 ms_data = cast(list[list[str]], st.session_state.get("intake_missing", []))
                 if ms_data:
-                    st.dataframe(
-                        pd.DataFrame(
-                            ms_data,
-                            columns=["Missing Proof", "Statutory Reason", "How to Procure"],
+                    st.markdown(
+                        render_editorial_table(
+                            ["Missing Proof", "Statutory Reason", "How to Procure"], ms_data
                         ),
-                        use_container_width=True,
-                        hide_index=True,
+                        unsafe_allow_html=True,
                     )
 
             if case_file_obj.clarification_questions:
                 with st.container(border=True):
-                    st.markdown("#### ❓ Targeted Clarification Questions")
+                    st.markdown("#### Targeted Clarification Questions")
                     for q in case_file_obj.clarification_questions:
                         st.markdown(f"- {q}")
                     clarif_ans = st.text_area(
@@ -1235,18 +1654,21 @@ def render_streamlit_app(
                         st.success("Case file updated with clarifications!")
                         st.rerun()
         else:
-            st.markdown("---")
+            st.markdown(
+                "<hr style='border: none; border-top: 1px solid #CCCAC6; margin: 24px 0;' />",
+                unsafe_allow_html=True,
+            )
             st.caption(
                 "Enter facts and click 'Analyze Facts & Build Case' to view structured summary, "
                 "chronological timeline, and evidence audit."
             )
 
     # ==========================================================================
-    # TAB 2: ⚖️ Legal Standing & Provenance
+    # TAB 2: Legal Standing & Provenance
     # ==========================================================================
     with tab_standing:
         eval_standing_clicked = st.button(
-            "⚖️ Assess Legal Standing & Retrieve Statutory Grounding",
+            "Assess Legal Standing & Retrieve Statutory Grounding",
             type="primary",
             key="btn_assess_standing",
         )
@@ -1283,50 +1705,83 @@ def render_streamlit_app(
         standing_obj = cast(LegalStanding | None, st.session_state.get("standing"))
 
         if standing_obj is not None:
-            # Top KPI Row
-            k1, k2, k3, k4 = st.columns(4)
+            # Top 4-Column Statutory Standing Strip
             c_label = "Eligible Consumer" if standing_obj.is_consumer else "Ineligible"
-            k1.metric("Consumer Standing", c_label)
-            k2.metric("Pecuniary Forum", standing_obj.pecuniary_commission_forum)
             lim_label = standing_obj.limitation_status.replace("_", " ").title()
-            k3.metric("Limitation Status", lim_label)
-            k4.metric(
-                "Est. Filing Fee",
-                f"₹{standing_obj.estimated_costs.court_fees_inr:,.0f}",
+            fee_disp = f"₹{standing_obj.estimated_costs.court_fees_inr:,.0f}"
+            pec_forum_esc = html.escape(standing_obj.pecuniary_commission_forum)
+            rat_esc = html.escape(standing_obj.consumer_rationale)
+            standing_strip_html = (
+                "<div style='display: grid; grid-template-columns: repeat(4, 1fr); "
+                "gap: 16px; border-top: 2px solid #CCCAC6; border-bottom: 1px solid #CCCAC6; "
+                "padding: 16px 0; margin-bottom: 24px;'>\n"
+                "  <div>\n"
+                "    <div style='font-size: 13px; font-weight: 500; color: #706D66; "
+                "text-transform: uppercase; margin-bottom: 6px;'>Consumer Standing</div>\n"
+                "    <div style='font-family: Newsreader, Georgia, serif; font-size: 22px; "
+                f"font-weight: 400; color: #0F0E0D;'>{c_label}</div>\n"
+                "  </div>\n"
+                "  <div>\n"
+                "    <div style='font-size: 13px; font-weight: 500; color: #706D66; "
+                "text-transform: uppercase; margin-bottom: 6px;'>Pecuniary Forum</div>\n"
+                "    <div style='font-family: Newsreader, Georgia, serif; font-size: 20px; "
+                "font-weight: 400; color: #0F0E0D; white-space: normal; "
+                f"word-break: break-word;'>{pec_forum_esc}</div>\n"
+                "  </div>\n"
+                "  <div>\n"
+                "    <div style='font-size: 13px; font-weight: 500; color: #706D66; "
+                "text-transform: uppercase; margin-bottom: 6px;'>Limitation Status</div>\n"
+                "    <div style='font-family: Newsreader, Georgia, serif; font-size: 22px; "
+                f"font-weight: 400; color: #0F0E0D;'>{lim_label}</div>\n"
+                "  </div>\n"
+                "  <div>\n"
+                "    <div style='font-size: 13px; font-weight: 500; color: #706D66; "
+                "text-transform: uppercase; margin-bottom: 6px;'>Est. Filing Fee</div>\n"
+                "    <div style='font-family: Newsreader, Georgia, serif; font-size: 22px; "
+                f"font-weight: 400; color: #0F0E0D;'>{fee_disp}</div>\n"
+                "  </div>\n"
+                "</div>"
             )
+            st.markdown(standing_strip_html, unsafe_allow_html=True)
 
             # Main Split View
             st_col1, st_col2 = st.columns([1.15, 1])
 
             with st_col1:
-                with st.container(border=True):
-                    st.markdown("#### Consumer Rationale")
-                    st.markdown(standing_obj.consumer_rationale)
+                rat_html = (
+                    "<div style='border-left: 3px solid #0F0E0D; background-color: #F2F1F0; "
+                    "padding: 14px 18px; border-radius: 0 4px 4px 0; margin-bottom: 20px;'>\n"
+                    "<div style='font-size: 13px; font-weight: 500; color: #706D66; "
+                    "text-transform: uppercase; margin-bottom: 6px;'>"
+                    "Consumer Standing Rationale</div>\n"
+                    "<div style='font-size: 15px; line-height: 1.5; color: #33312C;'>"
+                    f"{rat_esc}</div>\n"
+                    "</div>"
+                )
+                st.markdown(rat_html, unsafe_allow_html=True)
 
                 st.markdown("#### Established Statutory Violations")
                 viol_data = cast(
                     list[list[str]], st.session_state.get("standing_violations", [])
                 )
                 if viol_data:
-                    st.dataframe(
-                        pd.DataFrame(
+                    st.markdown(
+                        render_editorial_table(
+                            ["Statute", "Section", "Violation Nature", "Explanation"],
                             viol_data,
-                            columns=["Statute", "Section", "Violation Nature", "Explanation"],
                         ),
-                        use_container_width=True,
-                        hide_index=True,
+                        unsafe_allow_html=True,
                     )
 
                 st.markdown("#### Actionable 4-Step Dispute Resolution Pathway")
                 path_data = cast(list[list[str]], st.session_state.get("standing_pathway", []))
                 if path_data:
-                    st.dataframe(
-                        pd.DataFrame(
+                    st.markdown(
+                        render_editorial_table(
+                            ["Step", "Forum / Action", "Owner", "Timeline", "Fee"],
                             path_data,
-                            columns=["Step", "Forum / Action", "Owner", "Timeline", "Fee"],
                         ),
-                        use_container_width=True,
-                        hide_index=True,
+                        unsafe_allow_html=True,
                     )
 
                 st.markdown("#### Statutory Reliefs Claimable (CPA Section 39)")
@@ -1337,17 +1792,16 @@ def render_streamlit_app(
                 )
 
             with st_col2:
-                st.markdown("#### 🔍 Kotaemon Visual Provenance Inspector")
+                st.markdown("#### Statutory Grounding & Provenance Inspector")
                 telem_html = str(st.session_state.get("standing_telemetry", ""))
                 if telem_html:
                     st.markdown(telem_html, unsafe_allow_html=True)
 
                 prov_html_content = str(st.session_state.get("standing_provenance", ""))
-                with st.container(border=True):
-                    if prov_html_content:
-                        st.markdown(prov_html_content, unsafe_allow_html=True)
-                    else:
-                        st.caption("No statutory citations retrieved yet.")
+                if prov_html_content:
+                    st.markdown(prov_html_content, unsafe_allow_html=True)
+                else:
+                    st.caption("No statutory citations retrieved yet.")
         else:
             st.info(
                 "Click 'Assess Legal Standing & Retrieve Statutory Grounding' above to assess "
@@ -1355,7 +1809,7 @@ def render_streamlit_app(
             )
 
     # ==========================================================================
-    # TAB 3: 📄 Document Drafter
+    # TAB 3: Document Drafter
     # ==========================================================================
     with tab_drafter:
         with st.container(border=True):
@@ -1381,13 +1835,13 @@ def render_streamlit_app(
 
             btn_col1, btn_col2 = st.columns(2)
             draft_single_clicked = btn_col1.button(
-                "📝 Draft Selected Document",
+                "Draft Selected Document",
                 type="primary",
                 key="btn_draft_single",
                 use_container_width=True,
             )
             draft_all_clicked = btn_col2.button(
-                "📦 Draft All 3 Pre-Litigation Documents",
+                "Draft All 3 Pre-Litigation Documents",
                 key="btn_draft_all",
                 use_container_width=True,
             )
@@ -1439,21 +1893,45 @@ def render_streamlit_app(
                 st.rerun()
 
         # Document Metadata Banner
-        with st.container(border=True):
-            m_c1, m_c2, m_c3 = st.columns(3)
-            title_label = st.session_state.get("draft_title", "No Document Drafted Yet")
-            m_c1.markdown(f"**Document Title:** {title_label}")
-            m_c2.markdown(
-                f"**Target Recipient:** {st.session_state.get('draft_recipient', 'N/A')}"
-            )
-            m_c3.markdown(f"**Subject Line:** {st.session_state.get('draft_subject', 'N/A')}")
+        title_label = st.session_state.get("draft_title", "No Document Drafted Yet")
+        recip_label = st.session_state.get("draft_recipient", "N/A")
+        subj_label = st.session_state.get("draft_subject", "N/A")
+        t_esc = html.escape(str(title_label))
+        r_esc = html.escape(str(recip_label))
+        s_esc = html.escape(str(subj_label))
+        doc_meta_html = (
+            "<div style='background-color: #FFFFFF; border: 1px solid #CCCAC6; "
+            "border-radius: 4px; padding: 14px 18px; margin-bottom: 20px;'>\n"
+            "<div style='display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;'>\n"
+            "  <div>\n"
+            "    <div style='font-size: 12px; font-weight: 500; color: #706D66; "
+            "text-transform: uppercase;'>Document Title</div>\n"
+            f"    <div style='font-size: 15px; font-weight: 500; color: #0F0E0D; margin-top: 2px;'>"
+            f"{t_esc}</div>\n"
+            "  </div>\n"
+            "  <div>\n"
+            "    <div style='font-size: 12px; font-weight: 500; color: #706D66; "
+            "text-transform: uppercase;'>Target Recipient</div>\n"
+            f"    <div style='font-size: 15px; font-weight: 500; color: #0F0E0D; margin-top: 2px;'>"
+            f"{r_esc}</div>\n"
+            "  </div>\n"
+            "  <div>\n"
+            "    <div style='font-size: 12px; font-weight: 500; color: #706D66; "
+            "text-transform: uppercase;'>Subject Line</div>\n"
+            f"    <div style='font-size: 15px; font-weight: 500; color: #0F0E0D; margin-top: 2px;'>"
+            f"{s_esc}</div>\n"
+            "  </div>\n"
+            "</div>\n"
+            "</div>"
+        )
+        st.markdown(doc_meta_html, unsafe_allow_html=True)
 
         # Side-by-Side Formatted Preview & Raw Editor
         p_col1, p_col2 = st.columns(2)
         raw_draft = str(st.session_state.get("draft_raw_text", ""))
 
         with p_col1, st.container(border=True, height=550):
-            st.markdown("### 👁️ Formatted Legal Preview")
+            st.markdown("### Formatted Legal Preview")
             if raw_draft:
                 st.markdown(raw_draft)
             else:
@@ -1461,7 +1939,7 @@ def render_streamlit_app(
 
         with p_col2:
             new_raw_draft = st.text_area(
-                "✏️ Raw Editable Markdown",
+                "Raw Editable Markdown",
                 height=550,
                 key="ta_raw_markdown_editor",
             )
@@ -1471,7 +1949,7 @@ def render_streamlit_app(
         dl_col1, dl_col2 = st.columns(2)
         cid_str = cur_case_f.case_id if cur_case_f else "consumer_draft"
         dl_col1.download_button(
-            "💾 Download as Markdown (.md)",
+            "Download Markdown (.md)",
             data=str(st.session_state.get("draft_raw_text", "")),
             file_name=f"{cid_str}_legal_document.md",
             mime="text/markdown",
@@ -1479,7 +1957,7 @@ def render_streamlit_app(
             use_container_width=True,
         )
         dl_col2.download_button(
-            "📄 Download as Plain Text (.txt)",
+            "Download Plain Text (.txt)",
             data=str(st.session_state.get("draft_raw_text", "")),
             file_name=f"{cid_str}_legal_document.txt",
             mime="text/plain",
@@ -1488,7 +1966,7 @@ def render_streamlit_app(
         )
 
     # ==========================================================================
-    # TAB 4: 🥊 Opposing Counsel Simulator
+    # TAB 4: Opposing Counsel Simulator
     # ==========================================================================
     with tab_simulator:
         has_sim_state = bool(st.session_state.get("sim_state"))
@@ -1517,7 +1995,7 @@ def render_streamlit_app(
                 key="txt_sim_opp_entity",
             )
 
-            if st.button("🥊 Start / Reset Adversarial Debate", key="btn_init_sim"):
+            if st.button("Start / Reset Adversarial Debate", key="btn_init_sim"):
                 sim_obj = OpposingCounselSimulator(router=active_router)
                 effective_case = cast(CaseFile | None, st.session_state.get("case_file"))
                 if effective_case is None:
@@ -1570,8 +2048,7 @@ def render_streamlit_app(
                 else:
                     for chat_item in chat_msgs:
                         c_role = chat_item.get("role", "assistant")
-                        c_avatar = "⚖️" if c_role == "assistant" else "🛡️"
-                        with st.chat_message(c_role, avatar=c_avatar):
+                        with st.chat_message(c_role, avatar=None):
                             st.write(chat_item.get("content", ""))
 
             user_rebuttal = st.chat_input(
@@ -1608,7 +2085,7 @@ def render_streamlit_app(
                 st.rerun()
 
         with sim_col_right:
-            st.markdown("### 🎓 Live Statutory Coaching & Scoring")
+            st.markdown("### Live Statutory Coaching & Scoring")
             scores_data = cast(
                 dict[str, Any],
                 st.session_state.get(
@@ -1625,18 +2102,61 @@ def render_streamlit_app(
             t_score_val = float(scores_data.get("turn_score", 0.0))
             c_score_val = float(scores_data.get("cumulative_score", 0.0))
 
+            score_header_html = (
+                "<div style='display: grid; grid-template-columns: 1fr 1fr; gap: 16px; "
+                "border-top: 2px solid #CCCAC6; padding-top: 14px; margin-bottom: 12px;'>\n"
+                "  <div>\n"
+                "    <div style='font-size: 13px; font-weight: 500; color: #706D66; "
+                "text-transform: uppercase; margin-bottom: 4px;'>Turn Score</div>\n"
+                "    <div style='font-family: Newsreader, Georgia, serif; font-size: 24px; "
+                f"font-weight: 400; color: #0F0E0D;'>{t_score_val:.1f}"
+                "<span style='font-size: 14px; color: #706D66;'> / 100</span></div>\n"
+                "  </div>\n"
+                "  <div>\n"
+                "    <div style='font-size: 13px; font-weight: 500; color: #706D66; "
+                "text-transform: uppercase; margin-bottom: 4px;'>Readiness Score</div>\n"
+                "    <div style='font-family: Newsreader, Georgia, serif; font-size: 24px; "
+                f"font-weight: 400; color: #0F0E0D;'>{c_score_val:.1f}"
+                "<span style='font-size: 14px; color: #706D66;'> / 100</span></div>\n"
+                "  </div>\n"
+                "</div>"
+            )
+            st.markdown(score_header_html, unsafe_allow_html=True)
             m_s1, m_s2 = st.columns(2)
-            m_s1.metric("Turn Score", f"{t_score_val:.1f}/100")
             m_s1.progress(min(max(t_score_val / 100.0, 0.0), 1.0))
-            m_s2.metric("Readiness Score", f"{c_score_val:.1f}/100")
             m_s2.progress(min(max(c_score_val / 100.0, 0.0), 1.0))
 
-            st.markdown("#### Strengths")
-            st.success(str(scores_data.get("strengths", "No feedback yet.")))
-            st.markdown("#### Vulnerabilities / Weaknesses")
-            st.warning(str(scores_data.get("weaknesses", "No vulnerabilities detected yet.")))
-            st.markdown("#### Coach's Tactical Tip & Opponent Flaws")
-            st.info(str(scores_data.get("advice", "Practice articulating your statutory claims.")))
+            str_text = html.escape(str(scores_data.get("strengths", "No feedback yet.")))
+            weak_text = html.escape(
+                str(scores_data.get("weaknesses", "No vulnerabilities detected yet."))
+            )
+            adv_text = html.escape(
+                str(scores_data.get("advice", "Practice articulating your statutory claims."))
+            )
+            feedback_panels_html = (
+                "<div style='border-top: 1px solid #CCCAC6; padding-top: 16px; margin-top: 16px; "
+                "margin-bottom: 20px;'>\n"
+                "  <div style='font-size: 16px; font-weight: 500; color: #0F0E0D; "
+                "margin-bottom: 8px;'>Strengths</div>\n"
+                f"  <div style='font-size: 15px; font-weight: 400; line-height: 1.45; "
+                f"color: #33312C;'>{str_text}</div>\n"
+                "</div>\n"
+                "<div style='border-top: 1px solid #CCCAC6; padding-top: 16px; "
+                "margin-bottom: 20px;'>\n"
+                "  <div style='font-size: 16px; font-weight: 500; color: #0F0E0D; "
+                "margin-bottom: 8px;'>Vulnerabilities / Weaknesses</div>\n"
+                f"  <div style='font-size: 15px; font-weight: 400; line-height: 1.45; "
+                f"color: #33312C;'>{weak_text}</div>\n"
+                "</div>\n"
+                "<div style='border-top: 1px solid #CCCAC6; padding-top: 16px; "
+                "margin-bottom: 20px;'>\n"
+                "  <div style='font-size: 16px; font-weight: 500; color: #0F0E0D; "
+                "margin-bottom: 8px;'>Coach's Tactical Tip & Opponent Flaws</div>\n"
+                f"  <div style='font-size: 15px; font-weight: 400; line-height: 1.45; "
+                f"color: #33312C;'>{adv_text}</div>\n"
+                "</div>"
+            )
+            st.markdown(feedback_panels_html, unsafe_allow_html=True)
 
 
 # ==============================================================================
