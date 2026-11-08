@@ -1,23 +1,29 @@
-"""Gradio interactive web user interface for Legal Saathi AI Consumer Lawyer.
+"""Web user interface for Legal Saathi AI Consumer Lawyer.
 
-Integrates Kotaemon-inspired visual citation provenance with <mark> tags,
-comprehensive consumer intake and timeline extraction (Mode 1), legal standing
-assessment and 4-step pathway advice (Mode 2), automated legal demand and
-e-Daakhil complaint drafting (Mode 3), opposing counsel adversarial practice
-simulator (Mode 4), and live multi-provider runtime model switching across
-Ollama, Groq Cloud, OpenAI, and Google Gemini.
+Provides dual-entrypoint user interfaces:
+1. Streamlit web application (`render_streamlit_app`): Modern, high-contrast LegalTech
+   aesthetic inspired by Harvey AI and Kotaemon, equipped with hot-swappable LLM runtime
+   controls in a persistent sidebar, session state persistence, 4 core workflow tabs,
+   collapsible statutory provenance cards with amber visual marks, and courtroom defense
+   adversarial practice simulator.
+2. Gradio Blocks factory (`create_app`): Retained lightweight compatibility builder
+   supporting existing automated integration, regression, and adversarial test suites.
 """
 
 from __future__ import annotations
 
+import contextlib
 import html
 import logging
 import re
 import time
 from collections.abc import Sequence
 from pathlib import Path
+from typing import Any, cast
 
 import gradio as gr
+import pandas as pd
+import streamlit as st
 from pydantic import SecretStr
 
 from legal_assistant.config import Settings, get_settings
@@ -75,10 +81,139 @@ CORE_HIGHLIGHT_TERMS: tuple[str, ...] = (
     "condonation of delay",
 )
 
+LEGAL_SAATHI_CUSTOM_CSS: str = """
+<style>
+/* ==========================================================================
+   Legal Saathi Design System: Harvey AI / Kotaemon Refined Aesthetic
+   ========================================================================== */
+
+/* Typography & Prose Flow */
+html, body, [data-testid="stAppViewContainer"] {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    color: var(--text-color, #f8fafc);
+}
+
+.stMarkdown p, .stMarkdown div, .stMarkdown li {
+    line-height: 1.65;
+}
+
+/* Statutory Provenance Collapsible Cards */
+details.statutory-provenance-card {
+    transition: all 0.2s ease-in-out;
+}
+details.statutory-provenance-card summary::-webkit-details-marker {
+    display: none;
+}
+details.statutory-provenance-card summary {
+    list-style: none;
+    outline: none;
+}
+details.statutory-provenance-card summary:hover {
+    filter: brightness(1.08);
+}
+
+/* Amber <mark> tags */
+mark {
+    background-color: #fde68a !important;
+    color: #78350f !important;
+    font-weight: 600 !important;
+    padding: 2px 5px !important;
+    border-radius: 4px !important;
+    border: 1px solid rgba(245, 158, 11, 0.4) !important;
+}
+
+/* Metric Cards */
+[data-testid="stMetric"] {
+    background: var(--secondary-background-color, #1e293b);
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color, #334155);
+}
+[data-testid="stMetricLabel"] {
+    font-size: 0.85rem !important;
+    font-weight: 600 !important;
+    color: var(--text-color, #94a3b8) !important;
+}
+[data-testid="stMetricValue"] {
+    font-size: 1.35rem !important;
+    font-weight: 700 !important;
+    color: var(--text-color, #f8fafc) !important;
+}
+
+/* Tab Headers */
+button[data-baseweb="tab"] {
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+    padding: 10px 18px !important;
+}
+
+/* Chat Container Styling */
+[data-testid="stChatMessage"] {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background: var(--secondary-background-color, #1e293b);
+    border: 1px solid var(--border-color, #334155);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--border-color, #475569);
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
+
+/* Sidebar Styling */
+[data-testid="stSidebar"] {
+    border-right: 1px solid var(--border-color, #334155);
+}
+</style>
+"""
+
 
 # ==============================================================================
 # Helper Functions: Provenance Highlighting & Model Switching
 # ==============================================================================
+def format_citation_telemetry_banner(verified_count: int, flagged_count: int) -> str:
+    """Format Citation Telemetry banner with high contrast colors.
+
+    Args:
+        verified_count: Number of verified statutory citations.
+        flagged_count: Number of ungrounded or hallucinated citations.
+
+    Returns:
+        HTML string with high-contrast emerald or crimson styling.
+    """
+    if flagged_count == 0:
+        return (
+            "<div style='display: flex; align-items: center; gap: 8px; padding: 10px 16px; "
+            "background: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; border-radius: 6px; "
+            "color: #34d399; font-size: 0.9rem; font-weight: 500; margin-bottom: 12px;'>\n"
+            "  <span>🛡️ <strong>Citation Telemetry:</strong> "
+            f"<strong style='color: #10b981;'>{verified_count} verified</strong>, "
+            "<span>0 ungrounded citations</span>.</span>\n"
+            "</div>"
+        )
+    return (
+        "<div style='display: flex; align-items: center; gap: 8px; padding: 10px 16px; "
+        "background: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; border-radius: 6px; "
+        "color: #f87171; font-size: 0.9rem; font-weight: 500; margin-bottom: 12px;'>\n"
+        "  <span>⚠️ <strong>Citation Telemetry:</strong> "
+        f"<span>{verified_count} verified</span>, "
+        f"<strong style='color: #ef4444;'>{flagged_count} ungrounded citations</strong>.</span>\n"
+        "</div>"
+    )
+
+
 def format_ui_provenance_with_marks(
     chunks: Sequence[RetrievedChunk],
     cited_sections: Sequence[str] | None = None,
@@ -97,8 +232,9 @@ def format_ui_provenance_with_marks(
     """
     if not chunks:
         msg = (
-            "<div style='padding: 16px; color: #64748b; font-style: italic; "
-            "background-color: #f8fafc; border-radius: 8px; border: 1px dashed #cbd5e1;'>"
+            "<div style='padding: 16px; color: var(--text-color, #94a3b8); font-style: italic; "
+            "background-color: var(--secondary-background-color, #1e293b); border-radius: 8px; "
+            "border: 1px dashed var(--border-color, #334155);'>"
             "No statutory grounds retrieved. "
             "Enter case facts in Tab 1 to retrieve provisions.</div>"
         )
@@ -124,11 +260,27 @@ def format_ui_provenance_with_marks(
         combined_pattern = re.compile(f"({'|'.join(term_patterns)})", re.IGNORECASE)
 
     mark_replacement = (
-        r"<mark style='background-color: #fef3c7; color: #92400e; font-weight: 600; "
-        r"padding: 1px 4px; border-radius: 3px; border: 1px solid #fde68a;'>\1</mark>"
+        r"<mark style='background-color: #fde68a; color: #78350f; font-weight: 600; "
+        r"padding: 2px 5px; border-radius: 4px; "
+        r"border: 1px solid rgba(245, 158, 11, 0.4);'>\1</mark>"
     )
 
-    for chunk in chunks:
+    first_cited_opened = False
+    any_cited = False
+    if cited_sections:
+        for chunk in chunks:
+            for cs in cited_sections:
+                if (
+                    cs
+                    and chunk.section
+                    and (cs.lower() in chunk.section.lower() or chunk.section.lower() in cs.lower())
+                ):
+                    any_cited = True
+                    break
+            if any_cited:
+                break
+
+    for idx, chunk in enumerate(chunks):
         is_cited = False
         if cited_sections:
             for cs in cited_sections:
@@ -140,13 +292,23 @@ def format_ui_provenance_with_marks(
                     is_cited = True
                     break
 
-        border_color = "#059669" if is_cited else "#e2e8f0"
-        bg_card = "#f0fdf4" if is_cited else "#ffffff"
+        is_open = False
+        if any_cited:
+            if is_cited and not first_cited_opened:
+                is_open = True
+                first_cited_opened = True
+        else:
+            if idx == 0:
+                is_open = True
+
+        open_attr = " open" if is_open else ""
+        border_color = "#10b981" if is_cited else "var(--border-color, #334155)"
+        bg_card = "var(--secondary-background-color, #1e293b)"
         cited_badge = (
-            "<span style='background-color: #059669; color: white; padding: 2px 8px; "
+            "<span style='background-color: #10b981; color: #ffffff; padding: 2px 8px; "
             "border-radius: 9999px; font-size: 0.72rem; font-weight: 700; "
             "letter-spacing: 0.03em; margin-left: 8px; "
-            "box-shadow: 0 1px 2px rgba(5,150,105,0.25);'>CITED IN ADVICE</span>"
+            "box-shadow: 0 1px 2px rgba(16, 185, 129, 0.25);'>CITED IN ADVICE</span>"
             if is_cited
             else ""
         )
@@ -156,30 +318,35 @@ def format_ui_provenance_with_marks(
             safe_content = combined_pattern.sub(mark_replacement, safe_content)
 
         card_html = (
-            f"<details class='statutory-provenance-card' style='margin-bottom: 12px; "
+            f"<details class='statutory-provenance-card'{open_attr} style='margin-bottom: 12px; "
             f"border: 1.5px solid {border_color}; border-radius: 8px; "
             f"background-color: {bg_card}; padding: 10px 14px; "
             f"box-shadow: 0 1px 3px rgba(0,0,0,0.04);'>\n"
-            f"  <summary style='cursor: pointer; font-weight: 600; color: #312e81; "
+            f"  <summary style='cursor: pointer; font-weight: 600; "
+            f"color: var(--text-color, #f8fafc); "
             f"display: flex; justify-content: space-between; align-items: center;'>\n"
             f"    <span>\n"
-            f"      <strong style='color: #4338ca; margin-right: 4px;'>#{chunk.rank}:</strong>\n"
-            f"      <span style='background-color: #e0e7ff; color: #3730a3; padding: 2px 7px; "
-            f"border-radius: 4px; font-size: 0.78rem; font-weight: 600; margin-right: 6px;'>"
+            f"      <strong style='color: #818cf8; margin-right: 4px;'>#{chunk.rank}:</strong>\n"
+            f"      <span style='background-color: rgba(99, 102, 241, 0.2); color: #a5b4fc; "
+            f"border: 1px solid rgba(99, 102, 241, 0.4); padding: 2px 7px; border-radius: 4px; "
+            f"font-size: 0.78rem; font-weight: 600; margin-right: 6px;'>"
             f"[{html.escape(chunk.statute)} | Sec {html.escape(chunk.section)}]</span>\n"
-            f"      <span style='color: #1e1b4b; font-weight: 600;'>"
+            f"      <span style='color: var(--text-color, #f8fafc); font-weight: 600;'>"
             f"{html.escape(chunk.title)}</span>\n"
             f"      {cited_badge}\n"
             f"    </span>\n"
-            f"    <span style='background-color: #dcfce7; color: #166534; "
-            f"border: 1px solid #bbf7d0; padding: 2px 8px; border-radius: 12px; "
+            f"    <span style='background-color: rgba(16, 185, 129, 0.2); color: #34d399; "
+            f"border: 1px solid rgba(16, 185, 129, 0.4); padding: 2px 8px; border-radius: 12px; "
             f"font-size: 0.78rem; font-weight: 600; white-space: nowrap;'>"
             f"RRF: {chunk.score:.4f}</span>\n"
             f"  </summary>\n"
-            f"  <div style='margin-top: 10px; padding: 12px; background: #ffffff; "
-            f"border-radius: 6px; border-left: 4px solid #4338ca; border-top: 1px solid #f1f5f9; "
-            f"border-right: 1px solid #f1f5f9; border-bottom: 1px solid #f1f5f9; "
-            f"font-size: 0.88rem; line-height: 1.55; color: #1e293b; white-space: pre-wrap;'>\n"
+            f"  <div style='margin-top: 10px; padding: 12px; background: rgba(15, 23, 42, 0.6); "
+            f"border-radius: 6px; border-left: 4px solid {border_color}; "
+            f"border-top: 1px solid var(--border-color, #334155); "
+            f"border-right: 1px solid var(--border-color, #334155); "
+            f"border-bottom: 1px solid var(--border-color, #334155); "
+            f"font-size: 0.88rem; line-height: 1.6; color: var(--text-color, #f8fafc); "
+            f"white-space: pre-wrap;'>\n"
             f"{safe_content}\n"
             f"  </div>\n"
             f"</details>"
@@ -279,8 +446,8 @@ def ping_provider(
 # ==============================================================================
 def handle_case_intake(
     narrative: str,
-    router: LLMRouter,
-    scope_checker: ScopeChecker,
+    router: LLMRouter | None = None,
+    scope_checker: ScopeChecker | None = None,
     complainant_name: str = "",
     complainant_email: str = "",
     complainant_phone: str = "",
@@ -291,8 +458,8 @@ def handle_case_intake(
 
     Args:
         narrative: Verbatim consumer narrative input.
-        router: Active LLMRouter instance.
-        scope_checker: Pre-retrieval scope checker instance.
+        router: Optional active LLMRouter instance.
+        scope_checker: Optional pre-retrieval scope checker instance.
         complainant_name: Optional complainant full name.
         complainant_email: Optional complainant email address.
         complainant_phone: Optional complainant phone number.
@@ -310,8 +477,11 @@ def handle_case_intake(
     if not narrative or not narrative.strip():
         return None, "Please enter your dispute facts in the text area above.", [], [], []
 
+    effective_router = router or LLMRouter()
+    effective_scope_checker = scope_checker or ScopeChecker()
+
     # Pre-retrieval scope validation check
-    scope_result = scope_checker.check_scope(narrative)
+    scope_result = effective_scope_checker.check_scope(narrative)
     if not scope_result.is_in_scope:
         reason = scope_result.out_of_scope_category or "Non-consumer dispute"
         action = scope_result.escalation_advice or "Consult a registered Advocate."
@@ -332,7 +502,7 @@ def handle_case_intake(
             state=complainant_state.strip() or "Unknown State",
         )
 
-    builder = CaseBuilder(llm_router=router, scope_checker=scope_checker)
+    builder = CaseBuilder(llm_router=effective_router, scope_checker=effective_scope_checker)
     try:
         case_file = builder.build_case(
             narrative=narrative,
@@ -425,7 +595,7 @@ def handle_evaluate_standing(
     lim_status = standing.limitation_status.replace("_", " ").title()
     fee_val = standing.estimated_costs.court_fees_inr
     overview_md = (
-        f"### Legal Standing Assessment\n"
+        "### Legal Standing Assessment\n"
         f"- **Consumer Standing:** {c_status} (Under CPA 2019 Section 2(7))\n"
         f"- **Pecuniary Jurisdiction:** {standing.pecuniary_commission_forum}\n"
         f"- **Limitation Status:** {lim_status} (Section 69 CPA 2019)\n"
@@ -594,7 +764,7 @@ def handle_simulator_turn(
         use_llm=False,
     )
 
-    # Build chat transcript messages for gr.Chatbot
+    # Build chat transcript messages
     chat_history: list[dict[str, str]] = []
     for turn in updated_state.turns:
         role = "assistant" if turn.speaker == "opposing_counsel" else "user"
@@ -643,7 +813,834 @@ def handle_simulator_turn(
 
 
 # ==============================================================================
-# UI Component Graph Builder Factory
+# Streamlit Cached Resources & UI Application Entrypoint
+# ==============================================================================
+@st.cache_resource
+def get_cached_retriever() -> StatutoryHybridRetriever:
+    """Instantiate and cache statutory hybrid retriever across reruns.
+
+    Returns:
+        StatutoryHybridRetriever indexed with statutory corpus chunks.
+    """
+    corpus_dir = Path("data/statutes")
+    stat_chunks: list[RetrievedChunk] = []
+    if corpus_dir.exists():
+        chunker = StatutoryChunker()
+        for f in sorted(corpus_dir.glob("*.txt")):
+            parsed = chunker.split_text(f.read_text(encoding="utf-8"))
+            for sc in parsed:
+                stat_chunks.append(
+                    RetrievedChunk(
+                        chunk_id=sc.metadata.chunk_id,
+                        content=sc.content,
+                        statute=sc.metadata.statute,
+                        chapter=sc.metadata.chapter,
+                        section=sc.metadata.section,
+                        title=sc.metadata.section_title,
+                        score=0.025,
+                        rank=len(stat_chunks) + 1,
+                    )
+                )
+    return StatutoryHybridRetriever(
+        chunks=stat_chunks,
+        dense_retriever=InMemoryDenseRetriever(),
+    )
+
+
+def render_streamlit_app(
+    settings: Settings | None = None,
+    router: LLMRouter | None = None,
+    retriever: StatutoryHybridRetriever | None = None,
+    scope_checker: ScopeChecker | None = None,
+) -> None:
+    """Render the primary Legal Saathi Streamlit Web Interface.
+
+    Args:
+        settings: Optional application Settings override.
+        router: Optional LLMRouter instance override.
+        retriever: Optional StatutoryHybridRetriever instance override.
+        scope_checker: Optional ScopeChecker instance override.
+    """
+    with contextlib.suppress(Exception):
+        st.set_page_config(
+            page_title="Legal Saathi — AI Consumer Lawyer",
+            page_icon="⚖️",
+            layout="wide",
+            initial_sidebar_state="expanded",
+        )
+
+    st.markdown(LEGAL_SAATHI_CUSTOM_CSS, unsafe_allow_html=True)
+
+    if "settings" not in st.session_state:
+        st.session_state["settings"] = settings or get_settings()
+    app_settings = cast(Settings, st.session_state["settings"])
+
+    if "router" not in st.session_state:
+        st.session_state["router"] = router or LLMRouter(settings=app_settings)
+    active_router = cast(LLMRouter, st.session_state["router"])
+
+    if "retriever" not in st.session_state:
+        st.session_state["retriever"] = retriever or get_cached_retriever()
+    active_retriever = cast(StatutoryHybridRetriever, st.session_state["retriever"])
+
+    if "scope_checker" not in st.session_state:
+        st.session_state["scope_checker"] = scope_checker or ScopeChecker()
+    active_scope_checker = cast(ScopeChecker, st.session_state["scope_checker"])
+
+    # Session State Initialization
+    if "case_file" not in st.session_state:
+        st.session_state["case_file"] = None
+    if "standing" not in st.session_state:
+        st.session_state["standing"] = None
+    if "sim_state" not in st.session_state:
+        st.session_state["sim_state"] = None
+    if "drafted_doc" not in st.session_state:
+        st.session_state["drafted_doc"] = None
+    if "draft_raw_text" not in st.session_state:
+        st.session_state["draft_raw_text"] = ""
+    if "active_provider" not in st.session_state:
+        st.session_state["active_provider"] = app_settings.llm_provider
+    if "ta_case_narrative" not in st.session_state:
+        st.session_state["ta_case_narrative"] = ""
+    if "ta_raw_markdown_editor" not in st.session_state:
+        st.session_state["ta_raw_markdown_editor"] = ""
+    if "chat_history" not in st.session_state:
+        st.session_state["chat_history"] = []
+    if "sim_scores" not in st.session_state:
+        st.session_state["sim_scores"] = {
+            "turn_score": 0.0,
+            "cumulative_score": 0.0,
+            "strengths": "Submit your argument to receive coach feedback.",
+            "weaknesses": "Submit your argument to identify gaps.",
+            "advice": "Practice articulating your statutory claims.",
+        }
+
+    # --------------------------------------------------------------------------
+    # PERSISTENT SIDEBAR: Live Model Switcher & Telemetry
+    # --------------------------------------------------------------------------
+    cur_provider = str(st.session_state.get("active_provider", app_settings.llm_provider))
+    cur_model = app_settings.get_active_model(cur_provider)
+
+    st.sidebar.markdown(
+        f"<div style='padding: 8px 12px; background: rgba(99, 102, 241, 0.15); "
+        f"border: 1px solid rgba(99, 102, 241, 0.35); border-radius: 8px; margin-bottom: 12px;'>\n"
+        f"<strong style='color: #818cf8;'>Current Provider:</strong> "
+        f"<code>{cur_provider}</code><br/>\n"
+        f"<strong style='color: #818cf8;'>Active Model:</strong> "
+        f"<code>{cur_model}</code>\n"
+        f"</div>",
+        unsafe_allow_html=True,
+    )
+
+    provider_options = ["groq", "ollama", "openai", "gemini"]
+    p_idx = provider_options.index(cur_provider) if cur_provider in provider_options else 0
+    selected_provider = st.sidebar.selectbox(
+        "Active LLM Provider",
+        options=provider_options,
+        index=p_idx,
+        key="sb_provider_select",
+    )
+
+    with st.sidebar.expander("Provider API & Model Config", expanded=True):
+        st.markdown("##### Groq Cloud")
+        groq_choices = [
+            "openai/gpt-oss-20b",
+            "openai/gpt-oss-120b",
+            "qwen/qwen3.8-27b",
+            "llama-3.1-8b-instant",
+            "llama-3.3-70b-versatile",
+        ]
+        g_idx = (
+            groq_choices.index(app_settings.groq_model)
+            if app_settings.groq_model in groq_choices
+            else 3
+        )
+        sb_groq_model = st.selectbox(
+            "Groq Model",
+            options=groq_choices,
+            index=g_idx,
+            key="sb_groq_model",
+        )
+        g_key_val = (
+            app_settings.groq_api_key.get_secret_value() if app_settings.groq_api_key else ""
+        )
+        sb_groq_key = st.text_input(
+            "Groq API Key",
+            value=g_key_val,
+            type="password",
+            placeholder="gsk_...",
+            key="sb_groq_key",
+        )
+
+        st.markdown("##### Local Ollama")
+        sb_ollama_model = st.text_input(
+            "Ollama Model (<= 8B params)",
+            value=app_settings.ollama_model,
+            key="sb_ollama_model",
+        )
+        sb_ollama_url = st.text_input(
+            "Ollama Base URL",
+            value=app_settings.ollama_base_url,
+            key="sb_ollama_url",
+        )
+
+        st.markdown("##### OpenAI")
+        sb_openai_model = st.text_input(
+            "OpenAI Model",
+            value=app_settings.openai_model,
+            key="sb_openai_model",
+        )
+        oa_key_val = (
+            app_settings.openai_api_key.get_secret_value() if app_settings.openai_api_key else ""
+        )
+        sb_openai_key = st.text_input(
+            "OpenAI API Key",
+            value=oa_key_val,
+            type="password",
+            placeholder="sk-...",
+            key="sb_openai_key",
+        )
+
+        st.markdown("##### Google Gemini")
+        sb_gemini_model = st.text_input(
+            "Gemini Model",
+            value=app_settings.gemini_model,
+            key="sb_gemini_model",
+        )
+        gem_key_val = (
+            app_settings.gemini_api_key.get_secret_value() if app_settings.gemini_api_key else ""
+        )
+        sb_gemini_key = st.text_input(
+            "Gemini API Key",
+            value=gem_key_val,
+            type="password",
+            placeholder="AIza...",
+            key="sb_gemini_key",
+        )
+
+    col_apply, col_ping = st.sidebar.columns(2)
+    if col_apply.button("💾 Apply Settings", key="sb_btn_apply", use_container_width=True):
+        model_overrides: dict[str, str] = {
+            "groq": sb_groq_model,
+            "ollama": sb_ollama_model,
+            "openai": sb_openai_model,
+            "gemini": sb_gemini_model,
+        }
+        chosen_model = model_overrides.get(selected_provider)
+        key_overrides: dict[str, str] = {
+            "groq": sb_groq_key,
+            "openai": sb_openai_key,
+            "gemini": sb_gemini_key,
+        }
+        chosen_key = key_overrides.get(selected_provider)
+        chosen_url = sb_ollama_url if selected_provider == "ollama" else None
+
+        msg = apply_runtime_provider(
+            provider=selected_provider,
+            model_name=chosen_model,
+            api_key=chosen_key,
+            base_url=chosen_url,
+            settings=app_settings,
+            router=active_router,
+        )
+        st.session_state["active_provider"] = selected_provider
+        st.toast(f"Settings Applied: {msg}", icon="💾")
+        st.sidebar.success(f"Configured: {selected_provider}")
+
+    if col_ping.button("🔌 Ping Provider", key="sb_btn_ping", use_container_width=True):
+        ping_res = ping_provider(provider=selected_provider, router=active_router)
+        if "✅" in ping_res:
+            st.sidebar.success(ping_res)
+        else:
+            st.sidebar.error(ping_res)
+
+    st.sidebar.markdown("---")
+    st.sidebar.caption(
+        "⚠️ **Statutory Disclaimer:** This tool provides automated legal information and "
+        "self-help document drafts under CPA 2019. It does not constitute formal legal "
+        "representation. Disputes involving criminal offenses (BNS), Section 138 NI Act "
+        "cheque bounce, or corporate B2B disputes require a registered Advocate."
+    )
+
+    # --------------------------------------------------------------------------
+    # MAIN APP HEADER & 4 CORE WORKFLOW TABS
+    # --------------------------------------------------------------------------
+    st.title("⚖️ Legal Saathi — AI Consumer Lawyer")
+    st.caption(
+        "Statutory Consumer Dispute Resolution Platform under the Consumer Protection Act, 2019 "
+        "& Consumer Protection (E-Commerce) Rules, 2020."
+    )
+
+    tab_intake, tab_standing, tab_drafter, tab_simulator = st.tabs(
+        [
+            "📋 1. Case Intake & Facts",
+            "⚖️ 2. Legal Standing & Provenance",
+            "📄 3. Document Drafter",
+            "🥊 4. Opposing Counsel Simulator",
+        ]
+    )
+
+    # ==========================================================================
+    # TAB 1: 📋 Case Intake & Facts
+    # ==========================================================================
+    with tab_intake:
+        col_in_left, col_in_right = st.columns([1.2, 1])
+
+        sample_narrative = (
+            "I ordered a high-end smartphone for ₹65,000 on 2026-01-15 from an online e-commerce "
+            "marketplace (Order ID: INV-2026-8812). It was delivered on 2026-01-18 with a "
+            "shattered OLED screen and swollen battery. I contacted support within 24 hours "
+            "attaching unboxing photos. Customer support rejected the refund/replacement "
+            "citing their 'No Return on Electronics' policy and redirected me to manufacturer. "
+            "The manufacturer stated physical transit damage voided the warranty."
+        )
+
+        with col_in_left:
+            if st.button("Load Sample Dispute", key="btn_load_sample"):
+                st.session_state["ta_case_narrative"] = sample_narrative
+
+            narrative_text = st.text_area(
+                "Consumer Dispute Narrative (English, Hindi, or Hinglish)",
+                height=180,
+                placeholder="Describe your purchase, defect/deficiency, merchant responses...",
+                key="ta_case_narrative",
+            )
+
+            with st.expander("Complainant Contact Details (Optional)", expanded=False):
+                cc1, cc2 = st.columns(2)
+                c_name = cc1.text_input("Complainant Name", value="Rahul Sharma", key="c_name_in")
+                c_email = cc2.text_input(
+                    "Email Address", value="rahul.sharma@example.com", key="c_email_in"
+                )
+                c_phone = cc1.text_input(
+                    "Phone Number", value="+91-9876543210", key="c_phone_in"
+                )
+                c_city = cc2.text_input("City", value="New Delhi", key="c_city_in")
+                c_state = cc1.text_input("State", value="Delhi", key="c_state_in")
+
+            analyze_clicked = st.button(
+                "🔍 Analyze Facts & Build Case",
+                type="primary",
+                key="btn_analyze_case",
+            )
+
+        if analyze_clicked:
+            st.session_state["narrative_input"] = narrative_text
+            c_file, alert_msg, timeline, avail, missing = handle_case_intake(
+                narrative=narrative_text,
+                router=active_router,
+                scope_checker=active_scope_checker,
+                complainant_name=c_name,
+                complainant_email=c_email,
+                complainant_phone=c_phone,
+                complainant_city=c_city,
+                complainant_state=c_state,
+            )
+            st.session_state["case_file"] = c_file
+            st.session_state["intake_alert"] = alert_msg
+            st.session_state["intake_timeline"] = timeline
+            st.session_state["intake_avail"] = avail
+            st.session_state["intake_missing"] = missing
+
+        case_file_obj = cast(CaseFile | None, st.session_state.get("case_file"))
+        intake_alert_str = str(st.session_state.get("intake_alert", ""))
+
+        with col_in_right:
+            if intake_alert_str:
+                if case_file_obj is not None:
+                    st.success(f"✅ {intake_alert_str}")
+                else:
+                    st.error(intake_alert_str)
+            else:
+                st.info("Status: Ready to ingest dispute narrative.")
+
+            if case_file_obj is not None:
+                st.subheader(case_file_obj.title)
+                with st.container(border=True):
+                    m1, m2, m3 = st.columns(3)
+                    amt_disp = (
+                        f"₹{case_file_obj.disputed_amount_inr:,.2f}"
+                        if case_file_obj.disputed_amount_inr
+                        else "N/A"
+                    )
+                    m1.metric("Disputed Amount", amt_disp)
+                    m2.metric(
+                        "Transaction Date", case_file_obj.transaction_date or "Unknown"
+                    )
+                    m3.metric(
+                        "Cause of Action", case_file_obj.cause_of_action_date or "Unknown"
+                    )
+
+                with st.container(border=True):
+                    st.markdown("**Consolidated Statement of Facts:**")
+                    st.markdown(case_file_obj.facts_summary)
+
+        # Bottom Section: Timeline, Evidence Checklist & Clarifications
+        if case_file_obj is not None:
+            st.markdown("---")
+            st.subheader("Chronological Dispute Timeline")
+            t_data = cast(list[list[str]], st.session_state.get("intake_timeline", []))
+            if t_data:
+                st.dataframe(
+                    pd.DataFrame(
+                        t_data, columns=["Date", "Significance", "Event Description"]
+                    ),
+                    use_container_width=True,
+                    hide_index=True,
+                )
+
+            ev1, ev2 = st.columns(2)
+            with ev1:
+                st.subheader("Available Documentary Proof")
+                av_data = cast(list[list[str]], st.session_state.get("intake_avail", []))
+                if av_data:
+                    st.dataframe(
+                        pd.DataFrame(
+                            av_data, columns=["Document Type", "Description", "Status"]
+                        ),
+                        use_container_width=True,
+                        hide_index=True,
+                    )
+            with ev2:
+                st.subheader("Missing Critical Evidence Audit")
+                ms_data = cast(list[list[str]], st.session_state.get("intake_missing", []))
+                if ms_data:
+                    st.dataframe(
+                        pd.DataFrame(
+                            ms_data,
+                            columns=["Missing Proof", "Statutory Reason", "How to Procure"],
+                        ),
+                        use_container_width=True,
+                        hide_index=True,
+                    )
+
+            if case_file_obj.clarification_questions:
+                with st.container(border=True):
+                    st.markdown("#### ❓ Targeted Clarification Questions")
+                    for q in case_file_obj.clarification_questions:
+                        st.markdown(f"- {q}")
+                    clarif_ans = st.text_area(
+                        "Submit Clarification Answers",
+                        placeholder="Provide details for questions above...",
+                        key="ta_clarif_answers",
+                    )
+                    if st.button("Update Case File with Clarifications", key="btn_up_clarif"):
+                        builder = CaseBuilder(
+                            llm_router=active_router, scope_checker=active_scope_checker
+                        )
+                        up_case = builder.update_case_with_clarifications(
+                            case_file_obj, {"clarification": clarif_ans}
+                        )
+                        st.session_state["case_file"] = up_case
+                        st.success("Case file updated with clarifications!")
+                        st.rerun()
+        else:
+            st.markdown("---")
+            st.caption(
+                "Enter facts and click 'Analyze Facts & Build Case' to view structured summary, "
+                "chronological timeline, and evidence audit."
+            )
+
+    # ==========================================================================
+    # TAB 2: ⚖️ Legal Standing & Provenance
+    # ==========================================================================
+    with tab_standing:
+        eval_standing_clicked = st.button(
+            "⚖️ Assess Legal Standing & Retrieve Statutory Grounding",
+            type="primary",
+            key="btn_assess_standing",
+        )
+
+        if eval_standing_clicked:
+            cur_case = cast(CaseFile | None, st.session_state.get("case_file"))
+            if cur_case is None:
+                st.warning("Please complete Case Intake in Tab 1 first before evaluating standing.")
+            else:
+                standing_res, overview_txt, viol_rows, path_rows, prov_html = (
+                    handle_evaluate_standing(
+                        case_file=cur_case,
+                        router=active_router,
+                        retriever=active_retriever,
+                    )
+                )
+                verifier = CitationVerifier()
+                v_chunks, _ = active_retriever.retrieve_with_confidence(overview_txt, top_k=5)
+                telemetry = verifier.verify_response(
+                    response_text=overview_txt, source_chunks=v_chunks
+                )
+                telemetry_banner = format_citation_telemetry_banner(
+                    verified_count=len(telemetry.verified_citations),
+                    flagged_count=len(telemetry.flagged_citations),
+                )
+
+                st.session_state["standing"] = standing_res
+                st.session_state["standing_overview"] = overview_txt
+                st.session_state["standing_violations"] = viol_rows
+                st.session_state["standing_pathway"] = path_rows
+                st.session_state["standing_provenance"] = prov_html
+                st.session_state["standing_telemetry"] = telemetry_banner
+
+        standing_obj = cast(LegalStanding | None, st.session_state.get("standing"))
+
+        if standing_obj is not None:
+            # Top KPI Row
+            k1, k2, k3, k4 = st.columns(4)
+            c_label = "Eligible Consumer" if standing_obj.is_consumer else "Ineligible"
+            k1.metric("Consumer Standing", c_label)
+            k2.metric("Pecuniary Forum", standing_obj.pecuniary_commission_forum)
+            lim_label = standing_obj.limitation_status.replace("_", " ").title()
+            k3.metric("Limitation Status", lim_label)
+            k4.metric(
+                "Est. Filing Fee",
+                f"₹{standing_obj.estimated_costs.court_fees_inr:,.0f}",
+            )
+
+            # Main Split View
+            st_col1, st_col2 = st.columns([1.15, 1])
+
+            with st_col1:
+                with st.container(border=True):
+                    st.markdown("#### Consumer Rationale")
+                    st.markdown(standing_obj.consumer_rationale)
+
+                st.markdown("#### Established Statutory Violations")
+                viol_data = cast(
+                    list[list[str]], st.session_state.get("standing_violations", [])
+                )
+                if viol_data:
+                    st.dataframe(
+                        pd.DataFrame(
+                            viol_data,
+                            columns=["Statute", "Section", "Violation Nature", "Explanation"],
+                        ),
+                        use_container_width=True,
+                        hide_index=True,
+                    )
+
+                st.markdown("#### Actionable 4-Step Dispute Resolution Pathway")
+                path_data = cast(list[list[str]], st.session_state.get("standing_pathway", []))
+                if path_data:
+                    st.dataframe(
+                        pd.DataFrame(
+                            path_data,
+                            columns=["Step", "Forum / Action", "Owner", "Timeline", "Fee"],
+                        ),
+                        use_container_width=True,
+                        hide_index=True,
+                    )
+
+                st.markdown("#### Statutory Reliefs Claimable (CPA Section 39)")
+                st.markdown(
+                    "- Full refund of consideration with 18% p.a. interest\n"
+                    "- Compensation for mental agony & hardship\n"
+                    "- Litigation costs under CPA Section 39"
+                )
+
+            with st_col2:
+                st.markdown("#### 🔍 Kotaemon Visual Provenance Inspector")
+                telem_html = str(st.session_state.get("standing_telemetry", ""))
+                if telem_html:
+                    st.markdown(telem_html, unsafe_allow_html=True)
+
+                prov_html_content = str(st.session_state.get("standing_provenance", ""))
+                with st.container(border=True):
+                    if prov_html_content:
+                        st.markdown(prov_html_content, unsafe_allow_html=True)
+                    else:
+                        st.caption("No statutory citations retrieved yet.")
+        else:
+            st.info(
+                "Click 'Assess Legal Standing & Retrieve Statutory Grounding' above to assess "
+                "Section 2(7) standing, limitation period, and statutory grounds."
+            )
+
+    # ==========================================================================
+    # TAB 3: 📄 Document Drafter
+    # ==========================================================================
+    with tab_drafter:
+        with st.container(border=True):
+            d_ctrl1, d_ctrl2 = st.columns([2, 1])
+            doc_choice = d_ctrl1.radio(
+                "Select Legal Artifact to Draft",
+                options=[
+                    "Legal Demand Notice (15-Day)",
+                    "Grievance Escalation Email",
+                    "e-Daakhil Consumer Complaint Draft",
+                ],
+                horizontal=True,
+                key="rad_doc_choice",
+            )
+            notice_deadline = d_ctrl2.slider(
+                "Notice Period Deadline (Days)",
+                min_value=7,
+                max_value=30,
+                value=15,
+                step=1,
+                key="sld_notice_deadline",
+            )
+
+            btn_col1, btn_col2 = st.columns(2)
+            draft_single_clicked = btn_col1.button(
+                "📝 Draft Selected Document",
+                type="primary",
+                key="btn_draft_single",
+                use_container_width=True,
+            )
+            draft_all_clicked = btn_col2.button(
+                "📦 Draft All 3 Pre-Litigation Documents",
+                key="btn_draft_all",
+                use_container_width=True,
+            )
+
+        cur_case_f = cast(CaseFile | None, st.session_state.get("case_file"))
+        cur_stand_f = cast(LegalStanding | None, st.session_state.get("standing"))
+
+        if draft_single_clicked:
+            if cur_case_f is None:
+                st.warning("Please complete Case Intake in Tab 1 first.")
+            else:
+                doc_obj, md_text, _, path_str = handle_draft_single(
+                    case_file=cur_case_f,
+                    standing=cur_stand_f,
+                    doc_type=str(doc_choice),
+                    notice_days=int(notice_deadline),
+                    router=active_router,
+                    retriever=active_retriever,
+                )
+                st.session_state["drafted_doc"] = doc_obj
+                st.session_state["draft_raw_text"] = md_text
+                st.session_state["ta_raw_markdown_editor"] = md_text
+                st.session_state["draft_title"] = doc_obj.title if doc_obj else "Not Drafted"
+                st.session_state["draft_recipient"] = doc_obj.recipient if doc_obj else "N/A"
+                st.session_state["draft_subject"] = (
+                    doc_obj.subject if doc_obj and doc_obj.subject else "Consumer Protection Demand"
+                )
+                st.rerun()
+
+        if draft_all_clicked:
+            if cur_case_f is None:
+                st.warning("Please complete Case Intake in Tab 1 first.")
+            else:
+                drafter_inst = DocumentDrafter(
+                    llm_router=active_router, retriever=active_retriever
+                )
+                docs = drafter_inst.draft_all(cur_case_f, standing=cur_stand_f)
+                combo_md = "\n\n---\n\n".join(d.body_markdown for d in docs.values())
+                save_dir = Path("data/exports")
+                save_dir.mkdir(parents=True, exist_ok=True)
+                save_file = save_dir / f"{cur_case_f.case_id}_pre_litigation_package.md"
+                save_file.write_text(combo_md, encoding="utf-8")
+
+                st.session_state["draft_raw_text"] = combo_md
+                st.session_state["ta_raw_markdown_editor"] = combo_md
+                st.session_state["draft_title"] = "Pre-Litigation 3-Document Package"
+                st.session_state["draft_recipient"] = "Multiple Designated Authorities"
+                st.session_state["draft_subject"] = "Comprehensive Consumer Dispute Artifacts"
+                st.rerun()
+
+        # Document Metadata Banner
+        with st.container(border=True):
+            m_c1, m_c2, m_c3 = st.columns(3)
+            title_label = st.session_state.get("draft_title", "No Document Drafted Yet")
+            m_c1.markdown(f"**Document Title:** {title_label}")
+            m_c2.markdown(
+                f"**Target Recipient:** {st.session_state.get('draft_recipient', 'N/A')}"
+            )
+            m_c3.markdown(f"**Subject Line:** {st.session_state.get('draft_subject', 'N/A')}")
+
+        # Side-by-Side Formatted Preview & Raw Editor
+        p_col1, p_col2 = st.columns(2)
+        raw_draft = str(st.session_state.get("draft_raw_text", ""))
+
+        with p_col1, st.container(border=True, height=550):
+            st.markdown("### 👁️ Formatted Legal Preview")
+            if raw_draft:
+                st.markdown(raw_draft)
+            else:
+                st.caption("Draft preview will render here upon document generation.")
+
+        with p_col2:
+            new_raw_draft = st.text_area(
+                "✏️ Raw Editable Markdown",
+                height=550,
+                key="ta_raw_markdown_editor",
+            )
+            st.session_state["draft_raw_text"] = new_raw_draft
+
+        # Native 1-Click Downloads
+        dl_col1, dl_col2 = st.columns(2)
+        cid_str = cur_case_f.case_id if cur_case_f else "consumer_draft"
+        dl_col1.download_button(
+            "💾 Download as Markdown (.md)",
+            data=str(st.session_state.get("draft_raw_text", "")),
+            file_name=f"{cid_str}_legal_document.md",
+            mime="text/markdown",
+            key="btn_dl_md",
+            use_container_width=True,
+        )
+        dl_col2.download_button(
+            "📄 Download as Plain Text (.txt)",
+            data=str(st.session_state.get("draft_raw_text", "")),
+            file_name=f"{cid_str}_legal_document.txt",
+            mime="text/plain",
+            key="btn_dl_txt",
+            use_container_width=True,
+        )
+
+    # ==========================================================================
+    # TAB 4: 🥊 Opposing Counsel Simulator
+    # ==========================================================================
+    with tab_simulator:
+        has_sim_state = bool(st.session_state.get("sim_state"))
+        with st.expander("Simulator Configuration", expanded=not has_sim_state):
+            t_col1, t_col2, t_col3 = st.columns(3)
+            sim_tactic = t_col1.selectbox(
+                "Opposing Counsel Defense Tactic",
+                options=[
+                    "Auto",
+                    "Terms & Conditions No Refund Waiver",
+                    "Absence of Unboxing Video",
+                    "IT Act Section 79 Intermediary Safe Harbor",
+                    "Courier / 3PL Transit Damage Disclaimer",
+                    "Delivery OTP Verification Defense",
+                ],
+                key="sb_sim_defense_tactic",
+            )
+            sim_opp_name = t_col2.text_input(
+                "Opposing Counsel Title",
+                value="Senior Corporate Defense Counsel",
+                key="txt_sim_opp_name",
+            )
+            sim_opp_entity = t_col3.text_input(
+                "Opposing Entity Represented",
+                value="E-Commerce Marketplace & Merchant",
+                key="txt_sim_opp_entity",
+            )
+
+            if st.button("🥊 Start / Reset Adversarial Debate", key="btn_init_sim"):
+                sim_obj = OpposingCounselSimulator(router=active_router)
+                effective_case = cast(CaseFile | None, st.session_state.get("case_file"))
+                if effective_case is None:
+                    effective_case = CaseFile(
+                        case_id="sim_case_001",
+                        title="Consumer Dispute Simulation",
+                        disputed_amount_inr=20000.0,
+                        transaction_date="2026-01-01",
+                        facts_summary="Dispute regarding refund refusal for defective merchandise.",
+                        opposite_parties=[
+                            OppositeParty(name="Marketplace Platform", role="Marketplace")
+                        ],
+                        complainant=PartyDetails(name="Consumer", city="Delhi", state="Delhi"),
+                    )
+
+                chosen_tactic = (
+                    DefenseTacticType.UNBOXING_VIDEO_ABSENCE
+                    if "unboxing" in str(sim_tactic).lower()
+                    else DefenseTacticType.TERMS_AND_CONDITIONS_NO_REFUND
+                )
+                fresh_state = sim_obj.start_simulation(
+                    case=effective_case,
+                    initial_tactic=chosen_tactic,
+                    opponent_name=sim_opp_name,
+                    opponent_entity=sim_opp_entity,
+                )
+                st.session_state["sim_state"] = fresh_state
+                st.session_state["chat_history"] = [
+                    {"role": "assistant", "content": fresh_state.turns[0].content}
+                ]
+                st.session_state["sim_scores"] = {
+                    "turn_score": 0.0,
+                    "cumulative_score": 0.0,
+                    "strengths": "Initial argument ready. Submit your counter-argument below.",
+                    "weaknesses": "Avoid purely emotional appeals.",
+                    "advice": "Cite CPA 2019 provisions directly.",
+                }
+                st.rerun()
+
+        # Split View: Courtroom Transcript & Live Coaching
+        sim_col_left, sim_col_right = st.columns([1.3, 1])
+
+        with sim_col_left:
+            with st.container(border=True, height=460):
+                chat_msgs = cast(
+                    list[dict[str, str]], st.session_state.get("chat_history", [])
+                )
+                if not chat_msgs:
+                    st.caption("Start the debate above to begin opposing counsel practice.")
+                else:
+                    for chat_item in chat_msgs:
+                        c_role = chat_item.get("role", "assistant")
+                        c_avatar = "⚖️" if c_role == "assistant" else "🛡️"
+                        with st.chat_message(c_role, avatar=c_avatar):
+                            st.write(chat_item.get("content", ""))
+
+            user_rebuttal = st.chat_input(
+                "State your legal rebuttal citing CPA 2019 provisions...",
+                key="ci_consumer_rebuttal",
+            )
+            if user_rebuttal:
+                cur_s = cast(SimulatorState | None, st.session_state.get("sim_state"))
+                u_state, hist, s_txt, str_md, weak_md, adv_md = handle_simulator_turn(
+                    user_argument=user_rebuttal,
+                    state=cur_s,
+                    router=active_router,
+                    tactic=str(sim_tactic),
+                    opponent_name=sim_opp_name,
+                    opponent_entity=sim_opp_entity,
+                )
+                st.session_state["sim_state"] = u_state
+                st.session_state["chat_history"] = hist
+
+                latest_fb = None
+                for t in reversed(u_state.turns):
+                    if t.speaker == "consumer" and t.feedback is not None:
+                        latest_fb = t.feedback
+                        break
+
+                t_score = latest_fb.score if latest_fb else 0.0
+                st.session_state["sim_scores"] = {
+                    "turn_score": t_score,
+                    "cumulative_score": u_state.cumulative_score,
+                    "strengths": str_md,
+                    "weaknesses": weak_md,
+                    "advice": adv_md,
+                }
+                st.rerun()
+
+        with sim_col_right:
+            st.markdown("### 🎓 Live Statutory Coaching & Scoring")
+            scores_data = cast(
+                dict[str, Any],
+                st.session_state.get(
+                    "sim_scores",
+                    {
+                        "turn_score": 0.0,
+                        "cumulative_score": 0.0,
+                        "strengths": "Pending",
+                        "weaknesses": "Pending",
+                        "advice": "Pending",
+                    },
+                ),
+            )
+            t_score_val = float(scores_data.get("turn_score", 0.0))
+            c_score_val = float(scores_data.get("cumulative_score", 0.0))
+
+            m_s1, m_s2 = st.columns(2)
+            m_s1.metric("Turn Score", f"{t_score_val:.1f}/100")
+            m_s1.progress(min(max(t_score_val / 100.0, 0.0), 1.0))
+            m_s2.metric("Readiness Score", f"{c_score_val:.1f}/100")
+            m_s2.progress(min(max(c_score_val / 100.0, 0.0), 1.0))
+
+            st.markdown("#### Strengths")
+            st.success(str(scores_data.get("strengths", "No feedback yet.")))
+            st.markdown("#### Vulnerabilities / Weaknesses")
+            st.warning(str(scores_data.get("weaknesses", "No vulnerabilities detected yet.")))
+            st.markdown("#### Coach's Tactical Tip & Opponent Flaws")
+            st.info(str(scores_data.get("advice", "Practice articulating your statutory claims.")))
+
+
+# ==============================================================================
+# UI Component Graph Builder Factory (Gradio Compatibility Entrypoint)
 # ==============================================================================
 def create_app(
     settings: Settings | None = None,
@@ -1163,30 +2160,10 @@ def create_app(
             verifier = CitationVerifier()
             v_chunks, _ = active_retriever.retrieve_with_confidence(overview, top_k=5)
             telemetry = verifier.verify_response(response_text=overview, source_chunks=v_chunks)
-            if len(telemetry.flagged_citations) == 0:
-                v_count = len(telemetry.verified_citations)
-                telemetry_str = (
-                    f"<div style='display: flex; align-items: center; gap: 8px; padding: 8px 14px; "
-                    f"background-color: #f0fdf4; border: 1px solid #86efac; border-radius: 6px; "
-                    f"color: #166534; font-size: 0.88rem; font-weight: 500;'>\n"
-                    f"  <span>🛡️ <strong>Citation Telemetry:</strong> "
-                    f"<span style='color: #15803d; font-weight: 700;'>{v_count} verified</span>, "
-                    f"<span style='color: #15803d;'>0 ungrounded citations</span>.</span>\n"
-                    f"</div>"
-                )
-            else:
-                v_count = len(telemetry.verified_citations)
-                f_count = len(telemetry.flagged_citations)
-                telemetry_str = (
-                    f"<div style='display: flex; align-items: center; gap: 8px; padding: 8px 14px; "
-                    f"background-color: #fef2f2; border: 1px solid #fca5a5; border-radius: 6px; "
-                    f"color: #991b1b; font-size: 0.88rem; font-weight: 500;'>\n"
-                    f"  <span>⚠️ <strong>Citation Telemetry:</strong> "
-                    f"<strong>{v_count} verified</strong>, "
-                    f"<strong style='color: #b91c1c;'>{f_count} ungrounded citations</strong>."
-                    f"</span>\n"
-                    f"</div>"
-                )
+            telemetry_str = format_citation_telemetry_banner(
+                verified_count=len(telemetry.verified_citations),
+                flagged_count=len(telemetry.flagged_citations),
+            )
             return standing, overview, viol, path, prov, telemetry_str
 
         evaluate_standing_btn.click(
@@ -1455,11 +2432,10 @@ def create_app(
     return app  # type: ignore[no-any-return]
 
 
+def main() -> None:
+    """Primary CLI entrypoint for Legal Saathi UI."""
+    render_streamlit_app()
+
+
 if __name__ == "__main__":
-    app_instance = create_app()
-    app_instance.launch(
-        server_name="127.0.0.1",
-        server_port=7860,
-        share=False,
-        theme=gr.themes.Soft(primary_hue="blue", secondary_hue="indigo"),
-    )
+    render_streamlit_app()

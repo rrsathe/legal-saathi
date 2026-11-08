@@ -22,6 +22,7 @@ dependencies = [
     "httpx>=0.27.0",
     "starlette>=0.40.0",
     "fastapi>=0.115.0",
+    "streamlit>=1.40.0",
 ]
 
 [project.optional-dependencies]
@@ -136,6 +137,8 @@ module = [
     "ollama.*",
     "groq.*",
     "chromadb.*",
+    "streamlit.*",
+    "pandas.*",
 ]
 ignore_missing_imports = true
 
@@ -162,6 +165,7 @@ allowed-unresolved-imports = [
     "ollama.**",
     "groq.**",
     "scripts.**",
+    "streamlit.**",
 ]
 replace-imports-with-any = [
     "kotaemon.**",
@@ -175,6 +179,7 @@ replace-imports-with-any = [
     "ollama.**",
     "groq.**",
     "scripts.**",
+    "streamlit.**",
 ]
 
 [tool.ty.rules]
