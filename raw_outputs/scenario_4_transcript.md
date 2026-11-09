@@ -4,9 +4,9 @@
 **Dispute Category**: `quick_commerce_short_delivery`  
 **Dispute Value**: ₹1,800.00  
 **Language**: `en`  
-**Execution Timestamp**: 2026-11-07 10:42:57 UTC  
+**Execution Timestamp**: 2026-11-09 11:08:18 UTC  
 **Execution Mode**: Offline Mock LLM  
-**Runtime Latency**: 0.0978 seconds  
+**Runtime Latency**: 0.1018 seconds  
 
 ---
 
@@ -34,8 +34,8 @@
 
 | Date | Event Description | Legal Significance |
 |:---|:---|:---|
-| 2026-11-07 | Transaction entered and consideration paid for goods/services. | Purchase date establishing consumer standing under Section 2(7) |
-| 2026-11-07 | Opposite party customer support refused refund or return request. | Cause of action arose under Section 69 |
+| 2026-11-09 | Transaction entered and consideration paid for goods/services. | Purchase date establishing consumer standing under Section 2(7) |
+| 2026-11-09 | Opposite party customer support refused refund or return request. | Cause of action arose under Section 69 |
 
 ### Evidentiary Sufficiency & Missing Proof Audit
 
@@ -93,7 +93,7 @@
 ```markdown
 **TO**: Grievance Redressal Officer, Opposite Party (Merchant / Platform)
 **EMAIL**: grievance-officer@ecommerce-platform.in
-**DATE**: 2026-11-07
+**DATE**: 2026-11-09
 **SUBJECT**: FORMAL ESCALATION: Grievance under Rule 4(5) of Consumer Protection (E-Commerce) Rules, 2020 - Order regarding Consumer Dispute regarding Goods / Services
 
 Dear Grievance Officer,
@@ -102,7 +102,7 @@ I am writing to formally lodge a statutory consumer grievance pursuant to **Rule
 
 ### 1. TRANSACTION DETAILS
 - **Complainant / Buyer**: Vikram Malhotra (9988776655, vikram.m@example.com)
-- **Transaction / Order Date**: 2026-11-07
+- **Transaction / Order Date**: 2026-11-09
 - **Item / Service Purchased**: Consumer Dispute regarding Goods / Services
 - **Valuable Consideration Paid**: ₹1,800.00
 - **Opposite Party Seller**: Opposite Party (Merchant / Platform)
@@ -124,7 +124,7 @@ My name is Vikram Malhotra (vikram.m@example.com, +91-9988776655), residing at F
 
 **SENT VIA REGISTERED POST WITH ACKNOWLEDGMENT DUE (RPAD) & SPEED POST & REGISTERED EMAIL**
 
-**Date**: 2026-11-07
+**Date**: 2026-11-09
 **Place**: New Delhi, India
 
 **TO**:
@@ -193,11 +193,11 @@ Mobile: 9988776655 | Email: vikram.m@example.com
 | Sl. No. | Description of Annexure | Annexure Marker |
 |:---:|:---|:---:|
 | 1. | Formal Consumer Complaint with Solemn Verification Affidavit | - |
-| 2. | Copy of Tax Invoice & Proof of Purchase dated 2026-11-07 | **Annexure C-1** |
+| 2. | Copy of Tax Invoice & Proof of Purchase dated 2026-11-09 | **Annexure C-1** |
 | 3. | Copy of Electronic Bank / UPI Payment Receipt of ₹1,800.00 | **Annexure C-2** |
 | 4. | Photographic Proof / Video Recording of Defective / Spurious Goods | **Annexure C-3** |
 | 5. | Email Communication & Customer Support Denial Records | **Annexure C-4** |
-| 6. | Copy of Formal 15-Day Legal Demand Notice dated 2026-11-07 with Postal Receipt | **Annexure C-5** |
+| 6. | Copy of Formal 15-Day Legal Demand Notice dated 2026-11-09 with Postal Receipt | **Annexure C-5** |
 
 ---
 

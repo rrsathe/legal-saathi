@@ -1,9 +1,9 @@
 # Legal Saathi — Master Benchmark Evaluation Report
 
-**Generated**: 2026-11-07 10:42:57 UTC  
+**Generated**: 2026-11-09 11:08:18 UTC  
 **Execution Mode**: mock_llm (mock / mock-llama3.1:8b)  
 **Corpus Tested**: CPA 2019, 2021 Pecuniary Rules, E-Commerce Rules 2020, e-Daakhil/NCH Guidelines  
-**Total Latency**: 0.3679 seconds  
+**Total Latency**: 0.4255 seconds  
 
 ---
 

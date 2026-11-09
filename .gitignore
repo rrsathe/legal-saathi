@@ -144,3 +144,16 @@ $RECYCLE.BIN/
 # ==============================================================================
 .theflow/
 
+# ==============================================================================
+# Submission Deliverables & Media (Stored locally & uploaded to Google Drive)
+# ==============================================================================
+kuku_submission/
+kuku_submission/**
+*.mp4
+*.zip
+*.pdf
+kuku_walkthrough_script.txt
+ORIGINAL_REQUEST.md
+PROJECT.md
+
+
